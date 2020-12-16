@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            margin: 400px auto;
+        }
+
+        div img {
+            display: block;
+            margin: auto;
+            margin-bottom: 10px;
+            width: 300px;
+            height: 250px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <img src="img/default.jpg" class="bg" true-img="img/12.jpg" alt="">
+        <img src="img/default.jpg" class="bg" true-img="img/11.jpg" alt="">
+        <img src="img/default.jpg" class="bg" true-img="img/13.jpg" alt="">
+        <img src="img/default.jpg" class="bg" true-img="img/10.jpg" alt="">
+        <img src="img/default.jpg" class="bg" true-img="img/9.jpg" alt="">
+        <img src="img/default.jpg" class="bg" true-img="img/8.jpg" alt="">
+        <img src="img/default.jpg" class="bg" true-img="img/7.jpg" alt="">
+        <img src="img/default.jpg" class="bg" true-img="img/6.jpg" alt="">
+    </div>
+</body>
+
+</html>
+<script src="../utils.js"></script>
+<script>
+    let imgs = document.getElementsByClassName("bg");
+    // let winH = utils.win("clientHeight");
+
+    // 此函数就是判断每一张图片是否要加载
+    function delay() {
+        // 当函数执行的时候，循环每一张图片，判断每一张图片是否需要加载
+        for (let i = 0; i < imgs.length; i++) {
+            delayImg(imgs[i]);
+        }
+    }
+
+    function delayImg(img) {
+        // console.log(img);
+        // if (img.flag) {
+        //     return;
+        // }
+
+        let imgH = img.offsetHeight;
+        let imgT = utils.offset(img).top;
+
+        let winH = utils.win("clientHeight");
+        let winT = utils.win("scrollTop");
+        if (winH + winT >= imgH + imgT) {
+            let trueImg = img.getAttribute("true-img");
+
+            let newImg = new Image;
+            newImg.src = trueImg;
+            newImg.onload = function () {
+                img.src = trueImg;
+                img.clasaName = "";
+            }
+        }
+    }
+    delay();
+    window.onscroll = delay;
+</script>

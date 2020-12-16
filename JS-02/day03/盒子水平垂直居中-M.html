@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            background: yellowgreen;
+            border: 10px solid aqua;
+        }
+
+        /* 1.在知道宽高的情况下把当前元素上下左右垂直居中 */
+        /* .box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -100px;
+            margin-left: -100px;
+        } */
+
+        /* 2.基于css3变形的属性中的位移，在不知道宽高的情况下，把当前元素上下左右垂直居中 */
+        /* .box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        } */
+
+        /* 3.在不知道宽高的情况下把四个方向值全部设置为0也能实现垂直居中 */
+        /* .box {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        } */
+
+        /* 4.给body设置宽高，并用FLEX布局，设置元素在FLEX容器主轴和交叉轴方向上的对齐方式：CENTER居中对齐 */
+        /* body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        } */
+    </style>
+</head>
+
+<body>
+    <div id="box" class="box"></div>
+
+</body>
+
+</html>
+<!-- <script>
+    // 5.利用js实现元素上下左右垂直居中
+    // 利用js设置盒子的left和top值 left==>屏幕宽度的一半 - 盒子宽度的一半  <==>(屏幕宽度 - 盒子宽度)/2
+    let winW = document.documentElement.clientWidth;
+    let winH = document.documentElement.clientHeight;
+    let box = document.getElementById("box");
+
+    console.log(winW, winH);
+
+    box.style.position = "absolute";// 给box 设置定位
+
+    box.style.left = (winW - box.offsetWidth) / 2 + "px";
+    box.style.top = (winH - box.offsetHeight) / 2 + "px";
+
+</script> -->

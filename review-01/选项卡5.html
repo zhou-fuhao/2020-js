@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .main{
+            width: 600px;
+            height: 600px;
+            margin: 0 auto;
+        }
+        .main .lists>li{
+            display: inline-block;
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border: 1px solid black;
+            position: relative;
+            top: 1px;
+        }
+        .main>div{
+            width: 600px;
+            height: 400px;
+            line-height: 400px;
+            text-align: center;
+            background-color: pink;
+            border: 1px solid black;
+            display: none;
+        }
+        .main .lists>li.current{
+            background-color: pink;
+            border-bottom-color: pink;
+        }
+        .main>div.current{
+            display: block;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="main">
+        <ul id="lists" class="lists">
+            <li id="current" class="current">腾讯</li>
+            <li>优酷</li>
+            <li>爱奇艺</li>
+        </ul>
+        <div id="current" class="current">Tencent</div>
+        <div>YOUKU</div>
+        <div>iQIYI</div>
+    </div>
+</body>
+</html>
+<script>
+    var lis=document.getElementsByTagName("li");
+    var omains=document.getElementById("main");
+    var odivs=omains.getElementsByTagName("div");
+    for(let i=0; i<lis.length; i++){
+        lis[i].index=i;
+        lis[i].onclick=function(){
+            for (let j = 0; j < odivs.length; j++) {
+                lis[j].className="";
+                odivs[j].className="";
+            }
+            lis[this.index].className="current";
+            odivs[this.index].className="current";
+        }
+    }
+</script>

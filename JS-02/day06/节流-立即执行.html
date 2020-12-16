@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button{
+            margin: 800px 0 0 0;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="btn">点击</button>
+</body>
+
+</html>
+<script>
+    let num = 0;
+    function fn() {
+        console.log(++num);
+    }
+    function throttle(fn, time) {
+        let previous = 0;
+
+        return function () {
+            let now = Date.now();
+            if (now - previous >= time) {
+                fn.call(this);
+                previous = now;
+            }
+        }
+    }
+    window.onscroll = throttle(fn, 1000);
+</script>

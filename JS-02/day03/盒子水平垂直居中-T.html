@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        #box {
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+
+        /* 利用定位是知道当前元素的宽高的情况下 */
+        /* #box{
+      position: absolute;
+      left: 50%;
+      top:50%;
+      margin-left: -100px;
+      margin-top: -100px;
+    } */
+
+        /* 利用定位不知道当前元素的宽高的情况下 利用transform*/
+        /* #box{
+      position: absolute;
+      left: 50%;
+      top:50%;
+      transform: translate(-50%,-50%);
+    } */
+
+        /* #box {
+      position: absolute;
+      left:0;
+      right:0;
+      top:0;
+      bottom:0;
+      margin: auto;
+    } */
+
+        /* 利用flex布局 */
+        /* body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: cyan;
+    } */
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script src="../utils.js"></script>
+    <script>
+        let box = document.getElementById('box');
+        // 利用js给当前元素设置left和top值
+        box.style.position = 'absolute';
+        // left = 当前浏览器的clientWidth/2 - box的offsetWidth/2
+        // left = (当前浏览器的clientWidth-box的offsetWidth)/2
+        let winW = utils.win('clientWidth'); // 获取当前浏览器的可视区域的宽度
+        let boxW = box.offsetWidth;
+
+        let winH = utils.win('clientHeight'); // 获取当前浏览器的可视区域的宽度
+        let boxH = box.offsetHeight;
+
+        box.style.left = (winW - boxW) / 2 + "px";
+        box.style.top = (winH - boxH) / 2 + "px";
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="uDate" name="uDate" style="width: 300px;">
+</body>
+</html>
+<script>
+    
+    function zero(data){
+        return data>10?data:"0"+data
+    }
+
+    setInterval(function(){
+        var data=new Date();
+        var year=data.getFullYear();
+        var month=data.getMonth()+1;
+        var date=data.getDate();
+        var day=data.getDay();
+        var hours=data.getHours();
+        var minutes=data.getMinutes();
+        var seconds=data.getSeconds();
+        
+    
+        var newDate=year+"年"+month+"月"+date+"日   "+hours+"时"+zero(minutes)+"分"+zero(seconds)+"秒";
+        document.getElementById("uDate").value=newDate;
+    },1000)
+
+</script>

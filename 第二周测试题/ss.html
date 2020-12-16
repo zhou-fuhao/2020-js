@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function Fn(n, m) {
+    //   n = n || 0;
+    //   m = m || 0;
+    //   this.x = n; // 10 0
+    //   this.y = m; // 20 0
+    //   this.getX = function () {
+    //     console.log(this.x);
+    //   }
+    //   return n + m;
+    // }
+    // Fn.prototype.sum = function () {
+    //   console.log(this.x + this.y);
+    // }
+    // Fn.prototype = { // 重定向之后的原型没有constructor
+    //   // x:NaN
+    //   getX: function () { // af3
+    //     this.x += 1; // this.x = this.x+1 给this(原型)增加属性
+    //     console.log(this.x);
+    //   },
+    //   getY: function () {
+    //     // y:NaN
+    //     this.y -= 1; // this.y = this.y-1
+    //     console.log(this.y);
+    //   }
+    // };
+    // let f1 = new Fn(10, 20); // {x:10,y:20,getX:af0}
+    // let f2 = new Fn; // {x:0,y:-1,getX:af1}
+    // console.log(f1.getX === f2.getX); // false
+    // console.log(f1.getY === f2.getY); // true
+    // console.log(f1.__proto__.getY === Fn.prototype.getY);// true
+    // console.log(Fn.prototype.getX === f2.getX); // false
+    // console.log(f1.constructor); // Object
+    // f1.getX(); // f1.x  10
+    // Fn.prototype.getX(); // NaN
+    // f2.getY(); // -1
+    // Fn.prototype.getY(); // NaN
+    // f1.sum(); // 报错
+    //--------------------------------------
+
+    // var name = 'WINDOW'; // 'B' 'B'  'B'
+    // function A() {
+    //   console.log(1, this.name);
+    //   name = this.name;
+    // };
+    // function B() {
+    //   name = this.name;
+    //   console.log(2, this.name);
+    // };
+    // A.call(B, 10); // // 1, 'B'
+    // A.call.call.call(B); // 2, 'B'
+    // Function.prototype.call(B); // 啥也不输出
+    // Function.prototype.call.call.call(B);// 2, 'B'
+    //---------------------------------------------
+    // function call(context,...arg){
+    //   // context->B   [10]  this-->A
+    //   context = context || window;
+    //   context.$fn = this;// B.$fn = A
+    //   context.$fn(...arg)  // B.$fn()--->A()
+    // }
+    // A.call(B, 10);
+
+    //------------------------------------
+
+
+    // function call(context, ...arg) {
+    //   // context->B     this-->A.call.call-->call  []
+    //   context = context || window;
+    //   context.$fn = this;// B.$fn = call
+    //   context.$fn(...arg)  // B.$fn()-->call()
+    //   // call第二次执行
+    //   // context-->window  this-->B  []
+    //     // window.$fn = B;
+    //     // window.$fn()-->B()
+    // }
+    // A.call.call.call(B);
+
+
+    //--------------------------------------
+
+    // function call(context,...arg){
+    //   // context->B   this-->原型 匿名函数
+    //   context = context || window;
+    //   context.$fn = this;// B.$fn = 原型
+    //   context.$fn(...arg)  // B.$fn()==>原型()
+    // }
+    // Function.prototype.call(B);
+
+
+    //----------------------------------------
+
+    // function call(context,...arg){
+    //   // context->B   this-->call
+    //   context = context || window;
+    //   context.$fn = this;// B.$fn = call
+    //   context.$fn(...arg)  // B.$fn()--->call()
+    //   //call第二次执行
+    //   // context-->window  this-->B
+    //   // window.$fn = B;
+    //   // window.$fn()--->B()
+    // }
+    // Function.prototype.call.call.call(B);
+    // 当出现两个及以上的call的时候，call就会执行两次，并且会把给call传递进行的实参执行
+    // 实参函数执行时内部的this是window
+
+    //-------------------------------------------------------
+    // var name = "WINDOW";
+    // function fn() {
+    //   console.log(this.name);
+    // }
+    // var obj = {
+    //   name: "OBJ",
+    //   fn: () => {
+    //     console.log(this.name);
+    //   }
+    // };
+    // fn(); // "WINDOW"
+    // obj.fn(); // "WINDOW"
+    // fn.call(obj); //  "OBJ"
+    // window.onload = function () { //页面加载完成，事件就会触发
+    //   fn(); // "WINDOW"
+    //   obj.fn(); // "WINDOW"
+    // };
+    // fn.bind(obj);
+    //----------------------------------
+
+    /* 
+    print = af1 af2 af3 af5
+    Fn = af0
+    */
+    // var print = function () { // af2
+    //   alert(1);
+    // };
+    // function Fn() { // af0
+    //   print = function () { // af3 af5
+    //     alert(2);
+    //   };
+    //   return this; // window
+    // };
+
+    // function print() { // af1
+    //   alert(3);
+    // };
+    // Fn.prototype.print = function () { // 给Fn类的按运行增加方法
+    //   alert(4);
+    // };
+    // Fn.print = function () {// af4 把Fn类当做对象增加键值对
+    //   alert(5);
+    // };
+
+    // print(); // 1
+    // Fn.print();// 5
+    // Fn().print();// 先让Fn(),然后拿Fn函数的执行结果去寻找print(window.print()) // 2
+    // new Fn.print();// 先算Fn.print-->af4  new af4()   5
+    // new Fn().print();// 先算new Fn()-->Fn的实例  再算 Fn的实例.print() // 4
+
+
+    //------------------------------
+    // 数组扁平化
+    // let ary  =[1,2,[3,4,[5,6]]];
+    // // [1,2,3,4,5,6]
+    // console.log(ary.flat(Infinity)); // [1,2,3,4,5,6]
+
+    // 自己封装一个数组扁平化的方法
+    // Array.prototype.myFlat = function(){
+    //   // this-->ary
+    //   let arr = [];
+    //   let _this = this;
+    //   // [1,2,[3,4,[5,6]]];
+    //   function fn(ary){
+    //     ary.forEach((item,index)=>{
+    //       if(Array.isArray(item)){
+    //         // 如果if成立，说明当前项是数组
+    //         fn(item)
+    //       }
+    //       else {
+    //         arr.push(item)
+    //       }
+    //     })
+    //   }
+    //   fn(_this);
+    //   return arr;
+    // }
+    // console.log(ary.myFlat()); 
+
+
+
+
+    // let ary  =[1,2,[3,4,[5,6,{ss:100}]]];
+    // ary = ary.toString().split(','); // '1,2,3,4,5,6';
+    // ary.forEach((item,index)=>{
+    //   ary[index] = Number(item)
+    // })
+    //   console.log(ary);
+    //----------------------
+
+    /* 实现一个$attr(name,value)遍历
+    *    属性为name
+    *    值为value的元素集合
+    * 例如下面示例:
+    */
+    // let ary = $attr('class', 'box'); //=>获取页面中所有class为box的元素
+    // let ary = $attr('ss', 'box'); //=>获取页面中所有ss为box的元素
+      // 返回的是数组，数组里边是符合规则的元素
+      // <div ss="box"></div>
+      // <div ss="box"></div>
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul,ol{
+            list-style: none;
+        }
+        ul{
+            margin: 0 auto;
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1111111111111111111111111111111</li>
+        <li>2222222222222222222222222222222</li>
+        <li>3333333333333333333333333333333</li>
+        <li>4444444444444444444444444444444</li>
+        <li>5555555555555555555555555555555</li>
+        <li>6666666666666666666666666666666</li>
+        <li>7777777777777777777777777777777</li>
+        <li>8888888888888888888888888888888</li>
+    </ul>
+</body>
+</html>
+<script>
+
+    var arr = document.getElementsByTagName("li");
+    for (let i = 0; i < arr.length; i++) {
+        if(i%2==0){
+            arr[i].style.backgroundColor="pink";
+        }else{
+            arr[i].style.backgroundColor="blue";
+        }
+        arr[i].onmouseover=function(){
+            this.bgColor = arr[i].style.backgroundColor;
+            arr[i].style.backgroundColor="green";
+        }
+        arr[i].onmouseout=function(){
+            arr[i].style.backgroundColor=this.bgColor;
+        }
+    }
+
+</script>

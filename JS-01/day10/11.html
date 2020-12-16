@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div name="together" class="together" id="together">
+        <ul id="lists">
+            <li>111</li>
+            <li></li>
+        </ul>
+    </div>
+    <span name="userName" class="userName" id="userName"></span>
+    <div class="userName"></div>
+</body>
+
+</html>
+<script>
+    var together = document.getElementsByClassName("together");
+
+    var userName = document.getElementsByName("userName");
+
+    var query = document.querySelector(".together li");
+
+    var lisAll = document.querySelectorAll(".together li");
+
+    var togetherById = document.getElementById("together");
+
+    var ulById=document.getElementById("lists");
+
+    var newDiv = document.createElement("div");
+    
+    document.body.insertBefore(newDiv, togetherById);
+
+    ulById.removeChild(query);
+
+    var clone=togetherById.cloneNode();
+    console.log(clone)
+
+
+
+</script>

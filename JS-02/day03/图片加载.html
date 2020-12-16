@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #box {
+            width: 300px;
+            height: 200px;
+            margin: 800px auto;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <img src="img/12.jpg" true-img="img/15.jpg" alt="">
+    </div>
+</body>
+
+</html>
+<script src="../utils.js"></script>
+<script>
+    let box = document.getElementById("box");
+    let img = document.getElementsByTagName("img")[0];
+    function check() {
+        if (img.flag) {
+            return;
+        }
+        let boxH = box.offsetHeight;// 盒子的总高度
+        let boxT = utils.offset(box).top;// 盒子距离body的偏移量
+
+        let winH = utils.win("clientHeight");// 浏览器的高度
+        let winT = utils.win("scrollTop");// 滚动条卷曲的高度
+
+        if (winH + winT >= boxH + boxT) {
+            let trueImg = img.getAttribute("true-img");
+            let newImg = new Image;
+            newImg.src = trueImg;
+            
+            newImg.onload = function () {
+                img.src = trueImg;
+                img.flag = true;
+                fadeIn(img);
+            }
+
+            newImg.onerror = function () {
+                img.src = "img/11.jpg";
+                img.flag = true;
+                fadeIn(img);
+            }
+        }
+    }
+
+    function fadeIn(img) {
+        img.style.opacity = 0.01;
+        let num = Number(img.style.opacity);
+        let timer = setInterval(() => {
+            num += 0.01;
+            img.style.opacity = num;
+            if (num >= 1) {
+                clearInterval(timer);
+            }
+        }, 18);
+    }
+
+    window.onscroll = check;
+</script>

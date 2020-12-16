@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 200px;
+            height: 200px;
+            background: pink;
+            border-radius: 50%;
+            left: 0;
+            position: absolute;
+        }
+
+        button {
+            position: absolute;
+            top: 300px;
+            width: 100px;
+        }
+
+        button:nth-child(1) {
+            left: 0;
+        }
+
+        button:nth-child(2) {
+            left: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box" class="box"></div>
+    <button id="right" class="right"> 👉 </button>
+    <button id="left" class="left"> 👈 </button>
+</body>
+
+</html>
+<script src="../jquery-1.11.3.js"></script>
+<script>
+    let mingLeft = 0;
+    // 当前秋的left的最大值
+    let maxLeft = document.documentElement.clientWidth - box.offsetWidth;
+
+    $("#right").click(function () {
+        // animate第一个参数是一个对象，对象里存放的是当前元素某个样式的目标值，第二个参数是主要移动的总时间，第三个参数是动画的模式
+        // stop:停止所有在指定元素上正在运行的动画
+        $("#box").stop(true).animate({
+            left: maxLeft
+        }, 3000, "linear");
+    });
+
+    $("#left").click(function () {
+        $("#box").stop(true).animate({
+            left: 0
+        }, 3000, "linear");
+    });
+
+
+</script>

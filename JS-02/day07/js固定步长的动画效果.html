@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 200px;
+            height: 200px;
+            background: pink;
+            border-radius: 50%;
+            left: 0;
+            position: absolute;
+        }
+
+        button {
+            position: absolute;
+            top: 300px;
+            width: 100px;
+        }
+
+        button:nth-child(1) {
+            left: 0;
+        }
+
+        button:nth-child(2) {
+            left: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box" class="box"></div>
+    <button id="right" class="right"> 👉 </button>
+    <button id="left" class="left"> 👈 </button>
+</body>
+
+</html>
+<script src="../jquery-1.11.3.js"></script>
+<script>
+    let box = document.getElementById("box");
+    let left = document.getElementById("left");
+    let right = document.getElementById("right");
+    let mingLeft = 0;
+    // 当前秋的left的最大值
+    let maxLeft = document.documentElement.clientWidth - box.offsetWidth;
+
+    let timer;
+    let step = 10;
+    // 固定步长的动画
+    right.onclick = function () {
+        clearInterval(timer);
+        timer = setInterval(() => {
+            // 先获取当前元素的left值
+            // 给当前元素的值累加
+            // 设置回去
+            // 如果当前元素的值 大于等于 maxLeft的时候，就清除定时器
+            let left = parseFloat(getComputedStyle(box).left);
+            left += step;
+            if (left >= maxLeft) {
+                clearInterval(timer);
+                box.style.left = maxLeft + "px";
+                return;
+            }
+            box.style.left = left + "px";
+        }, 18);
+    }
+    left.onclick = function () {
+        clearInterval(timer);
+        timer = setInterval(() => {
+            // 先获取当前元素的left值
+            // 给当前元素的值累加
+            // 设置回去
+            // 如果当前元素的值 大于等于 maxLeft的时候，就清除定时器
+            let left = parseFloat(getComputedStyle(box).left);
+            left -= step;
+            if (left <= 0) {
+                clearInterval(timer);
+                box.style.left = 0 + "px";
+                return;
+            }
+            box.style.left = left + "px";
+        }, 18);
+    }
+
+
+</script>

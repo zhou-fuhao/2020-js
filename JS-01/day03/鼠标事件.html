@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            border: 1px solid black;
+            margin-bottom: 30px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box" class="box" style="color: red;"><h1>这里有一个 红 盒子</h1></div>
+    <div id="box2" class="box" style="color: green;">这里有一个 绿 盒子</div>
+    <div id="box3" class="box" style="color: pink;">这里有一个 粉 盒子</div>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+</body>
+
+</html>
+<script>
+    // 得到的是一个类数组，标签集合
+    var lis = document.getElementsByTagName("li");
+    // var boxs = document.getElementsByName("box");
+    console.log(lis[lis.length-1])
+    
+    var box = document.getElementById("box");
+    var boxText = box.innerText;
+    var boxHTML = box.innerHTML;
+    box.innerHTML = "<span>aabb1122</span>";
+    // alert(boxText)
+    // alert(boxHTML)
+
+    // box.onclick = function () {
+    //     console.log("鼠标点击到我啦。");
+    // }
+
+    // box2.onmouseover=function(){
+    //     console.log("鼠标滑上的时候看我的颜色"+this.style.color)
+    // }
+
+    // box3.onmouseout=function(){
+    //     // this 当前绑定的元素
+    //     this.style.color="black"
+    //     // console.log(this.style.color)
+    // }
+
+</script>

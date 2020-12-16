@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul,ol{
+            list-style: none;
+        }
+        body{
+            /* background: greenyellow; */
+        }
+        .lists{
+            width: 600px;
+            margin: 0 auto;
+        }
+        .lists li{
+            width: 300px;
+            height: 40px;
+            line-height: 40px;
+
+        }
+    </style>
+</head>
+<body>
+    <ul id="lists" class="lists">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+    </ul>
+</body>
+</html>
+<script>
+    var lists = document.getElementsByTagName("li");
+    for(var i=0;i<lists.length;i++){
+        if(i%2==0){
+            lists[i].style.backgroundColor="red"
+            }else{
+                lists[i].style.backgroundColor="green"
+                lists[i].style.fontSize="40px"
+            }
+        // 给每个li绑定鼠标滑过事件
+        lists[i].onmouseover=function(){
+            // 把原来的元素存放在这个元素身上
+            this.oldColor=this.style.backgroundColor;
+            this.style.backgroundColor="pink"
+        }
+        lists[i].onmouseout=function(){
+            this.style.backgroundColor=this.oldColor;
+        }
+    }
+</script>

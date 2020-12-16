@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .main {
+            width: 300px;
+            height: 400px;
+            background: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box" class="box">box</div>
+    <div id="main" class="main">
+        </divmain>
+</body>
+
+</html>
+<script src="../jquery-1.11.3.js"></script>
+<script>
+    // let res = $(".box");
+    // console.log(res);
+    $(".main").show(4000, function () {
+        $(this).text("Animation Done...");
+    });
+</script>

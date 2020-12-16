@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="main" class="main">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+        <!-- <span>123</span> -->
+        <div id="index" class="index"></div>
+    </div>
+
+</body>
+
+</html>
+<script>
+    // var oindexs = document.getElementById("index");
+    // let res = null;
+    // let flag=true;
+    // while (flag) {
+    //     oindexs = oindexs.previousSibling;
+    //     if (oindexs.nodeType == 1) {
+    //         res = oindexs;
+    //         flag=false;
+    //     }
+    // }
+    // console.log(res)
+
+    function myPre(data){
+        var pre=data.previousSibling;
+        while(pre && pre.nodeType!=1){
+            pre=pre.previousSibling;
+        }
+        return pre;
+    }
+    var oindexs=document.getElementById("index");
+    console.log(myPre(oindexs))
+</script>

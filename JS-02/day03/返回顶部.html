@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #back {
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            background: pink;
+            border-radius: 50%;
+            text-align: center;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="1.png" alt="">
+    <img src="1.png" alt="">
+    <img src="1.png" alt="">
+    <img src="1.png" alt="">
+    <img src="1.png" alt="">
+    <img src="1.png" alt="">
+    <div id="back" onclick="onBack()">返回顶部</div>
+</body>
+
+</html>
+<script src="../utils.js"></script>
+<script>
+    function onBack() {
+
+        let scrollTopVal = utils.win("scrollTop");
+        let part = scrollTopVal / 50;
+        let timer = setInterval(() => {
+            scrollTopVal -= part;
+            utils.win("scrollTop", scrollTopVal);
+
+            if (scrollTopVal <= 0) {
+                clearInterval(timer);
+            }
+        }, 20);
+    }
+
+    window.onscroll = function () {
+        let winH = utils.win("clientHeight");
+        let winT = utils.win("scrollTop");
+        if (winT >= winH) {
+            back.style.display = "block";
+        } else {
+            back.style.display = "none";
+        }
+    }
+</script>

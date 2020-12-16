@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    #box {
+      width: 200px;
+      height: 200px;
+      background: orangered;
+      border-radius: 50%;
+      left: 0;
+      position: absolute;
+    }
+
+    button {
+      position: absolute;
+      top: 300px;
+      width: 100px;
+    }
+
+    button:nth-child(1) {
+      left: 0
+    }
+
+    button:nth-child(2) {
+      left: 150px
+    }
+  </style>
+</head>
+
+<body>
+  <div id="box"></div>
+  <button id="right">往右</button>
+  <!-- <button id="left">往左</button> -->
+  <script src="./jquery-1.11.3.js"></script>
+  <script>
+    let box = document.getElementById('box');
+    let right = document.getElementById('right');
+
+
+    function linear(t, d, c, b) {
+      /* 
+      t:time已经运动的时间
+      d:duration:总时间
+      c:change总距离
+      b:begin起始的位置
+      */
+      return t / d * c + b;
+      // 返回值就是当前元素的需要到达的位置
+    }
+
+    // 我想实现让当前的元素的宽高一起改变
+    let target = { // 目标位置(用户指定)
+      width: 500,
+      height: 600,
+      left: 500,
+      top: 500
+    };
+    let change = { // 需要运动的总距离(可以利用target和begin计算出来)
+      // change = target - begin
+      width: 300,
+      height: 400,
+      left: 500,
+      top: 500
+    }
+    let begin = { // 起始位置(可以直接求出来)
+      width: 200,
+      height: 200,
+      left: 0,
+      top: 0
+    }
+    let duration = 3000; // 需要运动的总时间
+    let time = 0; // 已经运动过的时间
+
+    right.onclick = function () {
+      let timer = setInterval(() => {
+        time += 17;
+        if (time >= duration) {
+          clearInterval(timer);
+          // box.style.width = 500 +'px';
+          // box.style.height = 600 +'px';
+          for (let key in target) {
+            box.style[key] = target[key] + 'px';
+          }
+          return;
+        }
+        // box.style.width = linear(time,duration,change.width,begin.width) + 'px';
+        // box.style.height = linear(time,duration,change.height,begin.height) + 'px';
+        for (let key in change) {
+          box.style[key] = linear(time, duration, change[key], begin[key]) + "px"
+        }
+      }, 17);
+    }
+
+    //---------------------------------------------------
+    // 封装一个方法可以实现元素的多方向变化
+    function animate(ele, target, duration, callBack) {
+
+    }
+    // animate(元素,{target},总时间,回调函数)
+    animate(box, { width: 600, height: 700 }, 3000, () => {
+      console.log('执行完了');
+    });
+  </script>
+</body>
+
+</html>

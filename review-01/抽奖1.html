@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main{
+            width: 600px;
+            height: 300px;
+            line-height: 300px;
+            text-align: center;
+            background-color: pink;
+            margin: 0 auto;
+            font-size: 33px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="main"></div>
+</body>
+</html>
+<script>
+    
+    function prize(data){
+        var code="";
+        for (let i = 0; i < 6; i++) {
+            var index=Math.round(Math.random()*(data.length-1));
+            code+=data[index];
+        }
+        return code;
+    }
+    
+    var setInt=setInterval(() => {
+        var str="1234567890";
+        var luck=prize(str);
+        document.getElementById("main").innerText=luck;
+    }, 100);
+
+    var setTime=setTimeout(() => {
+        clearInterval(setInt);
+        setInt=null;
+
+        clearTimeout(setTime);
+        setTime=null;
+    }, 6666);
+
+
+</script>

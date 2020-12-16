@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul,ol{
+            list-style: none;
+        }
+        .lists{
+            width: 600px;
+            height: 400px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <ul id="lists" class="lists">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+    </ul>
+</body>
+</html>
+<script>
+    var olis=document.getElementsByTagName("li");
+    for (let i = 0; i < olis.length; i++) {
+        if(i%2==0){
+            olis[i].style.backgroundColor="pink";
+        }else{
+            olis[i].style.backgroundColor="green";
+        }
+        olis[i].onmouseover=function(){
+            this.bgColor=olis[i].style.backgroundColor;
+            olis[i].style.backgroundColor="gray"
+        }
+        olis[i].onmouseout=function(){
+            olis[i].style.backgroundColor="gray"
+            olis[i].style.backgroundColor=this.bgColor;
+        }
+    }
+</script>

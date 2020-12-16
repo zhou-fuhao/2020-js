@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 300px;
+            height: 300px;
+            border: 10px solid pink;
+            margin: 60px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box" class="box">
+        hello world!
+    </div>
+</body>
+
+</html>
+<script>
+    // 封装一个盒子距离body的偏移量的方法
+    function offset(ele) {
+        let left = ele.offsetLeft;
+        let top = ele.offsetTop;
+        // 先获取一下当前元素距离父级参照物的偏移量
+        // 然后再获取一下当前元素的父级参照物
+        let parent = ele.offsetParent;
+
+        // 如果当前元素的父级参照物不是body那就累加操作
+        while (parent != document.body) {
+            left += (parent.offsetLeft + parent.clientLeft);
+            top += (parent.offsetTop + parent.clientTop);
+            // 再次获取父级参照物的父级参照物
+            parent = parent.offsetParent;
+        }
+        return {
+            top,
+            left
+        }
+    }
+    let res = offset(box);
+    console.log(res);
+</script>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 500px;
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+            background-color: pink;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="box" class="box"></div>
+</body>
+</html>
+<script>
+    
+    function zero(data){
+        return data>10?data:"0"+data;
+    }
+
+    function newDate(){
+        var data=new Date();
+        var year=data.getFullYear();
+        var month=data.getMonth()+1;
+        var date=data.getDate();
+    
+        var day=data.getDay();
+        var week=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+        
+        var hours=data.getHours();
+        var minutes=data.getMinutes();
+        var seconds=data.getSeconds();
+
+        return year+"年"+month+"月"+date+"日  "+zero(hours)
+                +"时"+zero(minutes)+"分"+zero(seconds)+"秒  "
+                +week[day];
+    }
+
+    setInterval(() => {
+        var clock=newDate();
+        document.getElementById("box").innerText=clock;
+    }, 1000);
+
+</script>

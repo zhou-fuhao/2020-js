@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="jian" class="jian" onclick="jian()">-</button>
+    <input type="text" id="num" class="num" value="0">
+    <button id="add" class="add" onclick="add()">+</button>
+    单价：<span id="price" class="price">2</span>元&nbsp;&nbsp;&nbsp;&nbsp;
+    总计：<span id="total" class="total"></span>元
+</body>
+
+</html>
+<script>
+    sum();
+    var onum = document.getElementById("num");
+    var onumVal = onum.value;
+    function jian() {
+        if (onumVal == 0) {
+            alert("我是有底线的！");
+            onumVal = 0;
+        } else {
+            onumVal = Number(--onum.value);
+            sum();
+        }
+    }
+    function add() {
+        onumVal = Number(++onum.value);
+        // onum.value = Number(onum.value)+1;
+        sum();
+    }
+
+    function sum() {
+        var onum = document.getElementById("num").value;
+        var oprice = document.getElementById("price").innerText;
+        var ototal = document.getElementById("total");
+
+        var onumber = onum * oprice;
+        ototal.innerText = onumber;
+    }
+</script>

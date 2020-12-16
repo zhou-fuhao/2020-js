@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .bigBox{
+            width: 600px;
+            height: 600px;
+            margin: 0 auto;
+        }
+        .bigBox li{
+            display: inline-block;
+            width: 66px;
+            height: 33px;
+            line-height: 33px;
+            border: 1px solid black;
+            text-align: center;
+            position: relative;
+            top: 1px;
+        }
+        .bigBox div{
+            width: 500px;
+            height: 500px;
+            line-height: 500px;
+            border: 1px solid black;
+            background-color: darkmagenta;
+            text-align: center;
+            display: none;
+        }
+        .bigBox li.addStyle{
+            border-bottom-color: darkmagenta;
+            background-color: darkmagenta;
+        }
+        .bigBox div.addStyle{
+            display: block;
+            background-color: darkmagenta;
+        }
+    </style>
+</head>
+<body>
+    <div class="bigBox" id="bigBox">
+        <ul>
+            <li class="addStyle">1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+        <div class="addStyle">1</div>
+        <div>2</div>
+        <div>3</div>
+    </div>
+</body>
+</html>
+<script>
+    var lis=document.getElementsByTagName("li");
+    var mains=document.getElementById("bigBox");
+    var divs=mains.getElementsByTagName("div");
+
+    for (let i = 0; i < lis.length; i++) {
+        lis[i].flag=i;
+        lis[i].onclick=function(){
+            for (let j = 0; j < divs.length; j++) {
+                divs[j].className="";
+                lis[j].className="";
+            }
+            lis[this.flag].className="addStyle";
+            divs[this.flag].className="addStyle";
+        }
+    }
+</script>

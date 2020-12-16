@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        .lists>li {
+            width: 300px;
+            height: 30px;
+            margin: 0 auto;
+            border: 1px solid rebeccapurple;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="lists" id="lists">
+        <li>1111</li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+
+</html>
+<script>
+    var lists = document.getElementsByTagName("li");
+    for (var i = 0; i < lists.length; i++) {
+        if (i % 2 == 0) {
+            lists[i].style.backgroundColor = "pink";
+        } else {
+            lists[i].style.backgroundColor = "green";
+        }
+        lists[i].onmouseover = function () {
+            this.bgColor = this.style.backgroundColor;
+            this.style.backgroundColor = "red";
+        }
+
+        lists[i].onmouseout = function () {
+            this.style.backgroundColor = "red";
+            this.style.backgroundColor = this.bgColor;
+        }
+
+        lists[i].index = i;
+        lists[i].onclick = function () {
+            alert("我是第" + this.index + "个li")
+        }
+
+    }
+</script>

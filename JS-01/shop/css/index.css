@@ -1,0 +1,100 @@
+        body,
+        html {
+            background: rgb(253, 255, 251);
+            margin: 0 auto;
+        }
+        
+        a {
+            color: #ffffff;
+        }
+        
+        #main {
+            width: 80%;
+            height: 50px;
+            background: orange;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        
+        .header>a {
+            line-height: 50px;
+            font-size: 20px;
+            margin-left: 20px;
+            color: #ffffff;
+            position: relative;
+        }
+        
+        .header>a:hover {
+            color: red;
+        }
+        
+        .header>a>.span_up {
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+            border-bottom-color: #fff;
+            position: absolute;
+            top: 0px;
+        }
+        
+        .header>a>.span_down {
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+            border-top-color: #fff;
+            position: absolute;
+            top: 16px;
+        }
+        
+        #main .span_up.span_bg{
+            border-bottom-color: red;
+        }
+        #main .span_down.span_bg{
+            border-top-color: red;
+        }
+
+        #middle {
+            margin-top: 20px;
+        }
+        
+        #middle>ul {
+            width: 80%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            box-sizing: border-box;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        
+        #middle>ul>li {
+            width: 19%;
+            background: pink;
+            padding: 10px;
+            box-sizing: border-box;
+            float: left;
+            margin-top: 14px;
+            box-shadow: 1px 5px 1px 0.1px rgb(226, 226, 211);
+            border-radius:3px;
+        }
+        
+        #middle>ul>li>img {
+            width: 90%;
+            transition: all .2s;
+            margin-left: 10px;
+        }
+        
+        #middle li img:hover {
+            transform: scale(1.05);
+        }
+        
+        #middle>ul>li>span {
+            overflow: hidden;
+            display: block;
+            line-height: 16px;
+            height: 16px;
+            font-size: 16px;
+            margin-top: 8px;
+            margin-left: 20px;
+            color: blue;
+        }

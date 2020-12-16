@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        #main {
+            width: 479px;
+            height: 591px;
+            margin: 0 auto;
+            background: url("bg1.png");
+            padding: 30px;
+            box-sizing: border-box;
+            color: #fff;
+            position: relative;
+        }
+
+        #main li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            justify-content: space-evenly;
+
+        }
+
+        #main li .info {
+            color: #fff;
+        }
+
+        button {
+            width: 52px;
+            height: 44px;
+            background: url("add.png");
+            border: none;
+        }
+
+        .sub {
+            background: url("sub.png");
+        }
+
+        .num {
+            width: 44px;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            background: #fff;
+            border-radius: 10px;
+            color: #333;
+        }
+
+        .shopInfo {
+            position: absolute;
+            bottom: 20px;
+            left: 30px;
+        }
+
+        .shopInfo p {
+            line-height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <ul>
+            <li>
+                <button class="add" flag="1"></button>
+                <b class="num">0</b>
+                <button class="sub" flag="0"></button>
+                <span class="info">
+                    单价:<span class="itemPrice">1.5</span>元 小计：
+                    <b class="xjMoney">0</b>元
+                </span>
+            </li>
+            <li>
+                <button class="add" flag="1"></button>
+                <b class="num">0</b>
+                <button class="sub" flag="0"></button>
+                <span class="info">
+                    单价:<span class="itemPrice">2.5</span>元 小计：
+                    <b class="xjMoney">0</b>元
+                </span>
+            </li>
+            <li>
+                <button class="add" flag="1"></button>
+                <b class="num">0</b>
+                <button class="sub" flag="0"></button>
+                <span class="info">
+                    单价:<span class="itemPrice">3.5</span>元 小计：
+                    <b class="xjMoney">0</b>元
+                </span>
+            </li>
+
+        </ul>
+        <div class="shopInfo">
+            <p>商品共<span class="totalNum">0</span>件</p>
+            <p>共花了<span class="totalMoney">0</span>元</p>
+            <p id="changeBox">其中最贵的商品单价是<span class="specileMoney">0</span>元</p>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="../../jquery-1.11.3.js"></script>
+<script src="index3.js"></script>
+<!-- <script >
+    /* 
+    点击按钮的时候:
+    1：让数量相应的增加或者减少
+    2: 实现小计
+     
+    */
+
+   var button=document.querySelectorAll("#main button");
+   // 共多少件元素
+   var totalNumEle=document.querySelector("#main .totalNum");
+   // 共花了多少钱
+   var totalMoneyEle=document.querySelector("#main .totalMoney");
+   // 最贵的商品元素
+   var specileMoneyEle=document.querySelector("#main .specileMoney");
+   var lis=document.querySelectorAll("li");
+   for(var i=0;i<button.length;i++){
+        button[i].onclick=function(){
+            //如果是加法按钮，就让数量增加，如果是减法按钮就让数量减少
+            //怎么判断是加按钮还是减按钮 在结构上自己做了一个标志，flag=1就是加， flag=0就是减少
+            //怎么获取flag这个自定义属性
+            var flag=this.getAttribute("flag");
+            // 无论是加法还是减法，都需要让num数量按钮进行改变，我们先找到这个dom元素
+            // 点击按钮的父元素
+            var parentEle=this.parentNode;
+            // 数量元素
+             var numEle=parentEle.querySelector(".num");
+             var oldNum=Number(numEle.innerText);
+             // 小计元素
+             var xjEle=parentEle.querySelector(".xjMoney");
+             // 单价元素的价格
+             var itemPrice=parentEle.querySelector(".itemPrice").innerText;
+             // 现在的数量
+             var nowNum=0;
+            //加法按钮
+            if(flag==1){
+                //Number(numEle.innerText)+1 获取原来的值
+                //然后再累加
+                //numEle.innerText=oldNum+1;
+                nowNum=oldNum+1;
+
+               console.log(itemPrice);
+            }else{
+              // 减法按钮
+              if(oldNum-1<0){
+                nowNum=0;
+                return;
+              }
+              nowNum=oldNum-1;
+            }
+            numEle.innerText=nowNum;
+            // 计算小计：单价*数量
+            xjEle.innerText=itemPrice*nowNum;
+            // 计算共有多少件;
+            var totalNum=0;
+            // 获取了所有的num元素数组
+            var numArray=document.querySelectorAll("#main .num");
+            var xjArrayEle=document.querySelectorAll("#main .xjMoney");
+            var totalMoney=0;
+            for(var i=0;i<numArray.length;i++){
+                totalNum+= Number(numArray[i].innerText);
+                totalMoney+=Number(xjArrayEle[i].innerText);
+            }
+            // 总共的件数赋值
+            totalNumEle.innerText=totalNum;
+            totalMoneyEle.innerText=totalMoney;
+            // 共花了多少钱？计算所有的小计
+            // var xjArrayEle=document.querySelectorAll("#main .xjMoney");
+            // var totalMoney=0;
+            // for(var i=0;i<xjArrayEle.length;i++){
+            //     totalMoney+=Number(xjArrayEle.innerText);
+            // }
+
+            // 计算最贵的商品？把件数大于0的找到,并且找到最大的那个单件
+               //===>遍历每个li
+            var ary=[];   
+            for(var i=0;i<lis.length;i++){
+                var item=lis[i];
+                if(item.querySelector(".num").innerText>0){
+                    var itemP= item.querySelector(".itemPrice").innerText;
+                    ary.push(itemP);
+                }
+            }
+            var maxPrice=0;
+            if(ary.length>0){
+                maxPrice= ary.sort(function(a,b){return a-b})[ary.length-1]
+            }
+            specileMoneyEle.innerText=maxPrice;
+        }
+   }
+</script> -->

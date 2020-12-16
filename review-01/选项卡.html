@@ -1,0 +1,170 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul,ol{
+            list-style: none;
+        }
+        .main{
+            width: 600px;
+            height: 400px;
+            margin: 0 auto;
+        }
+
+        .main li{
+            display: inline-block;
+            width: 50px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid black;
+            text-align: center;
+            position: relative;
+            top: 1px;
+        }
+        .main div{
+            width: 600px;
+            height: 300px;
+            line-height: 300px;
+            background-color: pink;
+            border: 1px solid black;
+            text-align: center;
+            display: none;
+        }
+
+        .main li.current{
+            background-color: pink;
+            border-bottom-color: pink;
+        }
+        .main div.current{
+            display: block;
+            background-color: pink;
+        }
+    </style>
+
+
+</head>
+<body>
+    <div id="main" class="main">
+        <ul>
+            <li class="current">腾讯</li>
+            <li>优酷</li>
+            <li>爱奇艺</li>
+        </ul>
+        <div class="current">Tencent</div>
+        <div>YOUKU</div>
+        <div>iQIYI</div>
+    </div>
+</body>
+</html>
+<script>
+    var lis = document.getElementsByTagName("li");
+    var mains = document.getElementById("main");
+    var divs = mains.getElementsByTagName("div");
+
+    for (let i = 0; i < lis.length; i++) {
+        lis[i].index=i;
+        lis[i].onclick=function(){
+            for(var j=0;j<divs.length;j++){
+                lis[j].className="";
+                divs[j].className="";
+            }
+            lis[this.index].className="current";
+            divs[this.index].className="current";
+        }
+    }
+</script> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .main {
+            width: 600px;
+            height: 400px;
+            margin: 0 auto;
+        }
+
+        .main li {
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid black;
+            text-align: center;
+            position: relative;
+            top: 1px;
+        }
+
+        .main div {
+            width: 400px;
+            height: 300px;
+            line-height: 300px;
+            border: 1px solid black;
+            background-color: pink;
+            text-align: center;
+            display: none;
+        }
+
+        .main li.current {
+            border-bottom-color: pink;
+            background-color: pink;
+        }
+
+        .main div.current {
+            display: block;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main" class="main">
+        <ul>
+            <li class="current">张三</li>
+            <li>李四</li>
+            <li>王五</li>
+        </ul>
+        <div class="current">zhangsan</div>
+        <div>lisi</div>
+        <div>wangwu</div>
+    </div>
+</body>
+
+</html>
+<script>
+    var lis = document.getElementsByTagName("li");
+    var mains = document.getElementById("main");
+    var divs = mains.getElementsByTagName("div");
+
+    for (const key in lis) {
+        lis[key].index = key;
+        lis[key].onclick = function () {
+            for (const key in divs) {
+                lis[key].className = "";
+                divs[key].className = "";
+            }
+            lis[this.index].className = "current";
+            divs[this.index].className = "current";
+        }
+    }
+
+
+</script>

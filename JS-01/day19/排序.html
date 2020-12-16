@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul {
+            list-style: none;
+        }
+
+        .main {
+            margin: 0 auto;
+        }
+
+        .main ul>li {
+            width: 400px;
+            height: 22px;
+            border-bottom: 1px dashed green;
+        }
+
+        .main button {
+            margin-left: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main" class="main">
+        <ul>
+            <li>3</li>
+            <li>2</li>
+            <li>1</li>
+            <li>5</li>
+            <li>4</li>
+            <li>6</li>
+        </ul>
+        <button onclick="btn()">排序</button>
+    </div>
+</body>
+
+</html>
+<script src="排序.js"></script>
+<!-- <script>
+    var ouls = document.querySelector(".main ul");
+    var olis = document.querySelectorAll("li");
+    var newArr = [].slice.call(olis);
+    var data = 0;
+    function btn() {
+        data++;
+        if (data % 2 == 0) {
+            newArr.sort(function (m, n) {
+                return m.innerHTML - n.innerHTML;
+            })
+
+            for (let i = 0; i < newArr.length; i++) {
+                ouls.appendChild(newArr[i]);
+            }
+        } else {
+            newArr.sort(function (m, n) {
+                return n.innerHTML - m.innerHTML;
+            })
+
+            for (let i = 0; i < newArr.length; i++) {
+                ouls.appendChild(newArr[i]);
+            }
+        }
+    }
+</script> -->

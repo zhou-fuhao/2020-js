@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 500px;
+            height: 500px;
+            background: greenyellow;
+            margin: 0 auto;
+        }
+        .btn{
+            height: 30px;
+            width: 100%;
+        }
+        .img{
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box" class="box">
+        <button id="btn" class="btn" onclick="show()">隐藏</button>
+        <img id="img" class="img" src="../day03/image/1.jpg" alt="">
+    </div>
+</body>
+</html>
+<script>
+    function show(){
+        var btnValue=document.getElementById("btn").innerText;
+        if(btnValue=="隐藏"){
+            document.getElementById("btn").innerText="显示";
+            document.getElementById("img").style.display="none";
+        } else{
+            document.getElementById("btn").innerText="隐藏";
+            document.getElementById("img").style.display="block";
+        }
+    }
+</script>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="main" class="main">
+        <p>1</p>
+        <p id="aa" class="aa">2</p>
+        <p>3</p>
+    </div>
+</body>
+
+</html>
+<script>
+    var mains = document.getElementById("main");
+    console.log("获取父节点："+mains.parentNode);
+    console.log("获取子节点："+mains.childNodes);
+    console.log("获取子元素节点："+mains.children);
+
+
+    var aas = document.getElementById("aa");
+    console.log("上一个兄弟节点："+aas.previousSibling);
+    console.log("上一个兄弟元素节点："+aas.previousElementSibling);
+    
+    var aas = document.getElementById("aa");
+    console.log("下一个兄弟节点"+aas.nextSibling)
+    console.log("下一个兄弟元素节点"+aas.nextElementSibling);
+
+
+    console.log("获取第一个子节点"+document.firstChild);
+    console.log("获取第一个子元素节点"+document.firstElementChild);
+
+
+    console.log("获取最后一个子节点"+document.lastChild);
+    console.log("获取最后一个子元素节点"+document.lastElementChild);
+</script>

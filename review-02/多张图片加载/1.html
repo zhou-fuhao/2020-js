@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            margin: 400px auto;
+        }
+
+        img {
+            width: 300px;
+            height: 200px;
+            margin: auto;
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" id="box">
+        <img src="../img/default.jpg" class="bg" true-img="../img/10.jpg" alt="">
+        <img src="../img/default.jpg" class="bg" true-img="../img/9.jpg" alt="">
+        <img src="../img/default.jpg" class="bg" true-img="../img/8.jpg" alt="">
+        <img src="../img/default.jpg" class="bg" true-img="../img/1.jpg" alt="">
+        <img src="../img/default.jpg" class="bg" true-img="../img/2.jpg" alt="">
+        <img src="../img/default.jpg" class="bg" true-img="../img/3.jpg" alt="">
+    </div>
+</body>
+
+</html>
+<script src="../utils.js"></script>
+<script>
+    // 获取所有img标签
+    let imgs = document.getElementsByClassName("bg");
+
+    // 此函数判断每一张图片是否需要加载
+    function delay() {
+        // 当执行函数的时候，循环每一张图片，判断每一张图片是否需要加载
+        for (let i = 0; i < imgs.length; i++) {
+            delayImg(imgs[i]);
+        }
+    }
+
+    // 图片下边框  ===  浏览器可视窗口的下边框
+    // 图片距离body的上偏移量 + 图片自身的总高度
+    // 浏览器滚动条卷曲的高度 + 当前浏览器可视窗口的高度
+    function delayImg(img) {
+        // 当前图片盒子的总高度
+        let imgH = img.offsetHeight;
+        // 获取当前图片盒子距离body的上偏移量
+        let imgW = utils.offset(img).top;
+
+        let winH = utils.win("clientHeight");
+        let winW = utils.win("scrollTop");
+
+        if (winH + winW + 80 >= imgH + imgW) {
+            // 获取当前图片对应的真实路径
+            let trueImg = img.getAttribute("true-img");
+            // 动态创建一个img标签，用来检测当前的真实路径对不对
+            // let newImg = document.createElement("img");
+            // 创建一个img标签
+            let newImg = new Image;
+            // 把真实的路径去给检测的img去请求
+            newImg.src = trueImg;
+            // 如果当前路径是正确的，那onload对应的函数就会执行
+            newImg.onload = function () {
+                // 把真实的路径赋值给页面的img
+                img.src = trueImg;
+                img.className = "";
+                fadeIn(img);
+            }
+
+            newImg.onerror = function () {
+                img.src = "../img/9.jpg";
+                img.className = "";
+                fadeIn(img);
+            }
+        }
+    }
+
+    delay();
+
+    // 让图片渐渐的显示出来
+    function fadeIn(img) {
+        // 给图片加透明度
+        img.style.opacity = 0.01;
+        let num = Number(img.style.opacity);
+        // 每18毫秒调用一次，直至透明度为1，并清空定时器
+        let timer = setInterval(() => {
+            num += 0.01;
+            img.style.opacity = num;
+            if (num >= 1) {
+                clearInterval(timer);
+            }
+        }, 18);
+    }
+    window.onscroll = delay;
+</script>

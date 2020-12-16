@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 1200px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        111111
+    </div>
+</body>
+
+</html>
+<script src="../utils.js"></script>
+<script>
+    let fakeStyles = window.getComputedStyle(box, 'before');
+    console.log(fakeStyles);
+    console.log(fakeStyles.content); // hello
+    console.log(fakeStyles.color); // rgb(0, 255, 255)
+    console.log(fakeStyles.height); // auto
+    // 元素样式
+    // ele.style：获取或者设置元素的行间样式
+    // 获取的值都是字符串类型的
+    // 还有就是样式的名字必须遵循驼峰命名法
+    // box.style.backgroundColor
+
+
+    // getComputedStyle：获取当前元素计算后的样式(只能获取不能设置)
+    // 他是window上的一个方法
+    // getComputedStyle(ele, "伪类");// 方法的返回值是一个对象，对象里就是当前元素所有的计算后的样式
+    // 如果当前元素的样式名不是一个名，也得用驼峰命名法来获取
+    // getComputedStyle在IE6~8之间是不能用的
+
+    // 在ie下有专门的属性来获取元素计算后的样式
+    // ele.currentStyle // 他是一个属性，里边存储的是当前元素的所有的计算后的样式
+
+
+    // 封装获取 或者 设置css样式的一些方法
+    function getCss(ele, attr) {
+        let value = null;
+
+        if ("getComputedStyle" in window) {
+            value = getComputedStyle(ele)[attr];
+        } else {
+            value = ele.currentStyle[attr];
+        }
+
+        // 把可能要累加的样式转换为数字
+        let reg = /^(width|height|left|right|top|bottom|margin|padding|opacity|lineHeight|fontSize)$/;
+        if (reg.test(attr)) {
+            value = parseFloat(value);
+        }
+        return value;
+    }
+
+    // let widthLen = getCss(box, "width");
+    // let bgColor = getCss(box, "background-color");
+    // console.log(widthLen);
+    // console.log(bgColor);
+
+
+    function setCss(ele, attr, value) {
+
+        // 1、先确定当前的样式需不需要加单位
+        // 2、再确定当前样式有没有加单位
+        let reg = /^(width|height|left|right|top|bottom|margin|padding|opacity|lineHeight|fontSize)$/;
+        if (reg.test(attr)) {
+            let number = parseFloat(value);
+            ele.style[attr] = value + "px";
+        }
+        ele.style[attr] = value;
+    }
+    setCss(box, "width", "500px");
+
+
+    function setGroupCss(ele, obj) {
+        // 循环当前对象，每循环一次就调用setCss一次
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                setCss(ele, key, obj[key]);
+            }
+        }
+    }
+    setGroupCss(box, {
+        "width": 100,
+        "height": 200
+    });
+
+
+    function css() {
+        // 通过判断传参个数和传递参数的类型，就能判断出用户的意图
+        let [ele, attr, value] = arguments;
+        if (arguments.length === 3) {
+            setCss(ele, attr, value);
+        }
+        if (arguments.length === 2) {
+            if (typeof attr === "object") {
+                setGroupCss(ele, attr, value);
+            } else {
+                return getCss(ele, attr);
+            }
+        }
+    }
+
+    css(box, "width");
+    css(box, "width", 800);
+    css(box, {
+        "width": 300,
+        "height": 300,
+        "backgroundColor": "pink"
+    });
+
+
+    // 可枚举的属性
+    // 当前对象的私有属性和对象原型上的自己添加的属性都是可枚举的属性
+    // for in 循环可以遍历可枚举的属性
+    let obj = { name: "zhang", age: 20 };
+    Object.prototype.fn = 300;
+
+    for (const key in obj) {
+        console.log(key);
+    }
+
+</script>
+<script>
+    utils.css(box, "width");
+    utils.css(box, "width", 800);
+    utils.css(box, {
+        "width": 300,
+        "height": 300,
+        "backgroundColor": "pink"
+    });
+</script>

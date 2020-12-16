@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <div id="main" class="main">
+        <div id="header" class="header">
+            <ul id="paixu" class="paixu">
+                <li>排序</li>
+                <li><button>上架时间</button></li>
+                <li><button>热度</button></li>
+                <li><button onclick="onPrice()">价格</button></li>
+            </ul>
+        </div>
+        <div id="footer" class="footer">
+            <div id="footerBox" class="footerBox">
+                <div id="footerImg" class="footerImg"><img src="image/1.jpg" /></div>
+                <div id="footerInfo" class="footerInfo">HUWEI全网通版(亮黑色)</div>
+                <div id="footerDate" class="footerDate">2020-12-04</div>
+                <div id="footerBottom" class="footerBottom">
+                    <div id="bottomLeft" class="bottomLeft">198元</div>
+                    <div id="bottomRight" class="bottomRight">499</div>
+                </div>
+            </div>
+            <div id="footerBox" class="footerBox">
+                <div id="footerImg" class="footerImg"><img src="image/2.jpg" /></div>
+                <div id="footerInfo" class="footerInfo">HUWEI全网通版(亮黑色)</div>
+                <div id="footerDate" class="footerDate">2020-12-04</div>
+                <div id="footerBottom" class="footerBottom">
+                    <div id="bottomLeft" class="bottomLeft">198元</div>
+                    <div id="bottomRight" class="bottomRight">499</div>
+                </div>
+            </div>
+            <div id="footerBox" class="footerBox">
+                <div id="footerImg" class="footerImg"><img src="image/3.jpg" /></div>
+                <div id="footerInfo" class="footerInfo">HUWEI全网通版(亮黑色)</div>
+                <div id="footerDate" class="footerDate">2020-12-04</div>
+                <div id="footerBottom" class="footerBottom">
+                    <div id="bottomLeft" class="bottomLeft">198元</div>
+                    <div id="bottomRight" class="bottomRight">499</div>
+                </div>
+            </div>
+            <div id="footerBox" class="footerBox">
+                <div id="footerImg" class="footerImg"><img src="image/4.jpg" /></div>
+                <div id="footerInfo" class="footerInfo">HUWEI全网通版(亮黑色)</div>
+                <div id="footerDate" class="footerDate">2020-12-04</div>
+                <div id="footerBottom" class="footerBottom">
+                    <div id="bottomLeft" class="bottomLeft">198元</div>
+                    <div id="bottomRight" class="bottomRight">499</div>
+                </div>
+            </div>
+            <div id="footerBox" class="footerBox">
+                <div id="footerImg" class="footerImg"><img src="image/5.jpg" /></div>
+                <div id="footerInfo" class="footerInfo">HUWEI全网通版(亮黑色)</div>
+                <div id="footerDate" class="footerDate">2020-12-04</div>
+                <div id="footerBottom" class="footerBottom">
+                    <div id="bottomLeft" class="bottomLeft">198元</div>
+                    <div id="bottomRight" class="bottomRight">499</div>
+                </div>
+            </div>
+            <div id="footerBox" class="footerBox">
+                <div id="footerImg" class="footerImg"><img src="image/6.jpg" /></div>
+                <div id="footerInfo" class="footerInfo">HUWEI全网通版(亮黑色)</div>
+                <div id="footerDate" class="footerDate">2020-12-04</div>
+                <div id="footerBottom" class="footerBottom">
+                    <div id="bottomLeft" class="bottomLeft">198元</div>
+                    <div id="bottomRight" class="bottomRight">499</div>
+                </div>
+            </div>
+            <div id="footerBox" class="footerBox">
+                <div id="footerImg" class="footerImg"><img src="image/7.jpg" /></div>
+                <div id="footerInfo" class="footerInfo">HUWEI全网通版(亮黑色)</div>
+                <div id="footerDate" class="footerDate">2020-12-04</div>
+                <div id="footerBottom" class="footerBottom">
+                    <div id="bottomLeft" class="bottomLeft">198元</div>
+                    <div id="bottomRight" class="bottomRight">499</div>
+                </div>
+            </div>
+            <div id="footerBox" class="footerBox">
+                <div id="footerImg" class="footerImg"><img src="image/8.jpg" /></div>
+                <div id="footerInfo" class="footerInfo">HUWEI全网通版(亮黑色)</div>
+                <div id="footerDate" class="footerDate">2020-12-04</div>
+                <div id="footerBottom" class="footerBottom">
+                    <div id="bottomLeft" class="bottomLeft">198元</div>
+                    <div id="bottomRight" class="bottomRight">499</div>
+                </div>
+            </div>
+            <div id="footerBox" class="footerBox">
+                <div id="footerImg" class="footerImg"><img src="image/9.jpg" /></div>
+                <div id="footerInfo" class="footerInfo">HUWEI全网通版(亮黑色)</div>
+                <div id="footerDate" class="footerDate">2020-12-04</div>
+                <div id="footerBottom" class="footerBottom">
+                    <div id="bottomLeft" class="bottomLeft">198元</div>
+                    <div id="bottomRight" class="bottomRight">499</div>
+                </div>
+            </div>
+            <div id="footerBox" class="footerBox">
+                <div id="footerImg" class="footerImg"><img src="image/10.jpg" /></div>
+                <div id="footerInfo" class="footerInfo">HUWEI全网通版(亮黑色)</div>
+                <div id="footerDate" class="footerDate">2020-12-04</div>
+                <div id="footerBottom" class="footerBottom">
+                    <div id="bottomLeft" class="bottomLeft">198元</div>
+                    <div id="bottomRight" class="bottomRight">499</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="js/data.js"></script>
+<script>
+    var ofooterBoxs = document.querySelectorAll("footerBox");
+    var ofooterInfos = document.getElementsByClassName("footerInfo");
+    var ofooterDates = document.getElementsByClassName("footerDate");
+    var obottomLefts = document.getElementsByClassName("bottomLeft");
+    var obottomRights = document.getElementsByClassName("bottomRight");
+    for (let i = 0; i < phone.length; i++) {
+        ofooterInfos[i].innerText = phone[i].title;
+        ofooterDates[i].innerText = phone[i].time;
+        obottomLefts[i].innerText = phone[i].price;
+        obottomRights[i].innerText = phone[i].hot;
+    }
+
+    var flag = 1;
+    function onPrice() {
+        var obottomLefts = document.getElementsByClassName("bottomLeft");
+        var newPriceArr = [].slice.call(obottomLefts);
+
+        flag *= -1;
+        newPriceArr.sort(function (m, n) {
+            return (m.innerHTML - n.innerHTML)*flag;
+        });
+        for (let j = 0; j < newPriceArr.length; j++) {
+            console.log(obottomLefts[j].innerHTML+","+newPriceArr[j].innerHTML);
+            obottomLefts[j].innerText = newPriceArr[j].innerText;
+        }
+    }
+</script>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main{
+            width: 600px;
+            height: 300px;
+            line-height: 300px;
+            text-align: center;
+            background-color: pink;
+            margin: 0 auto;
+            font-size: 33px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="main"></div>
+</body>
+</html>
+
+<script>
+    function zero(data){
+        return data>10?data:"0"+data;
+    }
+    function cutDown(data){
+        var diffDate=new Date(data)-new Date();
+        if(diffDate<=0){
+            clearInterval(setInt);
+            setInt=null;
+            return "倒计时已结束！";
+        }
+        var hours=Math.floor(diffDate/(1000*60*60));
+        var minutes=Math.floor((diffDate-hours*1000*60*0)/(1000*60));
+        var seconds=Math.floor((diffDate-hours*1000*60*60-minutes*1000*60)/1000);
+
+        return zero(hours)+"时"+zero(minutes)+"分"+zero(seconds)+"秒";
+    }
+
+    var setInt=setInterval(() => {
+        var future="2020-11-21 11:00:00";
+        document.getElementById("main").innerText=cutDown(future);
+    }, 1000);
+
+    // var setTime=setTimeout(() => {
+    //     clearInterval(setInt);
+    //     setInt=null;
+
+    //     clearTimeout(setTime);
+    //     setTime=null;
+    // }, 1000);
+</script>

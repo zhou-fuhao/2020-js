@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    #box {
+      width: 200.2px;
+      height: 200px;
+      background: green;
+      border: 10px solid yellow;
+      padding: 20px;
+      margin: auto;
+      line-height: 300px;
+      /* overflow: auto; */
+    }
+  </style>
+</head>
+
+<body>
+  <div id="box">
+    hjsvfkjsafjdsfjdvhfscsdj<br />
+    sjgsajfgdgfdgfjagksjd
+  </div>
+  <script src="../utils.js"></script>
+  <script>
+    
+    // css盒子模型
+    // 宽度+左右的内边距+左右的边框+左右的外边距
+    // width+左右padding+左右border+左右margin
+    // js盒子模型和css盒子模型类似，也是描述当前盒子的尺寸
+
+    // js的盒子模型一个有四大系列共13个
+    // client
+    //   clientWidth clientHeight clientLeft clientTop
+    // offset
+    //   offsetWidth offsetHeight offsetLeft offsetTop offsetParent
+    // scroll
+    //   scrollTop scrollLeft scrollWidth scrollHeight
+
+    //   getComputedStyle(ele)    ele.currentStyle
+
+    //---------------------------------------------------------
+    // client系列
+    // 获取当前盒子可视区域的宽高
+    // clientWidth:当前盒子可视区域的宽度(width+左右的padding)
+    // clientHeight：当前盒子可视区域的高度(height+上下的padding)
+    // 获取当前盒子的左、上边框的宽度
+    // clientLeft：当前盒子左边框的宽度(左border)
+    // clientTop：当前盒子左边框的宽度(上border)
+
+    // 获取的值都是number类型的
+    // 如果获取的值是小数，那么他会给你向上取整为整数
+    // 内容是否溢出对其没有影响
+
+    // ceil floor round random
+    //       console.log(box.clientWidth);
+    //       console.log(box.clientHeight);
+
+    //       // 获取当前浏览器可视区域的宽高
+    //       let winH = document.documentElement.clientHeight || document.body.clientHeight;
+    //       let winW =  document.documentElement.clientWidth || document.body.clientWidth;
+    //       console.log(winH);
+    //       console.log(winW);
+    let res = utils.offset(box);
+    console.log(res);
+  </script>
+
+</body>
+
+</html>

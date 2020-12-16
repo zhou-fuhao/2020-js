@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .main{
+            margin: 0 auto;
+            width: 500px;
+        }
+        .main li{
+            width: 60px;
+            height: 30px;
+            line-height: 30px;
+            display: inline-block;
+            border: 1px solid black;
+            margin-right: 10px;
+            text-align: center;
+            position: relative;
+            top: 1px;
+        }
+        .main>div{
+            width: 600px;
+            height: 300px;
+            line-height: 300px;
+            background-color: darkcyan;
+            border: 1px solid black;
+            display: none;
+            text-align: center;
+        }
+        .main li.current{
+            border-bottom-color:darkcyan;
+            background-color: darkcyan;
+        }
+        .main>div.current{
+            display: block;
+            background-color: darkcyan;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="main">
+        <ul>
+            <li class="current">腾讯</li>
+            <li>优酷</li>
+            <li>爱奇艺</li>
+        </ul>
+        <div class="current">Tencent</div>
+        <div>YOUKU</div>
+        <div>iQIYI</div>
+    </div>
+</body>
+</html>
+<script>
+    var lis = document.getElementsByTagName("li");
+    var mains = document.getElementById("main");
+    var divs = mains.getElementsByTagName("div");
+    
+    for(var i=0;i<lis.length;i++){
+        lis[i].flag=i;
+
+        lis[i].onclick=function(){
+            for(var j=0;j<divs.length;j++){
+                lis[j].className="";
+                divs[j].className="";
+            }
+            this.className="current";
+            divs[this.flag].className="current";
+        }
+    }
+    
+</script>

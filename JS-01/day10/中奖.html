@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <input type="text" id="zhong" name="zhong" style="text-align: center;background-color: pink;font-size: 33px;">
+</body>
+</html>
+
+<script>
+
+    function suiji(data){
+        var jiang="";
+        for (let i = 0; i < 4; i++) {
+            var index=Math.round(Math.random()*(data.length-1));
+            jiang+=data[index];
+        }
+        return jiang;
+    }
+
+    var timerInt=setInterval(() => {
+        var str="1234567890";
+        var zhongjiang=suiji(str);
+        document.getElementById("zhong").value=zhongjiang;
+    }, 30);
+
+    //  性能优化，清除定时器
+    var timeOut=setTimeout(() => {
+        clearInterval(timerInt);
+        timerInt=null;
+
+        clearTimeout(timeOut);
+        timeOut=null;
+    }, 6000);
+
+</script>

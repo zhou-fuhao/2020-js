@@ -1,0 +1,76 @@
+ul {
+    list-style: none;
+}
+.main{
+    width: 1500px;
+}
+.main .header {
+    height: 60px;
+    background-color: gainsboro;
+}
+
+.header ul>li {
+    float: left;
+    margin-left: 20px;
+    margin: 20px 60px 20px 0;
+}
+.header .paixu{
+   font-size: 18px;
+}
+.header button {
+    width: 200px;
+    color: blue;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-size: 18px;
+}
+.header button:hover{
+    color: red;
+}
+
+.header img {
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+}
+
+.footer {
+    width: 1500px;
+    margin-top: 16px;
+    height: 800px;
+    background-color: pink;
+}
+
+.footer .footerBox {
+    width: 280px;
+    height: 380px;
+    background-color: whitesmoke;
+    float: left;
+    margin: 6px 8px 12px 12px;
+}
+
+.footer .footerImg>img {
+    width: 200px;
+    height: 300px;
+    margin-left: 40px;
+    background-size: cover;
+}
+
+.footer .footerInfo {
+    margin-left: 50px;
+}
+
+.footer .footerDate {
+    margin-left: 50px;
+}
+
+.footer .bottomLeft {
+    float: left;
+    margin-left: 50px;
+}
+
+.footer .bottomRight {
+    float: right;
+    margin-right: 50px;
+}

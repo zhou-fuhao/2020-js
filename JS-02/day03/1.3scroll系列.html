@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 300px;
+            height: 300px;
+            margin: 600px auto;
+            border: 10px solid pink;
+            overflow: auto;
+        }
+
+        .box p {
+            margin: 80px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box" class="box">
+        <p>hello world!</p>
+        <p>hello world!</p>
+        <p>hello world!</p>
+        <p>hello world!</p>
+        <p>hello world!</p>
+        <p>hello world!</p>
+        <p>hello world!</p>
+        <p>hello world!</p>
+    </div>
+</body>
+
+</html>
+<script>
+    let winT = document.documentElement.scrollTop || document.body.scrollTop;
+    let winL = document.documentElement.scrollLeft || document.body.scrollLeft;
+    console.log(winT, winL);
+
+    // 临界值
+    // min = 0;
+    // max = scrollHeight - clientHeight;
+
+    // 封装一个方法用来设置或获取浏览器的某些属性
+    function win(attr, value) {
+        if (value == undefined) {
+            return document.documentElement[attr] || document.body[attr];
+        }
+        document.documentElement[attr] = value;
+        document.body[attr] = value;
+    }
+    win("scrollTop", 100);// 设置
+    console.log(win("clientHeight"));// 获取
+</script>

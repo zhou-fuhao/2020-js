@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        li {
+            margin: 30px 10px;
+        }
+
+        .main li>span {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .footer {
+            margin: 30px 50px;
+        }
+
+        .footer>span {
+            margin: 10px;
+        }
+
+        .excellent {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="main" class="main">
+        <li>
+            <button id="jian" class="jian">-</button>
+            <span id="number" class="number">0</span>
+            <button id="add" class="add">+</button>
+            单价：<span id="price" class="price">1</span>元&nbsp;&nbsp;&nbsp;&nbsp;
+            小计：<span id="sum" class="sum">0</span>元
+        </li>
+        <li>
+            <button id="jian" class="jian">-</button>
+            <span id="number" class="number">0</span>
+            <button id="add" class="add">+</button>
+            单价：<span id="price" class="price">2</span>元&nbsp;&nbsp;&nbsp;&nbsp;
+            小计：<span id="sum" class="sum">0</span>元
+        </li>
+        <li>
+            <button id="jian" class="jian">-</button>
+            <span id="number" class="number">0</span>
+            <button id="add" class="add">+</button>
+            单价：<span id="price" class="price">3</span>元&nbsp;&nbsp;&nbsp;&nbsp;
+            小计：<span id="sum" class="sum">0</span>元
+        </li>
+    </ul>
+    <div id="footer" class="footer">
+        商品共：<span id="sumNumber" class="sumNumber">0</span>件<br>
+        共花了：<span id="sumPrice" class="sumPrice">0</span>元<br>
+        <div id="excellent" class="excellent">
+            小计的最高价：<span id="sumMaxPrice" class="sumMaxPrice">0</span>元
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    var ouls = document.getElementById("main");
+    var olis = ouls.getElementsByTagName("li");
+    var onumbers = document.getElementsByClassName("number");
+    var oprices = document.getElementsByClassName("price");
+    var osums = document.getElementsByClassName("sum");
+    // footer里面的数量价格赋值
+    var osumNumbers = document.getElementById("sumNumber");
+    var osumPrices = document.getElementById("sumPrice");
+    var osumMaxPrices = document.getElementById("sumMaxPrice");
+
+    for (let i = 0; i < olis.length; i++) {
+        // 点击 + 时执行的方法
+        add[i].onclick = function () {
+            onumbers[i].innerText = Number(++(onumbers[i].innerText));
+            osums[i].innerText = Number(onumbers[i].innerText) * Number(oprices[i].innerText);
+            footerFun();
+            sumFun();
+            excellent.style.display="block";
+        }
+
+        // 点击 - 时执行的方法
+        jian[i].onclick = function () {
+            if (onumbers[i].innerText == 0) {
+                onumbers[i].innerText = 0;
+            } else {
+                onumbers[i].innerText = Number(--(onumbers[i].innerText));
+                osums[i].innerText = Number(onumbers[i].innerText) * Number(oprices[i].innerText);
+                footerFun();
+                sumFun();
+            }
+        }
+    }
+    function footerFun() {
+        // 商品总计
+        var sumNumbers = 0;
+        // 价格总计
+        var sumPrices = 0;
+        for (let d = 0; d < onumbers.length; d++) {
+            sumNumbers += Number(onumbers[d].innerText);
+            sumPrices += Number(osums[d].innerText);
+        }
+        osumNumbers.innerText = sumNumbers;
+        osumPrices.innerText = sumPrices;
+    }
+
+    function sumFun() {
+        var arr = [];
+        for (let q = 0; q < osums.length; q++) {
+            var value = osums[q].innerText;
+            arr.push(value);
+        }
+        var maxVal = arr.sort(function (m, n) {
+            return m - n;
+        })[arr.length - 1];
+
+        osumMaxPrices.innerText = maxVal;
+    }
+
+</script>

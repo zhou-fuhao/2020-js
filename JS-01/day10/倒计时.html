@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 600px;
+            height: 30px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div>距离2020-11-20 17:22:00</div>
+    <div type="text" id="uDate" name="uDate"></div>
+</body>
+</html>
+
+<script>
+
+    function zero(data){
+        return data>10?data:"0"+data;
+    }
+    
+    function cutDown(data){
+        var cha=new Date(data) - new Date();
+        if(cha<=0){
+            clearInterval(timer);
+            timer=null;
+            return "倒计时已结束！";
+        }
+        var hours=Math.floor(cha/(1000*60*60));
+        var minutes=Math.floor((cha-hours*1000*60*60)/(1000*60));
+        var seconds=Math.floor((cha-hours*1000*60*60-minutes*1000*60)/1000);
+
+        return hours+"时"+minutes+"分"+seconds+"秒";
+    };
+
+    var timer= setInterval(function(){
+        var diffTime="2020-11-20 17:22:00"
+        document.getElementById("uDate").innerText=cutDown(diffTime);
+     },1000)
+
+
+</script>

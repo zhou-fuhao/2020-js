@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .main{
+            margin: 0 auto;
+            width: 600px;
+            height: 600px;
+        }
+        .main .lists>li{
+            display: inline-block;
+            width: 66px;
+            height: 33px;
+            line-height: 33px;
+            text-align: center;
+            border: 1px solid pink;
+            position: relative;
+            top: 1px;
+        }
+        .main>div{
+            width: 400px;
+            height: 400px;
+            line-height: 400px;
+            text-align: center;
+            border: 1px solid pink;
+            background-color: pink;
+            display: none;
+        }
+        .main .lists .current{
+            background-color: pink;
+            border-bottom-color: pink;
+        }
+        .main>div.current{
+            display: block;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="main">
+        <ul id="lists" class="lists">
+            <li class="current" id="current">腾讯</li>
+            <li>优酷</li>
+            <li>爱奇艺</li>
+        </ul>
+        <div class="current" id="current">Tencent</div>
+        <div>YOUKU</div>
+        <div>iQIYI</div>
+    </div>
+</body>
+</html>
+
+<script>
+    var mains=document.getElementById("main");
+    var lis=mains.getElementsByTagName("li");
+    var divs=mains.getElementsByTagName("div");
+    for (let i = 0; i < lis.length; i++) {
+        lis[i].index=i;
+        lis[i].onclick=function(){
+            for (let j = 0; j < divs.length; j++) {
+                lis[j].className="";
+                divs[j].className="";
+            }
+            lis[this.index].className="current";
+            divs[this.index].className="current";
+        }
+    }
+
+</script>

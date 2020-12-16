@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        li{
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+</html>
+<script>
+    
+    setInterval(() => {
+        var lists=document.getElementsByTagName("li");
+    
+        var arrStr=["年","月","日",'时','分','秒'];
+    
+        var dd=new Date();
+        var arrDate=[dd.getFullYear(),dd.getMonth()+1,dd.getDate(),dd.getHours(),dd.getMinutes(),dd.getSeconds()];
+    
+        for(var i=0;i<lists.length;i++){
+            lists[i].innerText=arrDate[i]+arrStr[i];
+        }
+        
+    });
+</script>

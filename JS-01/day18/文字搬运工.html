@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .left {
+            border: 10px red solid;
+            width: 400px;
+            height: 400px;
+            margin-left: 300px;
+            position: relative;
+            top: 20px;
+        }
+
+        .right {
+            border: 10px red solid;
+            width: 400px;
+            height: 400px;
+            margin-left: 800px;
+            margin-top: -400px;
+        }
+
+        .btn {
+            margin-left: 20px;
+            width: 100px;
+            height: 30px;
+            background: powderblue;
+            font-weight: 100px;
+            position: relative;
+            left: 700px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quan">
+        <div id="left" class="left">
+            中国很多民众都像我一样关注嫦娥五号的轨迹，同嫦娥五号一起遨游太空。我们对俄罗斯、欧洲等航天机构的美好祝愿表示感谢。嫦娥五号探测器12月1日成功在月球着陆并将开展后续工作。这是中国进行外空探索的历史性一步，也是国际合作与和平利用外空的历史性一步。
+        </div>
+        <div id="right" class="right"></div>
+        <button id="btn" class="btn" onclick="transforma()">开始转换<tton>
+    </div>
+</body>
+
+</html>
+<script>
+    var i=0;
+    var  leftStr = document.getElementById("left").innerText;
+    function transforma() {
+        
+        var strA=leftStr.charAt(i);
+        i++;
+        leftStr= leftStr.replace(strA," ");
+        leftStr=leftStr.slice(i+1,leftStr.length);
+        console.log(leftStr);
+    }
+    transforma();
+    // setInterval(() => {
+    //     transforma();
+    // }, 1000);
+</script>

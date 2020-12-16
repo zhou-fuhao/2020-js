@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            background: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box" class="box">点击</div>
+</body>
+
+</html>
+<script>
+    let num = 0;
+    function fn() {
+        console.log(++num);
+    }
+    // 非立即执行的定时器版的防抖函数
+    // 当点击按钮触发事件的时候，debounce返回的函数执行，让函数执行的时候会先把上一次的定时器清除，然后在重新开启一个新的定时器，以此类推，知道用户点击结束为止，这时候当前作用域内只会留下最后一个定时器，到达规定的时间之后执行
+
+    // function debounce(fn, time) {
+    //     // 准备接收定时器的返回值
+    //     let timer;
+    //     return function () {
+    //         // this ----> box
+    //         clearTimeout(timer);
+    //         timer = setTimeout(() => {
+    //             // fn(); //this指向当前被点击的元素
+    //             fn.call(this);
+    //         }, time);
+    //     }
+    // }
+
+    // 当第一次事件触发函数的时候，timer就是undefined，那now就true，所以if条件，fn执行
+    // 而且函数每执行一次就会把上次的定时器清除，然后再重新开启一个新的定时器，定时器里面做的事情就是把timer更改为null，那下一次执行的时候now又是true，这时候fn又正常执行
+    // function debounce(fn, time) {
+    //     // undefined 1 2 3 4 null
+    //     let timer;
+    //     return function () {
+    //         // 清除定时器
+    //         clearTimeout(timer);
+    //         // 第一次进来时，timer只声明未定义，所以timer为undefined，取反为true
+    //         let now = !timer;
+    //         // 根据传过来的time时间，进行启动定时器
+    //         timer = setTimeout(() => {
+    //             timer = null;
+    //         }, time);
+    //         // 判断成立，this指向当前被点击的元素
+    //         if (now) {
+    //             fn.call(this);
+    //         }
+    //     }
+    // }
+
+    // 封装一个既可以立即执行还可以非立即执行的防抖函数
+    // function debounce(fn, time, immediate) {
+    //     let timer;
+    //     // true 就立即执行防抖函数
+    //     if (immediate) {
+    //         // 清除定时器
+    //         clearTimeout(timer);
+    //         // 第一次进来时，timer只声明未定义，所以timer为undefined，取反为true
+    //         let now = !timer;
+    //         // 根据传过来的time时间，进行启动定时器
+    //         timer = setTimeout(() => {
+    //             timer = null;
+    //         }, time);
+    //         // 判断成立，this指向当前被点击的元素
+    //         if (now) {
+    //             fn.call(this);
+    //         }
+    //     } else {
+    //         clearTimeout(timer);
+    //         timer = setTimeout(() => {
+    //             // fn(); //this指向当前被点击的元素
+    //             fn.call(this);
+    //         }, time);
+    //     }
+    // }
+    // box.onclick = debounce(fn, 1000, true);
+
+
+    // -------------------------------------------
+    // 节流
+    // 高频事件可以连续触发，但在n秒内只会执行一次，所以节流会稀释函数的执行率
+    // 节流只会稀释函数执行的频率，但是函数可以一直执行
+
+    // 立即执行的时间戳版
+    // function throttle() {
+    //     let previous = 0;
+    //     return function () {
+    //         // 获取时间戳
+    //         let now = Date.now();
+    //         if (now - previous >= time) {
+    //             fn.call(this);
+    //             previous = now;
+    //         }
+    //     }
+    // }
+    // window.onscroll = throttle(fn, time);
+
+
+    // 非立即执行的定时器版
+    function throttle(fn, time) {
+        let timer;
+        return function () {
+            if (!timer) {
+                // 如果不赋值为null，这个条件不成立
+                timer = setTimeout(() => {
+                    timer = null;
+                    fn.call(this);
+                }, time);
+            }
+        }
+    }
+    window.onscroll = throttle(fn, 600);
+
+</script>

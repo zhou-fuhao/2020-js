@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训</title>
+    <style>
+        body,
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="price.css" />
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="box">
+            <ul class="list">
+                <li>
+                    <i></i>
+                    <em>0</em>
+                    <i></i>
+                    <span>
+                        单价：<strong>12.5元 </strong> 小计：<strong>0元</strong>
+                    </span>
+                </li>
+                <li>
+                    <i></i>
+                    <em>0</em>
+                    <i></i>
+                    <span>
+                        单价：<strong>10.5元 </strong> 小计：<strong>0元</strong>
+                    </span>
+                </li>
+                <li>
+                    <i></i>
+                    <em>0</em>
+                    <i></i>
+                    <span>
+                        单价：<strong>8.5元 </strong> 小计：<strong>0元</strong>
+                    </span>
+                </li>
+                <li>
+                    <i></i>
+                    <em>0</em>
+                    <i></i>
+                    <span>
+                        单价：<strong>8元 </strong> 小计：<strong>0元</strong>
+                    </span>
+                </li>
+                <li>
+                    <i></i>
+                    <em>0</em>
+                    <i></i>
+                    <span>
+                        单价：<strong>14.5元 </strong> 小计：<strong>0元</strong>
+                    </span>
+                </li>
+            </ul>
+            <div class="info">
+                <span>商品公合计：<em>0</em>件</span>
+                <span>共花费了：<em>0</em>元</span>
+                <br />
+                <br />
+                <span>其中最贵的商品单价是：<em>0</em>元</span>
+            </div>
+        </div>
+    </div>
+    <script src="./jquery-1.11.3.js"></script>
+    <script>
+        /* 
+1.获取所有i标签，给他们绑定点击事件
+*/
+        $('.list i').click(function () {
+            console.log(this);
+            let index = $(this).index(); // 获取当前元素在他的兄弟姐妹中的索引
+            let count = parseFloat($(this).siblings('em').html()); // 获取em标签里的购买数量
+            let $strongs = $(this).siblings('span').find('strong'); // 获取两个strong(单价和小计)
+            let price = parseFloat($strongs.eq(0).html());//获取单价 
+            if (index === 0) {
+                // 减
+                count--;
+                count < 0 ? count = 0 : null
+            }
+            else {
+                // 加
+                count++;
+                count > 10 ? count = 10 : null
+            }
+            $(this).siblings('em').html(count);// 设置购买数量
+            $strongs.eq(1).html(price * count + '元');
+
+            computed();
+        })
+
+        function computed() {
+            // 此函数就是计算商品的总数量和商品的总价格，还有最贵的商品的单价
+            // 上来之后我先初始化几个变量用来累加商品的数量和总价格，在初始化一个数组，用来存放购买商品的单价
+            let totalCount = 0;
+            let totalPrice = 0;
+            let ary = [0];
+
+            // 先计算总数量
+            // 获取所有的list里的所有em数量，然后循环累加起来，最后在设置到页面上(info里的第一个em)
+            $('.list em').each(function (index, item) {
+                let count = parseFloat($(item).html());
+                totalCount += count;
+                totalPrice += parseFloat($(item).siblings("span").children("strong").eq(1).html());
+            });
+            $('.info em').eq(0).html(totalCount);
+            $('.info em').eq(1).html(totalPrice);
+        }
+    </script>
+</body>
+
+</html>

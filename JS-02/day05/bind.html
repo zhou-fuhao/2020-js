@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="box" class="box">123</div>
+</body>
+
+</html>
+<script>
+    $("#box");
+</script>
+<script>
+    // bind是预先处理函数的this指向，并不会让fn函数立马执行，而是bind函数的返回值是一个新的函数，当这个新的函数执行的时候会让fn执行，并且把fn的this指向之前传递的第一个实参
+    function fn(a, b, c, d) {
+        console.log(this);
+        console.log(a, b, c, d);
+        return 100;
+    }
+    let obj = { name: "zhang" };
+
+    Function.prototype.MyBind = function (context, ...arg1) {
+        // this-->fn  context-->obj  
+        // bind函数执行形成不销毁的作用域，可以保存里面的变量不受外界的干扰，还可以让变量一直存在，这样 fn 和 context就一直保存下来
+        // 当以后bind返回的函数执行的时候就可以拿到fn 和 context
+        // 所以bind返回的函数里做的就是call做的事
+        let $this = this;
+        return function (...arg2) {
+            return $this.call(context, ...arg1, ...arg2);// fn.call(obj)
+        }
+
+    }
+    let res = fn.MyBind(obj, 1, 2);// bind执行会返回一个新的函数，以后执行新函数的时候，在新函数内部会让fn执行
+    console.log(res(3, 4));
+
+    // 当前这种利用闭包的机制编程的思想就是 柯理化思想
+</script>
