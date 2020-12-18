@@ -1,27 +1,27 @@
 
 let uls = document.getElementsByTagName("ul");
 uls = Array.from(uls);
-
 let imgs = document.getElementsByClassName("bg");
 
-// ajax请求数据
-getData();
+// 请求数据
 function getData() {
     let data = null;
     let xhr = new XMLHttpRequest;
-    xhr.open('get', 'data/data.txt', false);
+    xhr.open("get", "data/data.txt", false);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status)) {
             data = JSON.parse(xhr.responseText);
         }
     }
     xhr.send();
-    bindHTML(data);
+    renderHTML(data);
 }
+getData();
 
-// 渲染页面
-function bindHTML(data) {
-    for (let i = 0; i < 20; i++) {
+
+// 数据渲染
+function renderHTML(data) {
+    for (let j = 0; j < 20; j++) {
 
         let index = Math.round(Math.random() * 9);
         let curImg = data[index];
@@ -35,12 +35,14 @@ function bindHTML(data) {
         img.style.height = Math.round(Math.random() * (250 - 180) + 180) + "px";
 
         p.innerHTML = curImg.title;
+
         li.appendChild(img);
         li.appendChild(p);
 
         uls.sort(function (m, n) {
             return m.scrollHeight - n.scrollHeight;
         });
+
         uls[0].appendChild(li);
     }
 }
@@ -52,72 +54,94 @@ function delay() {
     }
 }
 
-// 对图片进行判断是否显示
+// 判断图片路径是否正确
 function delayImg(img) {
-    // 当图片的下边框  ===  当前浏览器可视窗口的下边框
-    // 图片的总高度 + 图片的上偏移量  ===  浏览器滚动条卷曲的高度 + 浏览器可视窗口的高度
-
     let imgH = img.offsetHeight;
-    let imgW = utils.offset(img).top;
+    let imgT = utils.offset(img).top;
 
     let winH = utils.win("clientHeight");
-    let winW = utils.win("scrollTop");
+    let winT = utils.win("scrollTop");
 
-    if (winH + winW >= imgH + imgW) {
+    if (winH + winT >= imgH + imgT) {
         let trueImg = img.getAttribute("true-img");
         let newImg = new Image;
         newImg.src = trueImg;
         newImg.onload = function () {
-            img.src = trueImg;
-            img.classList.remove("bg");
+            img.src = newImg.src;
+            img.classList.remove('bg');
+            utils.fadeIn(img);
         }
     }
 }
 
 delay();
 
-// 分页
+// 是否继续加载
 function isLoad() {
-    // 判断当前图片是否继续分页请求
-    // 当前浏览器滚动条卷曲的高度 + 浏览器可视区域的高度  >=  body的真实高度
     let winH = utils.win("clientHeight");
-    let winW = utils.win("scrollTop");
+    let winT = utils.win("scrollTop");
 
     let bodyH = utils.win("scrollHeight");
-    if (winH + winW + 100 >= bodyH) {
+
+    if (winH + winT + 100 >= bodyH) {
         getData();
     }
 }
 
-// 回到顶部
+// 点击按钮 回到顶部
 back.onclick = function () {
-    let distance = utils.win("scrollTop");
-    let step = distance / 50;
+    let dance = utils.win("scrollTop");
+    let step = dance / 50;
     let timer = setInterval(() => {
-        distance -= step;
-        utils.win("scrollTop", distance);
-        if (distance <= 0) {
+        dance -= step;
+        utils.win("scrollTop", dance);
+        if (dance <= 0) {
             clearInterval(timer);
         }
-    }, 18);
+    }, 17);
 }
 
-// 大于浏览器可视区域显示 回到顶部按钮
+// 小于浏览器可视区域回到顶部按钮隐藏
 function isButtonShow() {
     let winH = utils.win("clientHeight");
-    let winW = utils.win("scrollTop");
-    if (winW >= winH) {
-        // back.style.display = "block";
+    let winT = utils.win("scrollTop");
+    if (winT + 100 >= winH) {
         utils.css(back, "display", "block");
     } else {
-        // back.style.display = "none";
         utils.css(back, "display", "none");
     }
 }
 
-// 滚动条事件
-window.onscroll = function () {
+// 滚动条滑动时调用
+function scrollBarSlide() {
     delay();
     isLoad();
     isButtonShow();
+}
+
+window.onscroll = throttle(scrollBarSlide, 100);
+
+// 节流 - 立即执行
+// function throttle(fn, time) {
+//     let previos = 0;
+//     return function () {
+//         let now = Date.now();
+//         if (now - previos > time) {
+//             fn.call(this);
+//             previos = now;
+//         }
+//     }
+// }
+
+// 节流 - 非立即执行
+function throttle(fn, time) {
+    let timer;
+    return function () {
+        if (!timer) {
+            timer = setTimeout(() => {
+                timer = null;
+                fn.call(this);
+            }, time);
+        }
+    }
 }

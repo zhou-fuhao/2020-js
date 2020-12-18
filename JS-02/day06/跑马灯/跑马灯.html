@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
         * {
@@ -42,8 +42,8 @@
 </head>
 
 <body>
-    <div id="box">
-        <ul id="list" style="left:0">
+    <div id="box" class="box">
+        <ul id="lists" class="lists" style="left: 0;">
             <li>
                 <img src="../../../review-02/img/1.jpg" alt="">
             </li>
@@ -79,35 +79,27 @@
 </body>
 
 </html>
-<script src="../../../utils.js"></script>
 <script>
-    // let list = document.getElementById("list");
-    // let box = document.getElementById("box");
-    // 执行定时器，定时器里不短的让ul的left的值减小
-    // 如果盒子移动超过900，那么说明最后一张已经完全显示出来了，让当前ul瞬间left变为0；从头开始循环；
-
-    let list = document.getElementById("list");
+    // 执行定时器，定时器不断的让ul的left样式值减小
+    // 如果盒子移动超过900，那么说明最后一张图片已经完全显示，让当前盒子瞬间让ul的left样式的值变为0，从头开始循环
     let box = document.getElementById("box");
-    // 每执行一次move方法，将list的left减小10px;
+    let lists = document.getElementById("lists");
+    // 每执行一次move方法，将lists最新的值left减小10px
     function move() {
-        // 执行move时，先获取到当前list最新的left位置；
-        let curLeft = parseFloat(list.style.left);
+        // 执行move时，先获取当前lists最新的left位置
+        let curLeft = parseFloat(lists.style.left);
         curLeft -= 1;
         if (curLeft <= -900) {
-            // 如果盒子移动超过900，那么说明最后一张已经完全显示出来了，让当前ul瞬间left变为0；从头开始循环；
+            // 如果盒子移动超过900，那么说明最后一张图片已经完全显示，让当前盒子瞬间让ul的left样式的值变为0，从头开始循环
             curLeft = 0;
         }
-        list.style.left = curLeft + "px";
+        lists.style.left = curLeft + "px";
     }
-    var timer = setInterval(move, 10);
+    let timer = setInterval(move, 10);
     box.onmouseover = function () {
         clearInterval(timer);
     }
     box.onmouseout = function () {
         timer = setInterval(move, 10);
     }
-
-    setTimeout(function (data) {
-        console.log(data + " world！")
-    }, 1000, "hello")
 </script>

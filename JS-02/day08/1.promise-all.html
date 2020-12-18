@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    //3.Promise.all方法
+    let p1 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            // resolve(100)
+            reject(8888)
+        }, 2000)
+    });
+    let p2 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            // resolve(200)
+            reject()
+        }, 2000)
+    });
+    let p3 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(300)
+        }, 2000)
+    });
+    // 我要等到当前三个异步的请求全部请求成功以后再做什么事
+    let p = Promise.all([p1, p2, p3]);// all方法在promise类自己身上
+    // all会返回一个新的promise实例，这个实例的状态会等到上面三个promise的实例全部成功以后，才会成功
+    p.then((res) => {
+        console.log(res, '全部成功了');
+    }).catch((res) => {
+        console.log('有失败的');
+    })
+</script>

@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "img": "../../../review-02/img/1.jpg",
+    "desc": "广阔的就业推荐机会",
+    "link": "http://www.zhufengpeixun.cn/"
+  },
+  {
+    "id": 2,
+    "img": "../../../review-02/img/2.jpg",
+    "desc": "梦想起飞从选择珠峰培训开始",
+    "link": "http://www.zhufengpeixun.cn/"
+  },
+  {
+    "id": 3,
+    "img": "../../../review-02/img/3.jpg",
+    "desc": "把握未来，掌握先机",
+    "link": "http://www.zhufengpeixun.cn/"
+  },
+  {
+    "id": 4,
+    "img": "../../../review-02/img/4.jpg",
+    "desc": "先学习，后交费，学不好，不收费",
+    "link": "http://www.zhufengpeixun.cn/"
+  },
+  {
+    "id": 5,
+    "img": "../../../review-02/img/6.jpg",
+    "desc": "先学习，后交费，学不好，不收费",
+    "link": "http://www.zhufengpeixun.cn/"
+  },
+  {
+    "id": 5,
+    "img": "../../../review-02/img/7.jpg",
+    "desc": "先学习，后交费，学不好，不收费",
+    "link": "http://www.zhufengpeixun.cn/"
+  },
+  {
+    "id": 5,
+    "img": "../../../review-02/img/9.jpg",
+    "desc": "先学习，后交费，学不好，不收费",
+    "link": "http://www.zhufengpeixun.cn/"
+  }
+]

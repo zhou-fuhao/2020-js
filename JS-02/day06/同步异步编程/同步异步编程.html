@@ -8,18 +8,148 @@
 </head>
 
 <body>
+    <script>
+    // 防抖和节流
+    // jq的源码
+    // 同异步
+    // promise
+    // 考试题
+    // 计算器
 
+    // 浏览器运行代码的时候，会分配一个线程来执行代码，代码分为同步代码和异步代码
+    // 代码执行的时候如果遇到异步的任务会放到异步任务队列中
+    // 当主线程执行完成主任务之后，去异步任务队列中看看有没有符合输出条件的任务
+
+    // promise
+    // $.ajax({
+    //   url: './data1.json',
+    //   success: (res) => {
+    //     $.ajax({
+    //       url: './data2.json',
+    //       success: (res) => {
+
+    //       }
+    //     });
+    //   }
+    // });
+
+    // let p1 = new Promise((resolve,reject)=>{
+    //   $ajax({
+    //     url:'data1.json',
+    //     success:(res)=>{
+    //       resolve(res)
+    //     },
+    //     fail:()=>{
+    //       reject()
+    //     }
+    //   })
+    // });
+
+    // p1.then((res)=>{
+    //   // 我就可以在这里发送第二个请求
+    // },()=>{
+    //   console.log('请求失败了');
+    // })
+    // then中的回调函数执行是异步的
+
+    // console.log(100);
+    // let p1 = new Promise((resolve,reject)=>{
+    //   resolve()
+    // });
+
+
+    // p1.then(()=>{
+    //   console.log(200);
+    // },()=>{});
+    // console.log(300);
+    //-----------------------------------------
+
+
+    // let p1 = new Promise((resolve,reject)=>{
+    //   // resolve执行会把当前promise变成成功态，
+    //   // reject执行会把当前的promise变成失败态
+    //    promise执行的时候一般都会写一个异步的操作，当异步操作成功之后去把promsie的状态给为成功态，当异步操作失败之后，把当前promise的状态改为失败态
+    //   setTimeout(()=>{
+    //     resolve(100)
+    //     console.log('第一次请求成功了');
+    //     // reject('出错了')
+    //   },2000)
+
+    // });
+    // // promise的实例有三种状态：pending(等待态)、fulfilled(成功态)、rejected(失败态)
+    // // 状态一旦发生变化就会凝固，不会再变
+    // // pending-->fulfilled
+    // // pending-->rejected
+
+
+    // p1.then((msg)=>{
+    //   // 如果当前promise的状态是成功态，那此函数就会执行
+    //   console.log('异步输出发送第二次请求',msg);
+
+    //   // 可以发送第二次请求
+    // },(msg)=>{
+    //   // 如果当前promise的状态是失败态，那此函数就会执行
+    // })
+
+    // console.log(300);
+
+    // $.ajax() // 异步
+    // $.ajax() // 异步
+    // 我既想以同步的方式去书写，还想得到异步按顺序请求
+
+
+    //-----------------------------
+    // setTimeout((num)=>{
+    //   console.log(num);
+    // },5000,100);
+    // setTimeout函数的第三个参数是传递给回调函数的实参
+
+    //----------------------
+    // console.log(100);
+    // let p1 = new Promise((resolve, reject) => {
+    //   console.log(800);
+    //   setTimeout(() => {
+    //     // console.log(700);
+    //     resolve()
+    //   });
+    //   reject();
+    // });
+    // console.log(200);
+    // p1.then(()=>{
+    //   console.log(300);
+    // },()=>{
+    //   console.log(400);
+    // });
+    // console.log(500);
+    // // 100 800 200 500 400
+
+    //--------------------------------------
+    // let p1 = new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     resolve()
+    //     // reject()
+    //     // 第一个请求
+    //   });
+    // });
+    // p1.then(() => {
+    //   console.log('第一次成功');
+    //   return new Promise((resolve,reject)=>{
+    //     resolve()
+    //   })
+    // },()=>{
+    //   console.log('第一次失败');
+    // }).then(() => {
+    //   console.log(500);
+    //   // 发送第三次请求了
+    // },()=>{
+    //   console.log('第二次失败');
+    // }).then(()=>{
+    //   console.log(600);
+    // })
+    // 当前then中的回调函数执行的时候如果没有返回promise的实例，那下一个then中的成功的回调函数就(第一个函数)会默认执行
+
+    // 当前then中的回调函数执行的时候如果返回promise的实例了，那下一个then中的回调函数的执行就由当前的这个promise的实例的状态来管控
+    </script>
 </body>
 
 </html>
-<script>
-    console.log(100);
-    setTimeout(() => {
-        console.log(300);
-    }, 20);
-    setTimeout(() => {
-        console.log(400);
-    }, 18);
-    console.log(200);
-    // 当打开一个页面的时候，浏览器会分配一个线程来执行页面的代码，而且把全部的同步代码执行完成后才会执行异步代码
-</script>
