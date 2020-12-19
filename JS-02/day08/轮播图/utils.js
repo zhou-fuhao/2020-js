@@ -33,5 +33,8 @@ let utils = (function () {
             }, wait)
         }
     }
-    return { animate, ss }
+    return {
+        animate,
+        ss
+    }
 })()

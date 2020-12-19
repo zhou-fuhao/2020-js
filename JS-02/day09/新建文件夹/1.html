@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div temporary=2>div1</div>
+    <div temporary=2>div2
+        <span temporary="22">span</span>
+    </div>
+</body>
+
+</html>
+<script>
+    let all = document.getElementsByTagName("*");
+    let newArr = [];
+
+    function ss(attr, data) {
+        for (let j = 0; j < all.length; j++) {
+            if (all[j].getAttribute(attr) == data) {
+                newArr.push(all[j]);
+            }
+        }
+        return newArr;
+    }
+    let res = ss("temporary", "2");
+    console.log(res);
+</script>
