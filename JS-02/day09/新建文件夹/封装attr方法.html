@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div temporary="abc" class="box1 11" id="box1 span1">div1</div>
+    <div temporary="abc" class="box2">div2
+        <span temporary="22" id="span1">span</span>
+    </div>
+</body>
+
+</html>
+<script>
+
+    function checkAttr(attr, data) {
+        let all = document.getElementsByTagName("*");
+        let newArr = [];
+        for (let j = 0; j < all.length; j++) {
+            console.log(all[j].getAttribute(attr))
+            if (all[j].getAttribute(attr) != null && all[j].getAttribute(attr).indexOf(data) != -1) {
+                // console.log(all[j].getAttribute(attr).indexOf(data));
+                newArr.push(all[j].getAttribute(attr));
+            }
+
+            // if (all[j].getAttribute(attr) == data) {
+            //     newArr.push(all[j]);
+            // }
+        }
+        return newArr;
+    }
+    let res = checkAttr("class", "11");
+    console.log(res);
+</script>
