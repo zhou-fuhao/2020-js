@@ -1,11 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 100px;
+            height: 100px;
+            background: chartreuse;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* transform: translate(-50%, -50%); */
+        }
+    </style>
 </head>
+
 <body>
-    
+    <div id="box"></div>
 </body>
+
 </html>
+<script src="../../review-02/utils.js"></script>
+<script>
+    let box = document.getElementById("box");
+
+    window.onkeyup = function (e) {
+
+        let boxH = box.offsetHeight;
+        let boxW = box.offsetWidth;
+
+        let winH = utils.win("clientHeight");
+        let winW = utils.win("clientWidth");
+
+        let keys = getComputedStyle(box);
+
+        switch (e.keyCode) {
+            case 37:// ←
+                box.style.left = parseFloat(keys.left) - 10 + "px";
+                break;
+
+            case 38://👆
+                box.style.top = parseFloat(keys.top) - 10 + "px";
+                break;
+
+            case 39://→
+                box.style.left = parseFloat(keys.left) + 10 + "px";
+                break;
+
+            case 40://👇
+                box.style.top = parseFloat(keys.top) + 10 + "px";
+                break;
+
+            default:
+                break;
+        }
+
+
+
+    }
+
+</script>

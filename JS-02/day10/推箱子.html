@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #box {
+            width: 100px;
+            height: 100px;
+            background: orangered;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            /* transform: translate(-50%, -50%); */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        //--------------------------------------------------
+        // 键盘按键的keyCode码
+        document.body.onkeydown = function (e) {
+            console.log(e);
+            // e是当前事件的事件对象，只有键盘事件上的事件对象里才会有keyCode这些属性，分别代表了当前点击的键的一些标识
+
+            // 当用户点击键盘的按键的时候，通过keyCode判断一下，当前用户点击的到底是哪个按键，从而让你的盒子的位置做出相应的移动
+
+            // 上 38  下 40  左 37  右 39
+            let css = getComputedStyle(box);
+            let left = parseFloat(css.left);
+            let top = parseFloat(css.top); // 100  90
+            let H = document.documentElement.clientHeight - box.offsetHeight; // 获取当前盒子横向移动的最大距离
+            let W = document.documentElement.clientWidth - box.offsetWidth; // 获取当前盒子纵向移动的最大距离
+            let keyCode = e.keyCode;
+            switch (keyCode) { // number
+                case 38: // 向上
+                    top -= 10;
+                    if (top < 0) { // 如果当前的top值小于0了，说明盒子已经跑出屏幕最上方了，这时候让top等于0就好了
+                        top = 0;
+                    }
+                    break;
+                case 40: // 向下
+                    top += 10;
+                    if (top >= H) {
+                        top = H;
+                    }
+                    break;
+
+                case 37: // 向左
+                    left -= 10;
+                    if (left <= 0) {
+                        left = 0;
+                    }
+                    break;
+
+                case 39: // 向右
+                    left += 10;
+                    if (left >= W) {
+                        left = W
+                    }
+                    break;
+                default:
+
+            }
+            box.style.left = left + "px";
+            box.style.top = top + "px";
+        }
+
+    </script>
+</body>
+
+</html>

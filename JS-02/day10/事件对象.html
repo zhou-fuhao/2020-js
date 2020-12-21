@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #box {
+            width: 100px;
+            height: 100px;
+            background: orangered;
+            position: absolute;
+            border: 10px solid green;
+            left: 100px;
+            top: 50%;
+            /* transform: translate(-50%, -50%); */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">1111</div>
+    <script>
+        let box = document.getElementById('box');
+        box.onclick = function (e) {
+            // 当用户通过键盘或者鼠标去触发一些对应的事件的时候，浏览器会把当前事件的一些信息以实参的形式传递给当前的方法
+            // 1.clientX:当前鼠标点击的位置距离浏览器左侧的长度
+            // 2.clientY:当前鼠标点击的位置距离浏览器上侧的高度
+
+            // 3.offsetX：当前鼠标点击的位置距离当前的盒子的最左侧的长度
+            // 4.offsetY：当前鼠标点击的位置距离当前的盒子的最上侧的高度
+            console.log(e);
+        }
+    </script>
+</body>
+
+</html>

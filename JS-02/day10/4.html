@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 300px;
+            height: 300px;
+            background: url(../../review-02/img/9.jpg)
+            no-repeat center center;
+            background-size: cover;
+            position: relative;
+            margin: 200px auto;
+        }
+
+        #box #mark {
+            width: 100px;
+            height: 100px;
+            background: rgba(0, 0, 0, .5);
+            cursor: move;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <!-- <div id="mark"></div> -->
+    </div>
+</body>
+
+</html>
+<script>
+    let mark = null;
+
+    box.onmouseenter = function () {
+        mark = document.createElement("div");
+        mark.id = "mark";
+        box.appendChild(mark);
+
+    }
+
+    box.onmousemove = function (e) {
+        // 当前mark的left值 = e.clientX - box.offsetLeft
+        let curLeft = e.clientX - box.offsetLeft - mark.offsetWidth / 2;
+        let curTop = e.clientY - box.offsetTop - mark.offsetHeight / 2;
+
+        let minValLeft = 0;
+        let maxValLeft = box.offsetWidth - mark.offsetWidth;
+
+        let minValTop = 0;
+        let maxValTop = box.offsetHeight - mark.offsetHeight;
+
+        if (curLeft <= minValLeft) {
+            curLeft = minValLeft;
+        }
+        if (curLeft >= maxValLeft) {
+            curLeft = maxValLeft;
+        }
+
+
+        if (curTop <= minValTop) {
+            curTop = minValTop;
+        }
+        if (curTop >= maxValTop) {
+            curTop = maxValTop;
+        }
+
+
+        mark.style.left = curLeft + "px";
+        mark.style.top = curTop + "px";
+    }
+
+    box.onmouseleave = function () {
+        // 把mark从box中移除
+        box.removeChild(mark);
+    }
+</script>

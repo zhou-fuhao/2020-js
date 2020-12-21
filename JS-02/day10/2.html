@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            background: chartreuse;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            /* transform: translate(-50%, -50%); */
+        }
+
+        #lists {
+            border: 1px solid black;
+            list-style: none;
+            width: 160px;
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, .5);
+            position: absolute;
+            padding: 10px;
+            display: none;
+            left: 0;
+        }
+
+        #lists li {
+            border-bottom: 1px dashed black;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <a href="http://www.baidu.com" id="box">A标签</a> -->
+    <ul id="lists">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+</body>
+
+</html>
+<script>
+    // let box = document.getElementById("box");
+    let lists = document.getElementById("lists");
+    let lis = lists.getElementsByTagName("li");
+    // 组织a标签跳转
+    // box.addEventListener("click", function (e) {
+    //     e.returnValue = false;
+    // })
+
+    // 鼠标右击事件
+    window.oncontextmenu = function (e) {
+        // 阻止右击出现默认的菜单栏
+        e.returnValue = false;
+
+        lists.style.display = "block";
+
+        // 让盒子显示
+        // 获取当前鼠标右击位置的clientX和clientY
+        // 把刚才获取的位置设置给box的left和top
+
+        lists.style.left = e.clientX + "px";
+        lists.style.top = e.clientY + "px";
+
+        // 隔行变色
+        for (let j = 0; j < lis.length; j++) {
+            if (j % 2 == 0) {
+                lis[j].style.background = "pink";
+            } else {
+                lis[j].style.background = "yellowgreen";
+            }
+        }
+
+    }
+
+</script>
