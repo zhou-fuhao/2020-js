@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="box">123</div>
+</body>
+
+</html>
+<script>
+    let box = document.getElementById("box");
+
+    // 元素.on事件行为 = function () { }
+    // DOM0级事件绑定的原理，给元素的私有属性赋值，当事件触发，浏览器默认把赋的值执行
+    // 只能给当前元素某一个事件行为绑定一个方法
+    // box.onclick = function () {
+    //     console.log(this + "//---------------");
+    // }
+    // box.onclick = function () {
+    //     console.log(this + "=================\\");
+    // }
+    // // ===>移除事件绑定，DOM0直接赋值为null
+    // box.onclick = null;
+
+    // 元素.addEventListener("事件类型", function, boolean)
+    // DOM2级事件绑定的原理，基于原型链查找机制，找到EventTarget.prototype上的方法并执行，此方法执行，会把给当前元素某个事件行为绑定的所有方法，存放到浏览器默认的事件池中(绑定几个方法，会向事件池存储几个)，当事件行为触发，会把事件池中存储的对应方法依次按照顺序执行
+    // 基于addEventListener向事件池增加方法，存在去重的机制，“同一个元素，同一个事件类型，在事件池中只能存储一遍这个方法，不能重复存储”
+    // 可以给当前元素某一个事件行为绑定多个不同方法
+    box.addEventListener("click", function () {
+        console.log("第一个事件");
+    }, false);
+    box.addEventListener("click", function () {
+        console.log("第二个事件");
+    }, false);
+
+    // 移除事件绑定
+    // 元素.removeEventListener("事件类型", function, boolean)
+    box.removeEventListener("click", function () { }, false);
+</script>

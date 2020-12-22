@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box,
+        #bigBox {
+            width: 350px;
+            height: 350px;
+            border: 1px solid yellowgreen;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #bigBox {
+            left: 400px;
+            top: -350px;
+            display: none;
+        }
+
+        #bigBox img {
+            display: block;
+            width: 700px;
+            height: 700px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        #mark {
+            width: 175px;
+            height: 175px;
+            background: rgba(0, 0, 0, .3);
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: move;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <img src="../../review-02/img/9.jpg" style="width: 350px; height: 350px;" alt="">
+        <!-- <div id="mark"></div> -->
+    </div>
+    <div id="bigBox">
+        <img src="../../review-02/img/9.jpg" alt="">
+    </div>
+</body>
+
+</html>
+<script>
+    let box = document.getElementById("box");
+    let bigBox = document.getElementById("bigBox");
+    let img = bigBox.getElementsByTagName("img")[0];
+    let mark;
+
+    box.onmouseenter = function () {
+        mark = document.createElement("div");
+        mark.id = "mark";
+        box.appendChild(mark);
+        bigBox.style.display = "block";
+    }
+
+    box.onmouseleave = function () {
+        // 当鼠标划出，mark移除，大盒子隐藏
+        box.removeChild(mark);
+        bigBox.style.display = "none";
+    }
+
+    box.onmousemove = function (e) {
+        let curLeft = e.clientX - box.offsetLeft - mark.offsetWidth / 2;
+        let curTop = e.clientY - box.offsetTop - mark.offsetHeight / 2;
+
+        let maxValLeft = box.offsetWidth - mark.offsetWidth;
+
+        let maxValTop = box.offsetHeight - mark.offsetHeight;
+
+        // 判断左右盒子
+        if (curLeft <= 0) {
+            curLeft = 0;
+        }
+        if (curLeft >= maxValLeft) {
+            curLeft = maxValLeft;
+        }
+
+        // 判断上下盒子
+        if (curTop <= 0) {
+            curTop = 0;
+        }
+        if (curTop >= maxValTop) {
+            curTop = maxValTop;
+        }
+
+        // 小盒子在大盒子内划动
+        mark.style.left = curLeft + "px";
+        mark.style.top = curTop + "px";
+
+        img.style.left = -curLeft * 2 + "px";
+        img.style.top = -curTop * 2 + "px";
+    }
+</script>

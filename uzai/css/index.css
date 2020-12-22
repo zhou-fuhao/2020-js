@@ -1,0 +1,51 @@
+/* 头部信息 publicTop */
+
+.publicTop {
+    background-color: #fff;
+}
+
+.publicTop .common_top {
+    height: 30px;
+    background: #f7f7f7;
+}
+
+.publicTop .top_info {
+    width: 1142px;
+    margin: auto;
+    line-height: 30px;
+    overflow: hidden;
+}
+
+.publicTop .top_info a {
+    color: black;
+}
+.publicTop .top_info a:hover {
+    color: red;
+}
+
+.publicTop .top_info_left {
+    float: left;
+    /* line-height: 30px; */
+}
+
+.publicTop .top_info_left a {
+    padding: 0 7px;
+}
+
+.publicTop .top_info .info {
+    font-size: 12px;
+}
+
+.publicTop .top_info_right {
+    float: right;
+    /* line-height: 30px; */
+    margin-right: 1px;
+}
+
+.publicTop .top_info_right a {
+    padding-left: 26px;
+}
+
+.publicTop .top_info_right a:nth-of-type(3) {
+    color: red;
+}

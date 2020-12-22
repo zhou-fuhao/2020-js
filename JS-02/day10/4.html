@@ -7,80 +7,79 @@
     <title>Document</title>
     <style>
         * {
-            margin: 0;
             padding: 0;
+            margin: 0;
         }
 
-        #box {
-            width: 300px;
-            height: 300px;
-            background: url(../../review-02/img/9.jpg)
-            no-repeat center center;
-            background-size: cover;
+        #box,
+        #bigBox {
+            width: 350px;
+            height: 350px;
+            border: 1px solid red;
             position: relative;
-            margin: 200px auto;
+            overflow: hidden;
         }
 
-        #box #mark {
-            width: 100px;
-            height: 100px;
-            background: rgba(0, 0, 0, .5);
-            cursor: move;
+        #bigBox {
+            left: 400px;
+            top: -350px;
+            display: none;
+        }
+
+        #bigBox img {
+            display: block;
+            width: 700px;
+            height: 700px;
             position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        #mark {
+            width: 175px;
+            height: 175px;
+            background: rgba(0, 0, 0, .3);
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: move;
         }
     </style>
 </head>
 
 <body>
     <div id="box">
-        <!-- <div id="mark"></div> -->
+        <img src="../../review-02/img/9.jpg" alt="">
     </div>
+    <div id="bigBox">
+        <img src="../../review-02/img/9.jpg" alt="">
+    </div>
+    <script>
+        let box = document.getElementById('box');
+        let bigBox = document.getElementById('bigBox');
+        let img = bigBox.getElementsByTagName('img')[0];
+        let mark;
+        box.onmouseenter = function () {
+            // 动态创建mark
+            // 然后把mark添加到box中
+            // 让大盒子显示
+            mark = document.createElement('div');
+            mark.id = "mark";
+            box.appendChild(mark);
+            bigBox.style.display = 'block'
+        }
+        box.onmousemove = function () {
+            // 先求出当前mark主要移动的距离 = e.clientX - box.offsetWidth - mark.offsetWidth/2;
+
+            // 把当前求出来的距离赋值给mark的left即可
+
+        }
+        box.onmouseleave = function () {
+            // 当鼠标划出的时候，让mark移除，让大盒子隐藏
+            box.removeChild(mark);
+            bigBox.style.display = 'none'
+        }
+    </script>
 </body>
 
 </html>
-<script>
-    let mark = null;
-
-    box.onmouseenter = function () {
-        mark = document.createElement("div");
-        mark.id = "mark";
-        box.appendChild(mark);
-
-    }
-
-    box.onmousemove = function (e) {
-        // 当前mark的left值 = e.clientX - box.offsetLeft
-        let curLeft = e.clientX - box.offsetLeft - mark.offsetWidth / 2;
-        let curTop = e.clientY - box.offsetTop - mark.offsetHeight / 2;
-
-        let minValLeft = 0;
-        let maxValLeft = box.offsetWidth - mark.offsetWidth;
-
-        let minValTop = 0;
-        let maxValTop = box.offsetHeight - mark.offsetHeight;
-
-        if (curLeft <= minValLeft) {
-            curLeft = minValLeft;
-        }
-        if (curLeft >= maxValLeft) {
-            curLeft = maxValLeft;
-        }
-
-
-        if (curTop <= minValTop) {
-            curTop = minValTop;
-        }
-        if (curTop >= maxValTop) {
-            curTop = maxValTop;
-        }
-
-
-        mark.style.left = curLeft + "px";
-        mark.style.top = curTop + "px";
-    }
-
-    box.onmouseleave = function () {
-        // 把mark从box中移除
-        box.removeChild(mark);
-    }
-</script>

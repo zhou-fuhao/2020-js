@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 200px;
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+            background: palegreen;
+            margin: 200px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="http://www.baidu.com" id="btnA">百度</a>
+    <div id="box"></div>
+</body>
+
+</html>
+<script>
+    box.onclick = function (e) {
+        // 当前鼠标点击的位置距离浏览器可视窗口左边的距离
+        // console.log(e.clientX);
+        // 当前鼠标点击的位置距离浏览器可视窗口上边的距离
+        // console.log(e.clientY);
+
+        // 当前鼠标点击的位置距离盒子的左边框的距离
+        // console.log(e.offsetX);
+        // 当前鼠标点击的位置距离盒子的上边框的距离
+        // console.log(e.offsetY);
+
+        // 当前鼠标点击的位置距离页面(body)左边框的距离
+        // console.log(e.pageX);
+        // 当前鼠标点击的位置距离页面(body)上边框的距离
+        // console.log(e.pageY);
+
+        // 事件源，事件在哪个元素身上触发的，事件源就是谁
+        // console.log(e.target);
+
+        // 事件类型("client")
+        // console.log(e.type);
+
+    }
+    btnA.onclick = function (e) {
+
+        e.cancelBubble = true;
+        e.stopPropagation = true;
+    }
+</script>
