@@ -7,7 +7,8 @@
     <title>众信旅游</title>
     <link rel="stylesheet" href="css/reset.min.css">
     <!-- <link rel="stylesheet" href="css/iconfont.css"> -->
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_2284362_xkeqdqmpas.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2284362_1epuma8om54.css">
+    <link rel="stylesheet" href="swiper/swiper.min.css">
     <link rel="stylesheet" href="css/index.css">
 </head>
 
@@ -15,7 +16,7 @@
 
     <!-- 公共信息最外层 驼峰命名，剩余均采用 _ 格式 -->
 
-    <!-- 头部信息 -->
+    <!-- 头部信息 publicTop -->
     <div id="publicTop" class="publicTop">
         <!-- 登录注册及订单 -->
         <div id="common_top" class="common_top">
@@ -37,18 +38,83 @@
                     <a href="">我的订单</a>
                     <a href="">营业网点</a>
                     <a href="">招募合伙人</a>
-                    <a href="">服务中心<i class="iconfont icon-xiajiantou info"></i></a>
+                    <a href="javascript:;">
+                        服务中心
+                        <i class="iconfont icon-xiajiantou info"></i>
+                    </a>
+                    <div id="serverCenter" class="serverCenter">
+                        <a href="">关于我们</a>
+                        <a href="">商务合作</a>
+                        <a href="">联系我们</a>
+                        <a href="">诚聘英才</a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- 搜索栏 -->
-        <div id="common_head" class="common_head"></div>
+        <div id="common_head" class="common_head">
+            <a href="">
+                <img src="img/top/logo.png" alt="">
+            </a>
+            <div id="address" class="address">
+                <i class="iconfont icon-zhandiantuopu info"></i>
+                <span id="site_name" class="site_name">北京</span>
+            </div>
+            <div id="search" class="search">
+                <div id="search_bot" class="search_bot">
+                    <i class="iconfont icon-zu1771 info"></i>
+                </div>
+                <input type="text" name="index_search_input" id="index_search_input" placeholder="国内游">
+            </div>
+            <div id="phone_info" class="phone_info">
+                <h2>
+                    <i class="iconfont icon-dianhua">1010-9898</i>
+                </h2>
+                <h3>09:00 - 22:00</h3>
+            </div>
+        </div>
 
         <!-- 标题 -->
-        <div id="common_nav" class="common_nav"></div>
+        <div id="common_nav" class="common_nav">
+            
+        </div>
 
     </div>
+
+    <!-- 右侧导航栏 common_sidebar -->
+    <div id="common_sidebar" class="common_sidebar">
+        <div id="common_sidebar_info" class="common_sidebar_info">
+            <a href="">
+                <i class="iconfont icon-kefu"></i>
+            </a>
+            <a href="">
+                <i class="iconfont icon-dianhua"></i>
+            </a>
+            <a href="">
+                <i class="iconfont icon-APP"></i>
+            </a>
+            <a href="">
+                <i class="iconfont icon-weixin"></i>
+            </a>
+            <a href="">
+                <i class="iconfont icon-sirendingzhi"></i>
+            </a>
+            <a href="">
+                <i class="iconfont icon-dingdan"></i>
+            </a>
+            <a href="">
+                <i class="iconfont icon-zuji"></i>
+            </a>
+            <a href="">
+                <i class="iconfont icon-shangchuan"></i>
+            </a>
+        </div>
+    </div>
+
 </body>
 
 </html>
+<script src="js/jquery-1.11.3.js"></script>
+<script src="swiper/swiper.min.js"></script>
+<script src="js/index.js"></script>

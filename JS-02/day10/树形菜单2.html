@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* *{
+            margin: 0;
+            padding: 0;
+        } */
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        .lists span {
+            display: block;
+            height: 35px;
+            line-height: 35px;
+            cursor: pointer;
+        }
+
+        .lists span.close:before {
+            content: "+";
+            font-size: 20px;
+            font-weight: bold;
+            color: darkcyan;
+        }
+
+        .lists span.open:before {
+            content: " - ";
+            font-size: 20px;
+            font-weight: bold;
+            color: darkorchid;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="lists" class="lists">
+        <li><span>1.一级菜单</span>
+            <ul>
+                <li><span>1.1二级菜单</span>
+                    <ul>
+                        <li><span>1.1.1三级菜单</span></li>
+
+                        <li><span>1.1.2三级菜单</span></li>
+
+                        <li><span>1.1.3三级菜单</span></li>
+                    </ul>
+                </li>
+                <li><span>1.2二级菜单</span>
+                    <ul>
+                        <li><span>1.2.1三级菜单</span></li>
+                        <li><span>1.2.2三级菜单</span></li>
+                    </ul>
+                </li>
+                <li><span>1.3二级菜单</span></li>
+                <li><span>1.4二级菜单</span></li>
+            </ul>
+        </li>
+        <li><span>2.一级菜单</span></li>
+        <li><span>3.一级菜单</span></li>
+        <li><span>4.一级菜单</span>
+            <ul>
+                <li><span>4.1二级菜单</span></li>
+            </ul>
+        </li>
+    </ul>
+</body>
+
+</html>
+<script>
+
+    let lists = document.getElementById("lists");
+    let spans = document.getElementsByTagName("span");
+    for (let j = 0; j < spans.length; j++) {
+        let cur = spans[j];
+        let next = cur.nextElementSibling;
+        if (next) {
+            cur.classList.add("close");
+            next.style.display = "none";
+        } else {
+            spans[j].classList.add("open");
+        }
+    }
+    lists.onclick = function (e) {
+        // 当前点击的span
+        let cur = e.target;
+        // 当前span的下一个兄弟元素
+        let next = cur.nextElementSibling;
+
+        if(cur.nodeName != "SPAN"){
+            return;
+        }
+
+        if (next) {
+            if (cur.className.includes("close")) {
+                cur.className = "open";
+                next.style.display = "block";
+            } else {
+                let uls = next.getElementsByTagName("ul");
+                for (let j = 0; j < uls.length; j++) {
+                    uls[j].style.display = "none";
+                    uls[j].previousElementSibling.className = "close";
+                }
+
+                cur.className = "close";
+                next.style.display = "none";
+            }
+        }
+    }
+
+</script>

@@ -5,25 +5,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #box {
+            width: 200px;
+            height: 200px;
+            background: orangered;
+            position: absolute;
+        }
+
+        h3 {
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: greenyellow;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
+    <div id="box">
+        <h3 id="title">骨架终结者</h3>
+    </div>
+    <script>
+        let box = document.getElementById('box');
+        let title = document.getElementById('title');
+        let left = (document.documentElement.clientWidth - box.offsetWidth) / 2;
+        let t = (document.documentElement.clientHeight - box.offsetHeight) / 2;
+        box.style.left = left + 'px';
+        box.style.top = t + 'px';
+        // 利用js实现盒子上下左右居中
 
+        // 实现拖拽的逻辑
+        // 当用户按下鼠标的时候开始给当前title绑定鼠标移动事件，当用户抬起鼠标的时候，移除title的移动事件
+        title.onmousedown = function () {
+            console.log(1);
+
+            title.onmousemove = move;
+
+        }
+
+        function move() {
+            console.log('move');
+        }
+
+        title.onmouseup = function () {
+            console.log(2);
+            title.onmousemove = null;
+        }
+
+    </script>
 </body>
 
 </html>
-<script>
-    let arr1 = [1, 2, 3, 4]
-
-
-    Array.prototype.myForEach = function (callBack) {
-        for (let i = 0; i < this.length; i++) {
-            console.log(callBack(this[i], i));
-        }
-        // return null;
-    }
-    arr1.myForEach((index, item) => {
-        console.log(item, index);
-    });
-
-</script>

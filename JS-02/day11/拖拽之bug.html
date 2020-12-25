@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        #box {
+            width: 200px;
+            height: 200px;
+            background: darksalmon;
+            position: absolute;
+        }
+
+        #box h3 {
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: plum;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <h3 id="title">高渐离</h3>
+    </div>
+</body>
+
+</html>
+<script>
+    // 利用js 实现盒子上下左右居中
+    let box = document.getElementById("box");
+    let title = document.getElementById("title");
+    let leftVal = (document.documentElement.clientWidth - box.offsetWidth) / 2;
+    let topVal = (document.documentElement.clientHeight - box.offsetHeight) / 2;
+
+    box.style.left = leftVal + "px";
+    box.style.top = topVal + "px";
+
+    title.onmousedown = function (e) {
+        // 记录初始的鼠标的clientX 、 clientY 值
+        title.oldClientX = e.clientX;
+        title.oldClientY = e.clientY;
+
+        // 记录初始的盒子的left 、 top 值
+        title.leftVal = parseFloat(box.style.left);
+        title.topVal = parseFloat(box.style.top);
+
+        title.style.cursor = "move";
+
+        // document.onmousemove = move.bind(this);
+        document.onmousemove = function (e) {
+            move.call(title, e);
+        };
+    }
+
+    function move(e) {
+        // 获取当前鼠标的最新的e.clientX/Y，减去初始的clientX/Y，这就是鼠标移动的距离(盒子需要移动的距离)
+        // 盒子最新的位置等于盒子移动的距离加上初始的距离
+        let curLeft = e.clientX - this.oldClientX + this.leftVal + "px";
+        let curTop = e.clientY - this.oldClientY + this.topVal + "px";
+        box.style.left = curLeft;
+        box.style.top = curTop;
+    }
+
+    document.onmouseup = function () {
+        document.onmousemove = null;
+    }
+
+</script>
