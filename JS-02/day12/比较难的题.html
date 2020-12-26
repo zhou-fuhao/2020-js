@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 
+        obj = af2
+        Fn = af0
+        f1 = af1
+        f2 = 
+        f3 = 
+        window.m = 10
+        window.n = NaN
+        */
+        let n = m = 10; // let n = 10 20 21 22 23;m = 10
+        var obj = { // af2
+            n: 10,// 11
+            f1: (function (m) {// 10 11
+                /* 
+                this-->window
+                */
+                n += n; // n = n+n // 10+10
+                return () => {
+                    // 箭头函数没有this
+                    console.log(++this.n, this.m == undefined ? m : ++m);
+                    // window.n = window.n+1   11
+                    // NaN
+
+                }
+            })(n)
+        }
+
+        function Fn() { // af0
+            /* 
+             */
+            this.n = n; // f2.n = 20  f3.n = 22 23
+            n++ < 21 ? n++ : this.n++;
+            // 20<21 ?
+            // 22<21 ? 
+
+            f1.call(this, this.n); // f2 20   f3 23
+            this.getN = function () {
+                // obj
+                console.log(this.n++); // 20
+                // obj.n++ // obj = obj.n+1
+            }
+        }
+
+        function f1(n) { // af1
+            // this当前实例f2  f3  Object的原型
+            console.log(this.n++); // NaN 21 22
+            // 20  23
+            // Object的原型.n++ // Object的原型.n = Object的原型.n+1
+            // Object的原型.n = NaN
+
+            // f2.n = f2.n+1
+            // f2.n = f2.n+1
+        }
+        var f2 = new Fn(); // {n:23,getN:999}
+        var f3 = new Fn(); // {n:24,getN}
+        console.log(f2, f3);
+        Fn.prototype.f1 = f1; // 给当前Fn的原型增加方法，方法是(全局的af1)
+        f2.__proto__.f1 = f1;// 给当前Fn的原型增加方法，方法是(全局的af1)
+        Fn.prototype.__proto__.f1 = f1; // 给Object的原型增加方法f1(全局下的af1)
+        Fn.prototype.__proto__.getN = f2.getN; // 给Object的原型增加方法getN (getN的值是999)
+        console.log(f2.getN == f3.getN); // false
+        console.log(f2.getN === Fn.prototype.getN); // true
+        console.log(f2.f1 === Object.f1); // true
+        obj.f1(); //
+        obj.__proto__.f1();//
+        obj.getN(); // 
+        f2.f1(); // 
+        f3.f1.call(f2); // 
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    let arr = [1, 2, 3, 4];
+    let res = arr.findIndex((item, indedx) => {
+        return item > 2;
+    });
+    console.log(res);// 3
+
+
+    let str = " 123 ";
+    console.log(str.trim());
+
+    function fn() {
+        function f() {
+            console.log(a);// a is not defined
+        }
+        f();
+    }
+    fn()
+</script>

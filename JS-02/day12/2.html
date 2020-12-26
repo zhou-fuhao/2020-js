@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 全局作用域   私有作用域(函数执行)   块级作用域(除了函数发括号，对象大括号)
+        // 全局变量    私有变量  
+        // let a = 100;
+        // console.log(window);
+
+        // 作用域是否销毁
+        // 函数执行形成的私有作用域中产生一个引用值，而且被外界的变量所接收
+        // let a = 100;
+        // function fn(){
+        //   a = {};
+        //   function f(){
+
+        //   }
+        // }
+        // fn()
+        // console.log(a);
+
+        //---------------------------------------
+        // 原型-->构造函数
+        // function Fn(){
+
+        // }
+        // let f1 = new Fn;
+        // let f2 = new Fn
+
+        // 类的继承
+        //--------------------------------------
+        // 原型继承
+        // function A() {
+        //   this.x = 100;
+        // }
+        // A.prototype.getX = function () { };
+
+        // function B() {
+        //   this.y = 200;
+        // }
+        // B.prototype.getY = function(){};
+
+        // B.prototype = new A; // 相当于把类A的实例赋值给类B的原型(继承了共有属性还继承了私有属性)
+
+        // let f1 = new B; // 类B的实例
+        // console.log(f1);
+        //---------------------------------------
+        // call继承
+        // function A() {
+        //   // this-->f1
+        //   this.x = 100; // 给f1增加私有属性
+        // }
+
+        // function B(){
+        //   // this-->当前实例f1
+        //   let that = this;
+        //   this.y = 200; // 给f1增加私有属性
+        //   A.call(that); // 让类A以普通函数的方式运行，并且把类A的this指向当前的f1(这样就继承了类A的私有属性)
+        // }
+
+        // let f1 = new B;
+        // console.log(f1);
+        //----------------------------------------
+        // 寄生混合继承(继承私有和共有)
+        // Object.create(); // 创建一个对象，并且把当前对象的__proto__指向传递的第一个实参
+
+        // let obj = {a:100};
+        // let res= Object.create(obj);
+        // console.log(res);
+
+        // function A(){
+        //   this.x = 100;
+        // }
+        // A.prototype.getX = function(){};
+
+        // function B(){
+        //   this.y = 200;
+        //   A.call(this); // 继承类A的私有
+        // }
+        // B.prototype = Object.create(A.prototype); // 创建一个空对象，并且把对象的__proto__指向类A的原型，最后在把这个对象赋值给类B的原型
+
+        // let f1 = new B;
+        // // {y:200,x:100}-->{}-->A.prototype
+        // // 中间的这个空对象可以作为类B的新原型去使用
+
+
+        // f1.__proto__.ss = function(){}// 给类B的原型增加新方法
+        // console.log(f1);
+        //-------------------------------------------------
+        // class类继承
+        class A {
+            constructor(a) {
+                console.log(100);
+                this.x = a
+            }
+            getX() { }
+        }
+
+        class B extends A {
+            constructor() {
+                // super(100); // 继承私有，让类A的constructor执行，相当于 A.call(this,100)
+                A.call(this, 100)
+                this.y = 200;
+            }
+            getY() { }
+        }
+
+        let f1 = new B;
+        console.log(f1);
+    // f1-->B.prototype-->A.prototype
+
+
+    // let obj = {
+    //   ss(){},
+    //   ss:function(){}
+    //   // 以上两种方式是等价的
+    // }
+
+
+
+
+    // arguments.__proto__ = Array.prototype 中间类继承
+    // arguments.forEAch();
+
+    </script>
+</body>
+
+</html>
