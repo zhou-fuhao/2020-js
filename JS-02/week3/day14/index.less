@@ -1,0 +1,119 @@
+// less 支持变量和嵌套
+@width:200px; // 创建一个样式 变量，变量的值是 200px
+
+
+@bgColor1:red;
+@bgColor2:blue;
+@bg:@bgColor1+@bgColor2;
+
+
+@border:4px solid black;
+
+@name:#box; // 名称变量
+@smallBox:#smallBox;
+
+@urlBan:'./img'; // 半 路径
+@urlAll:'./img/15.jpg'; // 全 路径
+
+// @{name} {
+//     width: @width;
+//     height: @width;
+//     background: url(@urlAll); // 全路径图片
+// }
+
+// @{name} #header{
+//     width: 100px;
+//     height: 100px;
+//     background: palevioletred;
+// }
+
+// @{name} #footer{
+//     width: 50px;
+//     height: 50px;
+//     background: url('@{urlBan}/12.jpg'); // 半路径图片
+// }
+
+// less中的嵌套
+// #box #header
+// #box #footer
+@{name}{
+    width: @width;
+    height: @width;
+    background: url(@urlAll); // 全路径图片
+    background-size: cover;
+
+    #header{
+
+        @width:100px;
+
+        width: @width;
+        height: @width;
+        background: @bg;
+    }
+    #footer{
+        width: 50px;
+        height: 50px;
+        background: url('@{urlBan}/12.jpg'); // 半路径图片
+        background-size: cover;
+        border: @border;
+    }
+}
+
+@{smallBox}{
+    width: @width;
+    height: @width;
+    border: @border;
+
+    // & 代表最近的父级选择器的名称
+    &:hover{
+        background: @bgColor2;
+    }
+    &::after{
+        content: '++';
+    }
+}
+
+// less支持函数、支持继承
+@bigBox:#bigBox;
+
+// less中的函数可以有形参
+// .public(@width,@height){
+//     // 函数体一旦有形参，函数执行的时候就得传递实参
+//     width: @width;
+//     height: @height;
+//     border: 5px solid yellowgreen;
+//     line-height: @height;
+// }
+
+// @{bigBox}{
+//     .public(300px, 300px);
+// }
+
+.public(@width,...){
+    // 函数体一旦有形参，函数执行的时候就得传递实参
+    // @width 取第一个实参
+    // 也可以使用 arguments 获取全部参数
+    width: @width;
+    height: 10px;
+    border: @arguments;
+    line-height: 300px;
+}
+
+@{bigBox}{
+    .public(2px, solid, yellowgreen);
+}
+
+
+// less的继承
+@bigBox2:#bigBox2;
+
+@{bigBox2} {
+    color: rebeccapurple;
+    background: green;
+}
+
+#aa{
+    width: 300px;
+    height: 300px;
+    &:extend(#bigBox2);// 想继承谁 小括号里就写谁
+}
