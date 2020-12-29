@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 发布订阅模式
+        // 单利模式 高级单利模式 工厂函数 原型模式 构造函数模式
+
+        // dom2级事件的绑定
+        // box.addEventLIstener('click',fn); // 就是给当前box的点击事件对应的事件池子里订阅方法
+        // box.addEventLIstener('click',fn1); 
+
+        // {
+        //   'click':[fn,fn1],
+        //   'mouseup':[],
+        //     .... 
+        // }
+
+        // 上学  放学之后去 吃饭 写作业 睡觉
+        // 类型 是放学之后做的事  [吃饭 写作业 睡觉]
+
+        // 类型 结婚之后做的事    [还账 过日子]
+
+        // 订阅事件的方法  发布事件的方法  移除绑定的方法
+        let box = {}; // {'fangxue':[fn1]}
+        function on(ele, type, fn) { // 订阅的方法
+            // box.fanxue = [] ele[type] = []
+            if (!ele[type]) {
+                // 如果当前事件类型对应的池子存在就不会再重新创建了，如果当前类型对应的池子没有在重新创建
+                ele[type] = [] // 
+            }
+            let pool = ele[type];
+            // 在给当前的池子订阅方法之前，先判断一下将要订阅的方法在池子里是不是已经存在了，如果存在了，就不需要再次订阅了，如果不存在在继续订阅
+            let res = pool.some(item => {
+                return item === fn;
+            });
+            // 如果res是true说明当前要订阅的方法在池子里已经有了，就不需要再订阅了
+            if (res) return;
+            pool.push(fn); // 给池子里订阅新的方法
+
+        }
+        function emit(ele, type) { // 发布的方法
+            // 找到当前的事件池子，然后循环池子，让池子里的方法依次执行
+            let pool = ele[type];
+            // 如果当前的池子存在在继续发布
+            pool && pool.forEach(item => {
+                // 判断一下，如果当前的item是函数在让他执行
+                if (typeof item === 'function') {
+                    item()
+                }
+            })
+        }
+        function off(ele, type, fn) { // 移除绑定的方法
+            // 在发布之前把对应的事件池子里的方法移除
+            let pool = ele[type];
+            // pool && pool.forEach((item,index)=>{
+            //   if(item === fn){
+            //     // pool.splice(index,1); // 会造成数组的塌陷
+            //     pool[index] = null; // 这种不会造成数组的塌陷(假删除)
+            //   }
+            // })
+
+            // filter返回的是一个过滤之后的新数组，你需要把这个新数组给当前的事件池重新赋上
+            pool && (ele[type] = pool.filter((item) => {
+                return item !== fn;
+            }))
+        }
+
+
+        function fn1() {
+            console.log('吃饭');
+        }
+        function fn2() {
+            console.log('写作业');
+        }
+        function fn3() {
+            console.log('睡觉');
+        }
+        on(box, 'fangxue', 1);
+        on(box, 'fangxue', fn1);
+        on(box, 'fangxue', fn3);
+        off(box, 'fangxue', fn1);
+        console.log(box); // {'fangxue':[fn1,fn2,fn3]}
+
+        setTimeout(() => {
+            emit(box, 'fangxue');
+        }, 5000);
+
+
+    </script>
+</body>
+
+</html>
