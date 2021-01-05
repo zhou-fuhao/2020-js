@@ -1,0 +1,17 @@
+{
+  "name": "day15",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "lessc index.less index.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.5.1",
+    "less": "^4.0.0",
+    "swiper": "^6.4.5"
+  }
+}
