@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<!-- <script src="../../jquery-1.11.3.js"></script> -->
+<script src="../../week3/day15/node_modules/axios/dist/axios.js"></script>
+<script>
+    // $.ajax({
+    //     url: "./cs.json?id=1",
+    //     type: "get",
+    //     success: (res) => {
+    //         console.log(res);
+    //     }
+    // });
+    axios.get(
+        "./cs.json",
+        { id: "1" }
+    ).then((res) => {
+        console.log(res.data);
+    }).cacth((res) => {
+        console.log(res);
+    });
+
+</script>

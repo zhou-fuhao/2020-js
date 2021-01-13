@@ -1,0 +1,92 @@
+
+body {
+    background: linear-gradient(to bottom, #ec008c, #fc6767);
+}
+.top {
+    height: 220px;
+    width: 500px;
+    margin:10px auto;
+    border: 1px solid #000;
+    text-align: center;
+}
+.top h1 {
+    color: #ffdada;
+    text-shadow: 0 0 10px #fd8a8a;
+}
+#game-start {
+    border: 1px solid #ffffff91;
+    background: #ff7ecb;
+    border-radius: 3px;
+    color: #8b0053;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.diShu {
+    height: 500px;
+    width: 520px;
+    margin: 0px auto;
+    border: 1px solid rgb(228,231,231);
+}
+.diShu ul {
+    list-style: none;
+}
+.diShu ul li{
+    float: left;
+    width: 120px;
+    height: 60px;
+    background-color: rgba(228, 231, 231, 0.89);
+    border-radius: 50%;
+    margin-left: 5px;
+    margin-right: 33px;
+    margin-bottom: 85px;
+}
+.diShu ul li:first-child,
+.diShu ul li:nth-child(2),
+.diShu ul li:nth-child(3) {
+    margin-top: 50px;
+}
+.diShu li div {
+    width: 90px;
+    height: 100px;
+    margin: 0 auto;
+    position: relative;
+    opacity: 0;
+    display: none;
+    cursor: pointer;
+}
+.diShu li div.good {
+    width: 100px;
+    background: url("./img/lang.png") no-repeat center/cover;
+}
+.diShu li div.bad {
+    background: url("./img/tuzi.png") no-repeat center/cover;
+}
+@keyframes move{
+    50% {
+        margin-top: -50px;
+        opacity: 0;
+    }
+    100% {
+        margin-top: -20px;
+        opacity: 1;
+    }
+}
+.diShu li div.active {
+    animation: move 2s infinite;
+}
+/* clicked点击前值是0
+    点击之后变成1
+    效果是点击之后出现提示信息，需要clicked=1
+*/
+.diShu li div.bad[clicked="1"]::after {
+    font-size: 80px;
+    content: '×';
+    color: red;
+
+}
+.diShu li div.good[clicked="1"]::after {
+    font-size: 80px;
+    content: '√';
+    color: green;
+    
+}

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="./node_modules/axios/dist/axios.js"></script>
+  <script>
+    // axios就是一款基于promise封装的ajax库
+    // axios是一个函数，但是在他自己身上存储着好多方法和属性供咱们去使用
+
+
+    (function () {
+      class Axios {
+        constructor(url, options) {
+          // this-->当前的Axios的实例
+          this.url = url;
+          this.options = options;
+          return this.send(); // 
+
+        };
+        send() {
+          // this-->当前的Axios的实例
+          // 给当前axios的类的原型上增加方法
+          // 当前方法是用来发送ajax请求的
+          return new Promise((resolve, reject) => {
+            // 发送ajax请求，当请求车成功以后把当前的promise的实例改为成功态，请求失败以后把当前promise的实例改为失败态
+            let { url,
+              options: {
+                baseURL,
+                params,
+                data,
+                cache,
+                timeout,
+                method,
+                transformRequest
+              }
+            } = this;
+            console.log(this);
+            let that = this;
+
+            let xhr = new XMLHttpRequest;
+
+            // 0.把baseURL和url拼接到一起在赋值给url
+            url = baseURL + url;
+            // 1.5.如果是post系列的请求，那就执行transformRequest
+            data = transformRequest(data)
+            // 1.如果params有值，那就把它转换成字符串
+            params = this.transParams();
+
+            // 2.如果当前是get系列请求并且params不是null，那就把params拼接到url的后边
+            let reg = /^(GET|OPTIONS|DELETE|HEAD)$/i;
+            if (reg.test(method) && params) {
+              url += `${this.addMark(url)}${params}`
+            }
+            xhr.open(method, url);
+            console.log(1);
+            xhr.onreadystatechange = () => {
+
+              // 处理的是请求完成之后的逻辑
+              let {
+                readyState,
+                response,
+                status,
+                statusText,
+                responseText
+              } = xhr;
+              if (readyState === 4) {
+                if (/^(2|3)\d{2}$/.test(status)) {
+                  let headers = xhr.getAllResponseHeaders();
+                  console.log(headers);
+                  let obj = {};
+                  headers.split(/\n/).forEach(item => {
+                    console.log(item.split(': '));
+                    let [key,value] = item.split(':');
+                    if(value){
+                      obj[key] = value.trim();
+                    }
+                    
+                  });
+                  console.log(obj);
+                  resolve({
+                    status,
+                    statusText,
+                    data: JSON.parse(response),
+                    request: xhr,
+                    headers: obj,
+                    config: this.options
+                  })
+                }
+                else {
+                  reject(null)
+                }
+              }
+            };
+            xhr.send(data);
+          }).then(this.options.transformResponse)
+        }
+
+        transParams() {
+          // 当前函数的返回结果就是处理之后的参数
+          let {
+            options: {
+              params
+            }
+          } = this;
+          if (!params) return params;
+          let str = ``;
+          for (let key in params) {
+            if (!params.hasOwnProperty(key)) break;
+            str += `${key}=${params[key]}&`
+          }
+          str = str.slice(0, str.length - 1);
+          return str;
+
+        }
+
+        addMark(url) {
+          return url.includes('?') ? '&' : '?'
+        }
+        // 在当前大范围里边可以进行构造函数的执行，也可以给当前的类增加共有属性，也可以把当前的类当做对象增加键值对
+      }
+      function axios() { }
+
+      // 在axios身上会有一个默认的对象，里边存储着一些默认的配置
+      axios.defaults = {
+        baseURL: '',
+        cache: true,
+        data: null,
+        params: null,
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded'
+        },
+        timeout: null,
+        transformRequest: function (data) {
+          if (!data) return null;
+          let str = ``;
+          for (let key in data) {
+            if (!data.hasOwnProperty(key)) break;
+            str += `${key}=${data[key]}&`
+          }
+          str = str.slice(0, str.length - 1);
+          return str;
+        },
+        transformResponse: function (data) {
+          // 人家原来的axios的data是响应主体
+          // 咱们现在的data是整个大的返回对象
+          return data;
+        }
+      }
+      // 1.get系列的请求方法
+      function mergeOption(options) {
+        let { defaults } = axios;
+        let headers = { ...defaults.headers, ...options.headers };
+        return { ...defaults, ...options, headers }
+      }
+      axios.get = function (url, options) {
+        // 合并当前的options和defaults
+        let res = mergeOption(options);
+        // 到目前为止咱们的参数合并就算处理完成了
+        // 发送请求了
+        res.method = 'get';
+        return new Axios(url, res); // Axios的实例  Promise的实例
+      }
+
+      // 2.post系列的请求方法
+
+      axios.all = function (promiseAry = []) {
+        return Promise.all(promiseAry)
+      }
+      window.axios = axios;
+    }());
+
+
+    // axios.all([axios.get(),p2]).then(()=>{
+
+    // })
+
+    // let res = axios.get('data.json', { params: {}, timeout: 100 }); // 返回结果是一个promise的实例
+    // res.then((res) => {
+    //   console.log(res);
+    // }, () => {
+
+    // })
+
+
+
+
+
+    // console.dir(axios)
+    axios.get('data.json', { params: { name: 1, age: 2 } }).then((res) => {
+      console.log(res);
+    }).catch((res) => {
+      console.log(res);
+    })
+
+
+    //----------------------------------------------------
+    // function axios(url){
+    //   return new Promise((resolve,reject)=>{
+    //     $.ajax({
+    //       url:url,
+    //       success:()=>{
+    //         resolve()
+    //       },
+    //       error:()=>{
+    //         reject()
+    //       }
+    //     })
+    //   })
+    // };
+    // axios(url).then(()=>{},()=>{});
+
+
+    // let obj = {
+    //   name: 100,
+    //   options: {
+    //     ss: 200
+    //   }
+    // }
+
+    // let {
+    //   options:{
+    //     baseURL,
+    //     params
+    //   }
+    // } = obj;
+    // // console.log(ss);
+    // console.log(options);
+    // 'name=1&age=2'==> split('&')-->['name=1','age=2']
+
+      // item.split('=');-->['name','1']
+
+  </script>
+</body>
+
+</html>

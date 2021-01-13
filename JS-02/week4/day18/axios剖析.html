@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <script src="./node_modules/axios/dist/axios.js"> </script> -->
+    <script>
+        // axios是一个函数(同时也是一个对象)
+        // 在自己身上还存储了一些常用的方法
+        // get delete head options
+        // patch post put
+        // all
+        // defaults
+        // console.dir(axios)
+
+        (function () {
+
+            function axios(url, options) {
+                return new Promise((resolve, reject) => {
+                    // 发送你的ajax请求，当请求完成以后方调用resolve
+                    let { method, data, params, baseURL, timeout, headers, transformRequest, cache } = options;
+                    let xhr = new XMLHttpRequest;
+
+                    // 0.把baseURL和url拼接到一起
+                    url = baseURL + url;
+                    // 1.如果当前params有值，并且是get系列的请求，那就把params变成字符串拼接到url后边
+                    let reg = /^(GET|DELETE|HEAD|OPTIONS)$/i;
+                    if (reg.test(method) && params) {
+                        let str = '';
+                        for (let key in params) {
+                            if (!params.hasOwnProperty(key)) break;
+                            str += `${key}=${params[key]}&`
+                        }
+                        str = str.slice(0, str.length - 1);
+                        params = str;
+
+                        let mark = url.includes('?') ? "&" : "?";
+                        url += `${mark}${params}`;
+                    }
+
+                    // 如果当前的timeout有值，就给人家设置
+                    if (timeout) {
+                        xhr.timeout = timeout;
+                    }
+
+                    // 是否走缓存
+                    // 如果当前是get系列请求，而且cache的值是false，那就在url后边拼接一个时间戳或者字符串
+                    if (reg.test(method) && !cache) {
+                        let mark = url.includes('?') ? "&" : "?";
+                        url += `${mark}_=${Math.random()}`
+                    }
+
+                    // 如果当前请求时post系列请求，这时候参数的格式处理就交给transformRequest
+                    if (!reg.test(method)) { // 说明当前是post系列请求
+                        data = transformRequest(data);
+                        // 当前这个函数的返回值就是处理好之后的参数
+                    }
+
+                    xhr.open(method, url)
+                    // 处理headers
+                    // 如果当前的headers有值在进行处理
+                    if (headers) {
+                        for (let key in headers) {
+                            if (!headers.hasOwnProperty(key)) break;
+                            xhr.setRequestHeader(key, encodeURI(headers[key]))
+                        }
+                    }
+                    xhr.onreadystatechange = function () {
+
+                    };
+                    xhr.send(data)
+                })
+            }
+            axios.defaults = {
+                baseURL: '',
+                params: null, // get系列请求的参数
+                data: null, // post系列请求的参数
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                transformRequest: function (data) {
+                    if (!data) return data;
+                    let str = '';
+                    for (let key in data) {
+                        str += `${key}=${data[key]}&`
+                    }
+                    str = str.slice(0, str.length - 1);
+                    return str;
+                },
+                transformResponse: function (data) {
+                    return JSON.parse(data)
+                },
+                timeout: null,
+                cache: true,
+            }
+            function mergeOptions(options) {
+                // 当前函数就是用来合并参数用的，当前函数的返回值就是合并之后的对象
+                // 如果直接合并，那defaults里的headers里的参数就会被覆盖，咱们不能这样做，得把之前的headers里的参数留下
+                let newHeaders = { ...axios.defaults.headers, ...options.headers };
+
+                return { ...axios.defaults, ...options, headers: newHeaders }
+            }
+
+            // axios.get = function (url, options) {
+
+            //   let res = mergeOptions(options);// res就是合并之后的大对象
+            //   res.method = 'get';
+            //  return axios(url,res);  // 发送ajax请求
+            //  // new PromiseSend(url,res);执行结果是啥，那get函数的直接过就是啥
+            // };
+            ['get', 'delete', 'head', 'options'].forEach(item => {
+                axios[item] = function (url, options) {
+                    let res = mergeOptions(options);
+                    res.method = item;
+                    return axios(url, res);
+                }
+            });
+
+            // axios.post = function(url,data,options){
+            //   // 把参数进行合并
+            //   options.data = data;
+            //   options.method = 'post';
+            //   let res = mergeOptions(options);
+            //   console.log(res);
+            //   return axios(url,res);  // 发送ajax请求
+            // };
+            ['post', 'put', 'patch'].forEach(item => {
+                axios[item] = function (url, data, options) {
+                    options.data = data;
+                    options.method = item;
+                    let res = mergeOptions(options);
+                    return axios(url, res);
+                }
+            })
+
+            axios.all = function (promiseAry = []) {
+                // 把Promise.all(promiseAry)的执行结果给到axios.all上
+                return Promise.all(promiseAry);
+            };
+            window.axios = axios; // 把当前作用域的额axios函数暴露在全局
+        }());
+
+        axios.defaults.timeout = 3000;
+        axios.defaults.baseURL = '';
+        // let res = axios.get('data.json', {
+        //     params: { name: 1, age: 2 },
+        //     headers: {ss: 100},
+        //     timeout: 1000,
+        //     cache:false
+        //   }); // 当前get函数的返回结果是promsie的实例
+
+        // let res = axios.post('data.json',{name:1,age:2},{
+        //     headers:{
+        //       ss:100
+        //     },
+        //     timeout:1000
+        // })
+
+
+        console.dir(axios)
+
+    </script>
+</body>
+
+</html>
