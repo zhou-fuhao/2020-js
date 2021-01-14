@@ -171,7 +171,7 @@ let userAddModule = (function () {
 				} else {
 					return Promise.reject();
 				}
-			}).catch((res) => {
+			}).catch(() => {
 				alert('提交失败，请重试！');
 			});
 		});

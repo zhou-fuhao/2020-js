@@ -37,8 +37,8 @@ let customerAddModule = (function () {
                     QQ,
                     address,
                     type, //重点客户、一般客户、放弃客户
-                    userId,
-                    userName,
+                    // userId,
+                    // userName,
                     weixin
                 }
             } = res;

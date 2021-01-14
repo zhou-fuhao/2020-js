@@ -166,7 +166,7 @@ let userListModule = (function () {
 									}
 								});
 							} else {
-								alert('删除失败');
+								alert('删除失败，请重试！');
 							}
 						});
 					}
