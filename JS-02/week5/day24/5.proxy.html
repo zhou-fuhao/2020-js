@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  11111
+  <script src="./node_modules/jquery/dist/jquery.js"></script>
+  <script>
+    // proxy代理
+    // 跨域是后台之间是不存在的，服务器和服务器之间的请求没有跨域之说
+
+    // https://www.jianshu.com/asimov/subscriptions/recommended_collections
+    $.ajax({
+      url:'http://127.0.0.1:8888/asimov/subscriptions/recommended_collections',
+      success:(res)=>{
+        console.log(res);
+      }
+    })
+    // vue.config.js
+    //  {
+    //    proxy:{
+    //      origin:'https://www.jianshu.com'
+    //    }
+    //  }
+     // 在线上nginx上也需要配置一下
+     
+  </script>
+</body>
+</html>

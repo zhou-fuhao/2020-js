@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // ajax 原生的
+    // axios 他是promise和ajax的封装版
+    // fetch 原生的请求的方法
+
+    // console.log(fetch('./index.json'));
+
+    // 当前fetch方法的执行结果是一个promise实例，
+    // 而且不管当前你是成功的请求还是失败的请求(200,300,400,500)，promise实例的状态都是成功的
+    // 仅当网络故障时或请求被阻止时，才会标记为 reject。(此时的promsie是来的状态才会是失败的)
+
+    // 在window里有一个Navigator对象，里边存储了当前发送请求的浏览器的类型，如果是移动端还包括手机的型号
+
+    // fetch在默认情况下是不允许携带cookies
+
+    fetch('./index.json',{
+      // method:'get' 请求方式
+      // body: JSON.stringify(data), // 请求主体
+      // credentials: (include, same-origin, *omit) 设置当前资源凭证的是否携带
+            // include:不管是同域还是跨域，都允许携带资源凭证
+            // same-origin:只有在同域才允许携带资源凭证
+            // *omit :不允许携带资源凭证
+      // headers:{xx:100}; // 设置请求头
+    
+
+    }).then((res)=>{
+      // console.log(res.json());
+      console.log(res);
+      // res中有一个ok属性，他代表了当前请求的状态，如果是成功的请求，那他的值就是true，如果是失败的请求，按他的值就是false
+
+      return res.json(); // 返回值是一个promsie实例，当把返回的文件读取完成，当前的promise是开的状态就会变成成功态，还会把读取的内容传递给resolve的实参
+    }).then((res)=>{
+      console.log(res);
+    });
+    // 在fetch中想拿到当前请求主体，必须return一个res.json执行，然后在下一个then中就可以拿到响应体了
+  </script>
+</body>
+</html>

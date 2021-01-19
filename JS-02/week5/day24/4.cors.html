@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let xhr = new XMLHttpRequest;
+    xhr.open('get', 'http://127.0.0.1:8888/list');
+    xhr.withCredentials = false;
+    xhr.onreadystatechange = function () {
+      if (xhr.status === 200 && xhr.readyState === 4) {
+        console.log(xhr.responseText);
+      }
+    };
+    xhr.send();
+
+    /* 
+    CORS前端不需要做配置，后台设置一些响应头就可以
+    */
+  </script>
+</body>
+
+</html>

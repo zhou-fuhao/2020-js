@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="./node_modules/jquery/dist/jquery.js"></script>
+  <script>
+    // 在客户端，有一些请求(ajax,fetch)是同源策略，就是只能在同域才能请求
+    // 在客户端，有一些请求非同源策略，就是可以在不同域发送请求
+    // 浏览器本身可以往任何地址发送请求
+    // link script img  video audio 都可以往任何地址发送请求(而且不受源的限制)
+
+    // $.ajax({
+    //   url:'http://127.0.0.1:8888/list',
+    //   success:(res)=>{
+    //     console.log(res);
+    //   }
+    // });
+
+    // Access to XMLHttpRequest at 'http://127.0.0.1:8888/list' from origin 'http://127.0.0.1:5500' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+  </script>
+  <!-- <script src="http://127.0.0.1:8888/list"></script> -->
+  <script>
+    // script虽然是非同源策略，能够随意的发请求，但是你在js中拿不到当前请求的结果
+  // 一般情况下利用script发送跨域请求必须需要后台的配合
+  function fn(res){
+    console.log(res); // 123
+  }
+  // 咱们先在全局定义一个全局的函数，然后在发送script请求的时候携带一个参数callback=fn,这时候后台接受到请求之后，会把当前的参数callback的值结构出来，然后给你返回一个字符串 'fn(123)',还会把当前响应内容放到执行小括号的内部，最后给客户端进行返回
+
+  // 这时候客户端拿到 'fn(123)',浏览器会把当前字符串解析成js代码执行，这时候浏览器的全局函数fn就会执行了
+
+  // 这种跨域的形式就是jsonp跨域
+
+  // 只能发送get请求
+  // 这种跨域形式必须需要后台的配合
+  // 前端用起来不方便
+  </script>
+  <!-- <script src="http://127.0.0.1:8888/list?callback=fn"></script> -->
+  <!-- fn(123) -->
+
+  <script>
+  // 封装一个jsonp方法
+
+  function jsonp(options){
+    return new Promise((resolve,reject)=>{
+      let  {url,callback,params} = options;
+      // jsonp的必要条件 全局的函数，script标签
+      let script = null;
+      window[callback] = function(res){
+        // console.log(res);
+        // 如果当前的函数执行，说明已经请求成功了，那这时候需要把promise的实例改为成功态
+        resolve(res);
+        // 当把请求完成之后把script标签和全局的fn函数删除掉
+        document.body.removeChild(script);
+        window[callback] = null;
+      };
+      // 把当前的params里的参数拼接到url后边
+      // 还得拼接一个callback参数
+
+      url+= `${url.includes('?') ?'&' : '?'}callback=${callback}`;
+      console.log(url);
+      script = document.createElement('script');
+      script.src = url;
+      document.body.appendChild(script);
+    })
+  }
+  // jsonp({
+  //   url:'http://127.0.0.1:8888/list?name=3',
+  //   callback:'fn',
+  //   params:{name:1,age:2}
+  // }).then((res)=>{
+  //   console.log(res);
+  // });
+  jsonp({
+    url:'http://matchweb.sports.qq.com/kbs/calendar:8080?columnId=100000',
+    callback:'fn',
+    params:{name:1,age:2}
+  }).then((res)=>{
+    console.log(res);
+  });
+
+  // http://matchweb.sports.qq.com/kbs/calendar:8080?columnId=100000
+  
+  // 此链接的后台就是使用的jsonp跨域机制
+  </script>
+
+
+</body>
+</html>
