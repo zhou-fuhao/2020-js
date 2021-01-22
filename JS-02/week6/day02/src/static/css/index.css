@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  background: url(../images/1.jpg);
+}
+div {
+  width: 200px;
+  height: 200px;
+  background-color: red;
+  border: 1px solid black;
+}
