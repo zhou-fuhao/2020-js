@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 小胡子里面可以直接从vue的实例上取值 -->
+    <div id="app">{{message}}</div>
+
+    <div id='box'>
+        <button @click='sub'>点击</button>
+        《《《 <span>{{num}}</span> 》》》
+        <button @click='add'>点击</button>
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+
+    // 视图层
+    // 数据层
+
+    // 数据 对 视图
+
+    // 创建一个viewModel监听器
+    // vue的重要特点是 双向数据绑定
+    var app = new Vue({
+        // 确定当前监听器监听的范围
+        el: '#app',
+        // 监听的数据存放的容器
+        data: {
+            // 当前data中的属性会挂载到当前app实例上
+            message: 'hello world!'
+        }
+    });
+</script>
+<script>
+    // 点击按钮增加
+    let box = new Vue({
+        el: '#box',
+        data: {
+            num: 0
+        },
+        // 存放的是当前项目使用的方法
+        methods: {
+            // vue会把当前methods里的方法挂载到box实例上
+            // 把data中的数据修改(修改后会自动刷新)
+            // 当前methods里的方法中的this就是当前的实例box
+            // 当前methods里创建的方法一般是普通函数
+            add() {
+                this.num++;
+            },
+            sub() {
+                this.num--;
+            }
+        }
+    });
+</script>

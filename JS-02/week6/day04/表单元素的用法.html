@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+        单选框
+            1.都会进行v-model进行分组，单选框的数据是一个单一的值
+            2.每一个框都有自己的value值，谁被选中，那当前data中的数据就是value的值
+
+        复选框
+            1.按照v-model进行分组，复选框的数据是一个数组的形式
+            2.每一个框都有自己的value值，谁被选中，谁的value值就会被放到checkList数组中
+     -->
+    <div id="app">
+        <input type="radio" value="1" v-model='sex'>男
+        <input type="radio" value="0" v-model='sex'>女
+        <br>
+        <br>
+        <button @click='btn'>提交</button>
+
+        <!-- 用一个div包裹起来，那这些复选框就是一起的了，只要有一个复选框的值发生了改变，div上的change事件就会触发，利用的就是事件委托 -->
+        <br>
+        <input type="checkbox" v-model='all' @change='allCheck'>全选
+        <div @change='brand'>
+            <input type="checkbox" v-model="checkList" value="apple">苹果
+            <input type="checkbox" v-model="checkList" value="banana">香蕉
+            <input type="checkbox" v-model="checkList" value="pear">梨子
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            sex: '0',
+            checkList: [],
+            all: false
+        },
+        methods: {
+            btn() {
+                // console.log(this.sex);
+            },
+            // 单选
+            brand() {
+                // 获取当前勾选的个数
+                let len = this.checkList.length;
+                // 如果length是3，那就说明用户把每一个复选框都勾上
+                // 如果length不是4，那就说明用户有没有勾上的
+                if (len >= 3) {
+                    this.all = true;
+                } else {
+                    this.all = false;
+                }
+            },
+            // 全选
+            // 如果当前的全选this.all的值是true，那就把所有的复选框全都勾上，如果this.all的值是false，那就全都不勾(把checkList置为空数组)
+            allCheck() {
+                // click事件执行时间要早于数据更新的时间
+                // 所以获取到的this.all是上一次的值
+
+                // change事件的执行时间要晚于数据更新的时间
+                // 所以获取到的this.all就是最新的值
+                if (this.all) {
+                    // 数据变，对应的视图就会变
+                    this.checkList = ['apple', 'banana', 'pear'];
+                } else {
+                    this.checkList = [];
+                }
+
+            }
+        }
+    });
+</script>

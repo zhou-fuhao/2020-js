@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model='text'>
+        <div>正常的数据：{{text}}</div>
+        <div>反转后的数据：{{reversal}}</div>
+        
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+
+    let vm = new Vue({
+        el: '#app',
+        // 属性
+        data: {
+            text: ''
+        },
+        // 方法
+
+        // 用methods中的方法和computed中的属性都能实现一样的功能
+        // 但是computed中的属性是有缓存的，性能要好
+        // methods中的方法是没有缓存的，只要数据更新，视图就会更新，让方法重新执行
+        methods: {},
+        // 方法
+        filters: {},
+
+        // 属性
+        // computed中的属性最终也会挂载到当前vue的实例上
+        // 计算属性：是一个方法，不是一个属性，在视图里不能加小括号调用
+        // 计算属性：有自己的缓存机制，当第一次执行的时候，产生一个值缓存下来，当后期视图重新刷新的时候，当前reversal会看看依赖的this.text属性有没有变化，如果没有发生变化，reversal不会重新执行，而是拿上次的缓存直接赋值到视图中
+        // 计算属性：一般都会有依赖的值。最大的特点，依赖别的属性的变化而变化
+        // 计算属性的值：当前reversal return的结果，如果依赖的this.text的值发生了变化，要重新计算，重新给视图一个新的值
+        computed: {
+            reversal() {
+                return this.text.split('').reverse().join('');
+            }
+        }
+    });
+</script>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .container {
+            box-sizing: border-box;
+            margin: 20px auto;
+            width: 400px;
+            padding: 10px;
+            border: 1px solid red;
+        }
+
+        .container h2 {
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 1px dashed gainsboro;
+            padding-bottom: 10px;
+            color: orangered;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <vote title="车轮滚滚1"></vote>
+        <!-- <vote title="车轮滚滚2"></vote> -->
+
+    </div>
+
+
+    <template id="vote">
+        <div class="container">
+            <h2>{{title}} (<span>{{sum}}</span>)</h2>
+            <vote-content></vote-content>
+            <vote-footer></vote-footer>
+        </div>
+    </template>
+
+    <template id="voteContent">
+        <div class="content">
+
+            <p>支持人数：<span>{{supportNum}}</span></p>
+            <p>反对人数：<span>{{opposeNum}}</span></p>
+            <p>支持率：<span>{{yes}}%</span></p>
+        </div>
+    </template>
+    <template id="voteFooter">
+        <div class="footer">
+            <button type="button" style="margin-right: 30px;">支持</button>
+            <button type="button">反对</button>
+        </div>
+    </template>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+
+
+        let voteContent = {
+            template: '#voteContent',
+            data() {
+                return {
+                    supportNum: 0,
+                    opposeNum: 0
+                }
+            },
+            computed: {
+                yes() {
+                    if (this.supportNum == 0) {
+                        return 0
+                    }
+                    else {
+                        return this.supportNum / (this.supportNum + this.opposeNum) * 100
+                    }
+
+                }
+            }
+        }
+
+        let voteFooter = {
+            template: '#voteFooter',
+            data() {
+                return {
+
+                }
+            }
+        }
+        let vote = {
+            template: '#vote',
+            props: ['title'],
+            data() {
+                return {
+                    sum: 0
+                }
+            },
+            components: {
+                voteContent,
+                voteFooter
+            }
+        };
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '车轮滚滚'
+            },
+            components: {
+                vote
+            }
+        });
+    </script>
+</body>
+
+</html>

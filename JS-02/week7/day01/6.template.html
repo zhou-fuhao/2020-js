@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        template会替换这里的数据
+    </div>
+
+    <!-- template模版可以根据ID获取 -->
+    <template id="first">
+        <div @click="fn">
+            <span>{{msg}}</span>
+        </div>
+    </template>
+
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    // 如果vue在初始化的时候有template选项就会把template的属性值进行编译，编译完成之后把app元素进行替换
+    // 模版里的元素可以正常使用小胡子语法，也可以正常使用methods中的方法，等等
+    // 模版里只能有一个根元素
+    let vm = new Vue({
+        el: '#app',
+        template: '#first',  // 获取页面中的template模版
+        // template: `<div id="app" @click="fn"><span>{{msg}}</span></div>`,
+        data: {
+            msg: 200
+        },
+        methods: {
+            fn() {
+                alert(`点击 ${this.msg} 时触发`);
+            }
+        }
+    });
+</script>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <!-- 函数绑定的时候可以小括号也不可以不带，如果带小括号，事件对象就没有，如果想要的话就使用$event占位，加上小括号的好处就是可以随意传参 -->
+        <button @click='fn($event,100,200)'>{{msg}}</button>
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        // 注意：data中的属性和methods的属性不要重名
+        // 存放响应式的数据
+        // data中的属性最后都会挂载到当前vue实例上
+        data: {
+            msg: '点击',
+            // fn: 100
+        },
+        // 存放的方法
+        // methods中属性最后都会挂载到当前vue实例上
+        methods: {
+            // 可以正常获取事件对象
+            // 当前方法里的this就是vue实例
+            // 如果是箭头函数，this就是window
+            fn(e, x, y) {
+                console.log(e, x, y);
+            }
+        }
+    });
+</script>

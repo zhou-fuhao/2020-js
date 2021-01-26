@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- 使用自定义事件的方法实现子改父 -->
+        <!-- 相当于当前自己创建了一个自定义事件类型     fn就是这个事件类型对应的池子里的方法 -->
+        <com :msg="msg" @changeparent="fn"></com>
+    </div>
+
+
+    <!-- 组件模版 -->
+    <template id="first">
+        <div>
+            <div>我是com组件</div>
+            <div>{{msg}}</div>
+            <button @click="ss">改变</button>
+        </div>
+    </template>
+
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+
+    let com = {
+        template: '#first',
+        props: ['msg'],
+        methods: {
+            ss() {
+                // 发布changeParent事件类型对应的事件池子里的方法
+                this.$emit('changeparent', 9999);
+            }
+        }
+    }
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 100
+        },
+        methods: {
+            fn(value) {
+                this.msg = value;
+            }
+        },
+        components: {
+            com
+        }
+    });
+
+
+</script>

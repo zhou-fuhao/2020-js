@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <com1></com1>
+        ----------------------------
+        <com2></com2>
+    </div>
+
+
+
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        let eventBus = new Vue(); // 创建一个第三方的事件总线 (事件车)
+        // vue实例身上有 $emit发布 和$on订阅方法
+        // let eventBus = {
+        //   changeCom1:[fn]
+        // };
+
+
+        let com1 = {
+            template: `<div>
+                      <div>我是{{msg}}组件一</div>
+                  </div>`,
+            data() {
+                return {
+                    msg: 100
+                }
+            },
+            methods: {
+                fn(value) {
+                    this.msg = value;
+                    console.log(22, value);
+                },
+                fn1(value) {
+                    console.log(11, value);
+                }
+
+            },
+            created() {
+                eventBus.$on('changeCom1', this.fn);
+                eventBus.$on('changeCom1', this.fn1);
+                // 相当于在eventBus身上增加了一个changeCom1事件类型，并且往对应的池子里订阅了fn方法
+            },
+
+        };
+        let com2 = {
+            template: `<div>
+                      <div>我是组件二</div>
+                      <button @click="ss">改变组件一的msg</button>
+                  </div>`,
+            methods: {
+                ss() {
+                    eventBus.$emit('changeCom1', 800);
+                }
+            }
+        };
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 100
+            },
+            components: {
+                com1,
+                com2
+            }
+        });
+    </script>
+</body>
+
+</html>

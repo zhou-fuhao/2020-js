@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #outer {
+            margin: 0 auto;
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+
+        #inter {
+            margin: 0 auto;
+            width: 100px;
+            height: 100px;
+            background-color: green;
+        }
+
+        #center {
+            margin: 0 auto;
+            width: 50px;
+            height: 50px;
+            background-color: purple;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div id="outer" @click.once="fn1">
+            outer
+            <div id="inter" @click="fn2">
+                inter
+                <div id="center" @click="fn3">center</div>
+            </div>
+        </div>
+
+        <!-- 事件修饰符可以连续写多个 -->
+        <a href="https://www.baidu.com" @click.prevent.stop='baidu'>百度</a>
+
+        <!-- 可以链式调用 -->
+        <input type="text" @keydown.enter='fn4'>
+        <!-- 鼠标键入 Ctrl+c 触发事件 -->
+        <!-- <input type="text" @keydown.ctrl.c='fn4'> -->
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 事件修饰符
+        // 事件修饰符就是用来修饰你此次的事件行为的
+
+        // 阻止事件的冒泡传播 e.cancelBubble = true;   e.stopPropagation()
+        // .stop 阻止事件的冒泡传播机制
+        // .prevent 阻止事件的默认行为  a标签的点击事件
+        // .capture 控制方法在捕获阶段执行  //从外往里捕获
+        // .once 只让当前方法触发一次(不会阻止事件的冒泡)
+        // .self 只有点击自己的时候才能触发方法执行(通过冒泡或者捕获都不能触发方法)
+        // .passive 
+
+        // 键盘的事件修饰符
+        // .enter(13) .ctrl(17) .c(67) 
+        // 键盘修饰符也可以使用keyCode码
+        // 只有用户按下的是当前指定的按键的时候就会触发响应的方法
+
+
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                fn1() {
+                    console.log('outer');
+                },
+                fn2() {
+                    console.log('inter');
+                },
+                fn3() {
+                    console.log('center');
+                },
+                baidu() {
+                    alert(1);
+                },
+                fn4(){
+                    console.log(11);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

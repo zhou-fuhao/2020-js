@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" @keydown.enter="fn" v-model="text">
+        <ul>
+            <li v-for="(item,index) in ary">
+                {{item.value}}
+                <button @click="del(item.id)">删除</button>
+            </li>
+        </ul>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 你就想着操作数据就可以了
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                text: '',
+                ary: [
+                    {
+                        id: Math.random(),
+                        value: 'hello'
+                    },
+                    {
+                        id: Math.random(),
+                        value: 'world'
+                    },
+                ]
+            },
+            methods: {
+                fn() {
+                    console.log(this.text);
+                    this.ary.push({
+                        id: Math.random(),
+                        value: this.text
+                    });
+                    this.text = '';
+                },
+                del(id) {
+                    console.log(id);
+                    this.ary = this.ary.filter((item) => {
+                        return item.id !== id
+                    })
+                }
+            },
+            computed: {
+
+            },
+            watch: {
+
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" @keydown.enter="inp" v-model="text">
+        <div>要添加的数据：{{text}}</div>
+        <ul>
+            <li v-for="(item,index) in arr">
+                {{item.id}}、{{item.text}}
+                <button @click="btn(item.id)">{{dele}}</button>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            text: '',
+            arr: [],
+            dele: '删除'
+        },
+        methods: {
+            inp() {
+                this.arr.push({ id: Math.random(), text: this.text });
+                this.text = '';
+            },
+            btn(arrId) {
+                this.arr = this.arr.filter(item => {
+                    return item.id != arrId;
+                });
+            }
+        },
+        filters: {
+        },
+        computed: {}
+    });
+</script>

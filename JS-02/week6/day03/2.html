@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='box'>
+        <ul v-for='(item,index) in arr'>
+            <li v-if='index == 3'>{{index+1}}、
+                <span v-for="items in arr[3]">{{items}}</span>
+            </li>
+            <li v-else>
+                {{index+1}}、{{item}}
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#box',
+        data: {
+            arr: [1, 2, 3, { obj1: 4, obj2: 5 }]
+        },
+        methods: {}
+    });
+</script>

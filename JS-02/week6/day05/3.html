@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>选项卡</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+        .parts span {
+            display: inline-block;
+            width: 50px;
+            height: 20px;
+            text-align: center;
+            border: 1px solid #000000;
+        }
+
+        .parts .active {
+            border: 1px solid orange;
+        }
+
+        .block {
+            width: 200px;
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="parts">
+            <span @click="func('A');" v-bind:class="{'active':(active=='A') }">一</span>
+            <span @click="func('B');" v-bind:class="{'active':(active=='B') }">二</span>
+            <span @click="func('C');" v-bind:class="{'active':(active=='C') }">三</span>
+        </div>
+
+        <div class="block" v-if="block=='A'">
+            111
+        </div>
+        <div class="block" v-if="block=='B'">
+            222
+        </div>
+
+        <div class="block" v-if="block=='C'">
+            333
+        </div>
+
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                active: 'A',
+                block: 'A'
+            },
+            methods: {
+                func: function (data) {
+                    this.active = data;
+                    this.block = data;
+                }
+            }
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- {{fn(2)}}
+        <br>
+        {{fn(4)}} -->
+
+        <!-- | 是管道符 -->
+        <!-- 管道符左侧可以传多个值，用逗号分隔 -->
+        <!-- {{num,num1 | toFixed()}} -->
+
+        <!-- 取两位小数 -->
+        {{num | toFixed()}}
+
+        <br>
+        <!-- 不足十位补零 -->
+        {{zero | addZero()}}
+
+        <br>
+        <!-- 在管道中写多个方法，会从左到右依次执行 -->
+        <!-- 取两位小数，十位不足补零 -->
+        {{num | toFixed(2) | addZero}}
+
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            num: 3.1415926,
+            zero: 9
+        },
+        methods: {
+            // 如果在小胡子里放置函数执行，那最后小胡子里渲染的数据就是函数执行的结果
+            fn(data) {
+                return this.num.toFixed(data);
+            }
+        },
+        // filters对象中存储的也是方法
+        // 这些方法是专门用来二次处理数据的
+        // filters中的方法也会被添加到vue的实例上
+        filters: {
+            // 方法执行的时候可以不加小括号
+            // 方法里的第一个形参就是管道符左侧的值
+
+            // 取两位小数
+            toFixed(val) {
+                // return 的是什么，视图就显示什么
+                return val.toFixed(2);
+            },
+            // 不足十位 补零 09 10 12
+            addZero(value) {
+                value = Number(value);
+                return value < 10 ? '0' + value : value;
+            }
+        }
+    });
+</script>

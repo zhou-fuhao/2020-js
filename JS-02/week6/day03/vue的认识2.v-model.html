@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 给普通的行间属性加上：之后，就可以动态取值 -->
+        <!-- @就是绑定事件类型 -->
+        数额：<input type="text" :value='message' @input='fn'><br>
+        对应的美元：<span>{{message/6.7}}</span>
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    // v-model 是vue内置的行间指令，可以让表单元素实现双向的数据绑定
+    // v-model 就是 :value 和 @input 的综合写法，他们就是语法糖
+    // 视图<==>数据
+
+    // input框的内容发生变化，就会触发input的事件，对应的fn方法就会执行，在fn里只要得到最新的内容赋值给message即可
+    // message数据一旦更新，视图上使用message的地方都得更新
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            message: 100
+        },
+        methods: {
+            fn(e) {
+                // 拿到input框最新的内容，赋值给message
+                this.message = e.target.value;
+            }
+        }
+    });
+</script>

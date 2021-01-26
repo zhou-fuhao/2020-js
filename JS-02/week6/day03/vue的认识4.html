@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{msg}} ||
+        {{arr}} ||
+        {{obj.name}}
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    // 1.vue的data中的值如果是null 或 undefined，在视图中都是空
+    // 2.其余的数据类型显示到视图中都是字符串类型
+        // 如果是对象的话(包含数组)，会JSON.stringify转换
+    // 3.data中不是所有的数据都是响应式的，
+        // 普通对象在初始化的时候没有某个属性，那在视图上使用了，以后在更新这个属性值的时候，视图不会刷新
+        // 解决办法，
+        // 1.在vue中的data初始化的时候，可以给当前的属性赋默认值obj:{name:null}
+        // 2.直接把obj对象进行替换(堆内存替换) obj:{} 替换 vm.obj={}
+        // 3.利用vue实例自己的方法进行设置 vm.$set(obj,key,value) let obj = {}; vm.$set(obj,'name',value);
+
+        // vm.$set(obj,key,value);视图会刷新
+        // vm.obj = {name:100};视图会刷新
+        // vm.obj.name = 100;视图不会刷新
+    // -----------------------------------------------------------
+    // 如果data中的值是一个数组，通过length或者原生的方法进行增删改(arr[3]=100)，视图是不刷新的
+        // 解决办法
+        // vue对数组的原型进行重定向，数组的pop，push，unshift，shift，splice，sort，reverse进行重新的封装，通过这几个方法改变数组是有响应式的
+        // vm.arr.length--; 视图不会刷新
+        // vm.arr[3]=4 ;  视图不会刷新
+        // vm.arr.push(4);视图会刷新
+    let obj = {};
+    let vm = new Vue({
+        el: '#app',
+        // 把data中的属性挂载到vue的实例中，当挂载的时候就会给每一个属性加上get、set方法(只要当前的属性有get、set方法，那就是响应式)
+        data: {
+            msg: { name: 100 },
+            arr: [1, 2, 3],
+            // obj: { name: null } //第一种
+            // obj: { } //第二种
+            obj: obj //第三种
+        },
+        methods: {}
+    });
+    // 对象
+    // 第一种  obj: { name: null }
+    // 第二种  vm.obj = { }
+    // 第三种  vm.$set(obj,'name',value)
+
+    // 数组
+    // vm.arr.push(4);
+</script>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" @keydown.enter="inp" v-model="text">
+        <ul>
+            <li v-for="(item,index) in arr">
+                {{index+1}}、{{item}}
+                <button @click="btn(index)">{{dele}}</button>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            text: '',
+            arr: [],
+            dele: '删除'
+        },
+        methods: {
+            inp() {
+                this.arr.push(this.text);
+            },
+            btn(val) {
+                this.arr.splice(val, 1);
+            }
+        },
+        filters: {},
+        computed: {}
+    });
+</script>

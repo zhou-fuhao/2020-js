@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 在指令中的值如果是js数据类型的值，直接渲染，如果不是js数据类型的值，那就去下边data或methods中寻找属性，如果找不到就会报错 -->
+        <div v-text="msg"></div>
+        <!-- 报错 -->
+        <!-- <div v-text="aaa"></div> -->
+
+        <!-- <div v-text="tag"></div>
+        <div v-html="tag"></div> -->
+
+        <!-- <span>{{msg}}</span> -->
+
+        <!-- 用法相等 -->
+        <!-- <span v-bind:ss="msg">span</span>
+        <span :ss="msg">span</span> -->
+
+        <!-- 用法相等 -->
+        <!-- <button v-on:click="fn">点击</button>
+        <button @click="fn">点击</button> -->
+
+        <div v-once>{{msg}}</div>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- v-if的使用 -->
+        <!-- <div v-if="flag == 0">1111</div>
+        <div v-else-if="flag == 1">1212</div>
+        <div v-else>2222</div>
+
+        <div>{{flag == "1" ? "显示true" : "显示false"}}</div>
+
+        <div v-show="!flag">我是男生</div>
+        <div v-show="flag">我是女生</div> -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        
+        <img :src="src" alt="" v-show="flag" style="height: 100px;width: 100px;">
+        <button @click="btn">{{text}}</button>
+
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    // vue中的指令
+        // 都是按照v-xxx处理的，它是vue中规定给元素设置的自定义属性
+        // 当vue执行的时候会把带有特殊指令的标签按照指令记性特殊的处理
+        // v-html/v-text：把指定的内容放到元素中，v-html可以识别字符串的标签，使用{{}}会使页面闪一下，对用户不友好，但是使用v-html或v-text进行渲染，页面不会闪，用户体验好
+        // v-bind：使用当前元素中普通的行间属性进行动态取值(还可以简写成:)
+        // v-on：给当前元素绑定事件(还可以简写成@)
+        // v-once：获取的值只会刷新一次，就算以后数据刷新，视图也不改变
+
+        // v-if、v-else-if、v-else：可以对当前视图层的元素进行显示隐藏的判断(是对dom的卸载和加载)
+        // v-show：判断元素的显示隐藏的，控制的是元素的样式(dom元素结构一直存在)
+        // v-if和v-show可以实现相同的功能，但是v-show适用于元素频繁显示和隐藏的场合，v-if用于初次加载的时候判断显示不显示的场合
+
+        // v-model：实现双向数据绑定【数据<==>视图】，用于表单元素
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 100,
+            tag: '<b>100</b>',
+            src: './2.jpg',
+            flag: true,
+            text: "隐藏"
+        },
+        methods: {
+            fn(){
+                alert('点击按钮');
+            },
+            btn(){
+                this.flag = !this.flag;
+                if(this.falg){
+                    this.text = "隐藏";
+                } else {
+                    this.text = "显示";
+                }
+
+            }
+        }
+    });
+</script>

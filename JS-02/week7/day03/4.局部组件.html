@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <com></com>
+        <com2></com2>
+    </div>
+
+    <template id="first">
+        <div>我是局部组件{{msg}}</div>
+    </template>
+    <template id="second">
+        <div>ssoonn我是局部组件{{msg}}</div>
+    </template>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    // 局部组件 1.创建组件 2.注册组件 3.使用组件
+
+    // 全局组件 1.创建组件 2.使用组件
+
+
+    let com = {
+        template: '#first',
+        data() {
+            return {
+                msg: 200
+            }
+        }
+    }
+    
+    let com2 = {
+        template: '#second',
+        data() {
+            return {
+                msg: 200
+            }
+        }
+    }
+    
+
+    // 局部组件和全局组件一样，都有自己的实例，自己的生命周期、data、methods...
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            num: 100
+        },
+        // 注册组件
+        components: {
+            com: com,
+            com2: com2,
+        }
+    });
+</script>

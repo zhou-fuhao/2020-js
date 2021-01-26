@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        数额：<input type="text" v-model='message'><br>
+        对应的美元：<span>{{message/6.7}}</span>
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    // v-model 是vue内置的行间指令，可以让表单元素实现双向的数据绑定
+    // 视图<==>数据
+
+    // input框的内容改变会把对应的数据message的值进行更新，当数据message更新以后，视图中使用message的地方都会更新
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            message: 100
+        },
+        methods: {
+
+        }
+    });
+</script>

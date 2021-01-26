@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <div @click="fn($event,1,2)" :class="['box',{'ss':flag},{flag?'ss':'aa'}]" :style="[s]"></div> -->
+        {{res}},,,,,{{fn1()}}
+        <br>
+        {{msg}},,,,,,{{num1}}
+        <br>
+        {{num2}}
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                flag: true,
+                s: {
+                    width: '200px',
+                    color: 'res'
+                },
+                num: 100,
+                msg: 'hello world',
+                num1: 0,
+                num2: 100
+            },
+            methods: {
+                fn(e, num1, num2) { },
+                fn1() {
+                    console.log('methods');
+                    return this.num + 50;
+                }
+            },
+            computed: {
+                // 不是方法，是一个属性，也会挂载到vue实例上
+                // 这里的属性不要和data中的属性重名
+                // 有自己的缓存,一般计算属性都会有一个依赖的值，只有依赖的值发生变化，才会重新计算属性
+                // computed里不能使用异步
+                res() {
+                    console.log('computed');
+                    // setTimeout(()=>{
+                    //   console.log(100);
+                    // },3000);
+                    // let res = null;
+                    // setTimeout(()=>{
+                    //   res = this.num+50;
+                    // },10);
+                    // 此时的代码就不准了，因为当函数执行的时候，同步代码没有return，他会默认return undefined
+                    // return res;
+                }
+            },
+            watch: {
+                // 这里存放的是方法，此方法是实现对响应式的数据的监听的
+                // 而且只能监听vue实例上的属性
+                // watch里的方法支持异步的写法
+                msg(value) {
+                    // 他会监听msg属性，只要msg的值发生了变化，当前函数就会执行
+                    // value就是给当前属性设置的最新的值
+                    console.log(value);
+                },
+                num1(value) {
+                    // 这里不是必须要return，所以可以正常写异步的代码
+                    setTimeout(() => {
+                        this.num2 = this.num2 * value;
+                    }, 5000);
+                }
+            }
+        });
+
+    // 事件修饰符
+    // .stop
+    // .prevent
+    // .capture
+    // .once
+    // .self 只有通过本身才能触发对应的事件行为(通过冒泡还是捕获时触发不了的)
+
+    // 键盘事件修饰符
+    // .enter .13
+    // .ctrl.c
+
+
+
+    </script>
+</body>
+
+</html>

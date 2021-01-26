@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- 在组件的行间属性上如果想写一个指定的数据类型的值   :bbb="true" -->
+        <com :msg="msg" :fn="fn"></com>
+    </div>
+
+
+    <!-- 组件模版 -->
+    <template id="first">
+        <div>
+            <div>我是com组件</div>
+            <div>{{msg}}</div>
+            <!-- <button @click="ss">改变</button> -->
+            <button @click="fn(8888)">改变</button>
+        </div>
+    </template>
+
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+
+
+    let com = {
+        template: '#first',
+        props: ['msg', 'fn'],
+        methods: {
+            // 点击子级的button修改父级的数据
+            // ss() {
+            //     // console.log(this.fn);
+            //     this.fn(8888);
+            // }
+        }
+    }
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 100
+        },
+        methods: {
+            fn(value) {
+                this.msg = value;
+            }
+        },
+        components: {
+            com
+        }
+    });
+    
+    // 从子级组件中把父级的msg修改
+
+    // 子级直接修改父级是不可以的，但是父级自己改自己的数据是可以的，在父级身上定义一个改数据的方法，然后把这个方法传递给子级，在子级内部去执行这个方法，从而间接的去修改父级的数据
+
+
+</script>

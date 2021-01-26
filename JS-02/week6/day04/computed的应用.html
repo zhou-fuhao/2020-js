@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="checkbox" v-model="all">全选
+        <div>
+            <input type="checkbox" v-model="checkList" value="1">一
+            <input type="checkbox" v-model="checkList" value="2">二
+            <input type="checkbox" v-model="checkList" value="3">三
+            <input type="checkbox" v-model="checkList" value="4">四
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            checkList: [],
+            // all: false
+        },
+        methods: {},
+        filters: {},
+        computed: {
+            // 当前全选框的值是依赖checkList的变化而变化
+            // 因为每一次勾选的动作都能够把数据的checkList改变，所以all依赖的数据变了，会重新计算值
+            // all() {
+            //     return this.checkList.length === 4;
+            // }
+            all: {
+                get() {
+                    return this.checkList.length === 4;
+                },
+                // 可以在这里对checkList进行设置
+                set(value) {
+                    // 当前set函数会在操作的全选框的时候执行，value的值就是当前全选框的最新的状态，如果是true就是选中状态，把checkList中的值加满，如果是false就是没有选中，把checkList数组清空
+                    if (value) {
+                        this.checkList = ['1', '2', '3', '4'];
+                    } else {
+                        this.checkList = [];
+                    }
+                }
+            }
+        }
+    });
+</script>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        hello world
+        <com></com>
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    // 组件化的思想
+    // 组件：把相同的功能(结构、样式)的代码封装在一起，以后想使用这部分需求的话，直接调用这个组件即可，实现代码的复用，减少代码的冗余
+
+    // 特点
+    // 可复用
+    // 方便维护
+    // vue创建的每一个组件都是一个独立的个体(拥有自己完整的vm实例)，有独立的data、methods、完整的生命周期...，不同组件之间的数据互不干扰
+    // 组件还可以嵌套
+
+    // 组件：1.全局组件     2.局部组件
+    // 全局组件：在当前vue自己身上有一个component属性，执行可以创建一个全局组件
+    Vue.component('com', {
+        data() {
+            return {
+                msg: 100
+            }
+        },
+        methods: {
+
+        },
+        template: `<div>{{msg}}   我是com组件</div>`
+    });
+
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+
+        },
+        methods: {
+
+        },
+
+    });
+</script>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background: yellowgreen;
+        }
+
+        .y {
+            background: green;
+        }
+
+        .x {
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- 当前class里的对象中的box是style中的样式类名，flag是数据data中的属性，可以用过修改data的值从而进行控制类名的有无(flag中true显示，false不显示) -->
+        <!-- 如果有多个类名，可以以数组的形式进行书写 -->
+        <div :class="{box:flag}">中国</div>
+        <div :class="['x','y']">当前元素的类名就是x和y</div>
+        <ul>
+            <li v-for="(item,index) in arr" :class="['y',{x:index%2}]">{{item}}</li>
+            <!-- <li v-for="(item,index) in arr" :class="index%2 === 0 ? 'x':'y'">{{item}}</li> -->
+        </ul>
+
+        <!-- class的数组中的值如果是字符串，就会往style中找类名，如果数组中的值不是字符串，就会往data中找属性 -->
+        <div :class="[z]">自行车，渲染的类型就是bieming</div>
+
+        <div>------------------------------------------------------------</div>
+        <!-- 关于style的用法 -->
+        <div :style="{fontSize:num}">阿萨德</div>
+        <div :style="[abc,def]">金坷垃</div>
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            // 控制样式显示或不显示
+            flag: true,
+            arr: [100, 200, 300, 400],
+            z: "bieming",
+            num: "20px",
+            abc: {
+                width: '100px',
+                height: '100px',
+                background: 'blue'
+            },
+            def: {
+                border: '1px solid pink'
+            }
+        },
+        methods: {}
+    });
+</script>

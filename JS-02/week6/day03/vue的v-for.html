@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <!-- item是数组的每一项，index是每一项的索引，数组有几项就会生成几个li -->
+            <li v-for="(item,index) in arr">
+                我是第{{index+1}}个li
+                <div v-if="index == 3">
+                    <div v-for="items in item.objArr">{{items}}</div>
+                </div>
+
+                <!-- <div v-if="index < 3"> -->
+                <!-- </div> -->
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    // vue中的v-for指令，是vue中循环渲染数据
+    // v-for不仅可以循环数组，还可以循环对象、数字、字符串
+    // 如果循环的是对象，item就是属性值，idnex属性名
+    // 如果循环的是数字，数字是几就循环几次，每一次的item是数字从1开始累加的值，index是每一项的索引
+    // 如果循环的是字符串，item就是每一个字符，index是每一次的索引
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            arr: [1, 2, 3, { objArr: ['a', 'b'] }]
+        },
+        methods: {}
+    });
+</script>

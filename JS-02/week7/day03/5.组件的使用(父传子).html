@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{msg}}
+
+        <!-- 在组件的行间属性上如果想写一个指定的数据类型的值   :bbb="true" -->
+        <com :num="msg" :aaa="data" :bbb="true" ss="abc"></com>
+    </div>
+
+
+    <!-- 组件模版 -->
+    <template id="first">
+        <div>
+            我是com组件---->父级的值：{{num}}、{{aaa}}、{{bbb}}、{{ss}}，我是com组件---->自己的值：{{a}}
+        </div>
+    </template>
+
+</body>
+
+</html>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+
+
+    let com = {
+        template: '#first',
+        data() {
+            return {
+                a: 900
+            }
+        },
+        // props 接收从父级传递过来的属性，而且会挂载到当前的组件实例上
+        /*
+         *  1.在子组件中设置props接收从父级传递过来的属性信息，接收以后，会把当前接收的属性挂载到当前的组件实例上
+         *  2.以对象形式接收的值可以进行数据类型的校验，如果数据类型匹配不一致，只会在控制台抛出警告，但是不会阻止代码运行
+         */
+        // props: ['num', 'aaa'],
+        props: {
+            num: Number,
+            // num: {
+            //     // 判断当前的属性是否是必传的
+            //     required: true,
+            //     // 可以对当前传递过来的属性进行自定义校验
+            //     validator(value) {
+            //         // 当前函数如果返回true，说明校验通过，返回false，说明不通过
+            //         console.log(value);
+            //         return value > 10000;
+            //     }
+            // },
+            aaa: Number,
+            bbb: Boolean,
+
+            // 校验ss，如果没有ss这个属性，那就default
+            ss: {
+                // 校验数据类型
+                type: [Boolean, String, Number],
+                // 设置默认值
+                default: '我是默认值'
+            }
+        },
+        created() {
+            // this.num = '改变num的值';
+        }
+    }
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 100,
+            data: 200
+        },
+        components: {
+            com: com
+        }
+    });
+
+    // vue的数据流是单向的，只能从外界流向里面，不能倒着流，而且也不能从里面进行更改
+
+    // 让视图刷新，一种有良好总途径：更新自己的数据   从父级身上跟新子级使用到的属性
+
+</script>
