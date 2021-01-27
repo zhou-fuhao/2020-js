@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        根组件{{obj.num}}
+        <father></father>
+    </div>
+    <template id="father">
+        <div>
+            父组件{{obj.num}}
+            <son></son>
+        </div>
+    </template>
+    <template id="son">
+        <div>
+            子组件{{obj.num}}
+            <button @click="fn">num增加</button>
+        </div>
+    </template>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    let son = {
+        template: '#son',
+        inject: ['obj', 'fn'],
+    };
+    let father = {
+        template: '#father',
+        inject: ['obj'],
+        components: {
+            son
+        }
+    };
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            obj: {
+                num: 1
+            }
+        },
+        provide() {
+            return {
+                obj: this.obj,
+                fn: this.fn
+            }
+        },
+        components: {
+            father
+        },
+        methods: {
+            fn() {
+                console.log(++this.obj.num);
+            }
+        },
+
+    });
+</script>
+
+</html>

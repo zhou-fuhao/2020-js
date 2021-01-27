@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训</title>
+    <style type="text/css">
+        body {
+            font-size: 14px;
+            font-family: "Lantinghei SC Extralight", Arial;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        img {
+            vertical-align: top;
+        }
+
+        #wrap {
+            width: 760px;
+            height: 260px;
+            margin: 20px auto;
+            padding: 145px 120px 95px;
+            background: url(img/bg.jpg) no-repeat 0 0;
+        }
+
+        #section {
+            width: 760px;
+            height: 260px;
+            -moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, .2);
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, .2);
+        }
+
+        #choose {
+            width: 760px;
+            height: 50px;
+            margin: 0 auto;
+            background: url(img/nav_bg.png) no-repeat 0 0;
+            line-height: 50px;
+            text-indent: 21px;
+        }
+
+        #type {
+            width: 100%;
+            height: 210px;
+            background: url(img/type_bg.png) no-repeat 0 0;
+            padding: 17px 0 16px 28px;
+        }
+
+        #type li {
+            height: 44px;
+            color: #8a8a8a;
+            line-height: 44px;
+        }
+
+        #type a {
+            margin: 0 12px 0 11px;
+            color: #000;
+        }
+
+        #choose mark {
+            position: relative;
+            display: inline-block;
+            height: 24px;
+            line-height: 24px;
+            border: 1px solid #28a5c4;
+            color: #28a5c4;
+            margin: 12px 5px 0;
+            background: none;
+            padding: 0 30px 0 6px;
+            text-indent: 0;
+        }
+
+        #choose mark a {
+            position: absolute;
+            top: 3px;
+            right: 2px;
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background: #28a5c4;
+            color: #fff;
+            line-height: 18px;
+            font-size: 16px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <section id="section">
+            <nav id="choose">
+                你的选择：
+                <markcom v-for="item in selectedAry" :type="item.type" :text="item.text" @sondel="del"></markcom>
+            </nav>
+            <ul id="type">
+                <typecom v-for="item in ary" :text="item.text" :type="item.type" :content="item.content"
+                    @sonselect="selectFather">
+                </typecom>
+            </ul>
+        </section>
+    </div>
+
+    <template id="typecom">
+        <li>
+            {{text}}：
+            <a href="javascript:;" v-for="innerText in content" @click="selectContent(innerText)">{{innerText}}</a>
+        </li>
+    </template>
+    <template id="markcom">
+        <mark>
+            {{text}}
+            <a href="javascript:;" @click="delThis">x</a>
+        </mark>
+    </template>
+
+
+    <!-- IMPORT JS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+
+        let markcom = {
+            template: '#markcom',
+            props: ['type', 'text'],
+            methods: {
+                delThis() {
+                    this.$emit('sondel', this.type)
+                }
+            }
+        }
+
+
+        let typecom = {
+            template: '#typecom',
+            props: ['text', 'content', 'type'],
+            methods: {
+                selectContent(innerText) {
+                    this.$emit('sonselect', innerText, this.type);
+                }
+            }
+        }
+
+        //=>类别具体的分类数据
+        let ary = [{
+            type: 1,
+            text: '品牌',
+            content: ['苹果', '小米', '华为', '三星']
+        },
+        {
+            type: 2,
+            text: '尺寸',
+            content: ['3.0英寸', '4.5英寸', '3.7英寸']
+        },
+        {
+            type: 3,
+            text: '系统',
+            content: ['安卓', 'IOS', '塞班', '鸿蒙']
+        },
+        {
+            type: 4,
+            text: '颜色',
+            content: ['死亡粉', '原谅绿', '狗屎黄', '狗血红']
+        }
+        ]
+
+        //=>选中项的数据
+        let selectedAry = [
+
+        ]
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                ary,
+                selectedAry
+            },
+            methods: {
+                selectFather(text, type) {
+                    let obj = { text, type };
+                    // 由于每一种类型只能选择一项，所以在push之前先判断以选数组中有没有，相同的type
+                    // 如果有已选择的，则替换text，没有则直接push
+                    let findType = this.selectedAry.find(item => item.type === type);
+                    if (findType) {
+                        findType.text = text;
+                        return;
+                    }
+                    this.selectedAry.push(obj);
+                },
+                del(type) {
+                    this.selectedAry = this.selectedAry.filter(item => item.type !== type)
+                }
+            },
+            components: {
+                typecom,
+                markcom
+            },
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        父组件里的num:{{num}}
+        <div ref="vmdiv">我是div</div>
+        <my-button ref="my-button">button</my-button>
+        <com ref='com'></com>
+    </div>
+
+    <template id="my-button">
+        <div>
+            <button class="my-button" @click='signin'>
+                <slot></slot>
+            </button>
+            {{obj.name}}
+        </div>
+    </template>
+    <template id="com">
+        <div>这是com组件 {{num2}}</div>
+    </template>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    let bus = new Vue();
+    // 事件池
+    // 项目中的组件都可以$on，向事件池中添加事件；
+    // 添加后的事件可用$emit 触发
+
+    // 定义组件 创建组件
+    function outFn(str) {
+        console.log('我在外面' + str);
+    }
+    let myButton = {
+        template: '#my-button',
+        // props接收属性
+        props: ['status', 'id'],
+        inject: ['obj'],
+        methods: {
+            signin() {
+                this.$parent.num = 100;
+                bus.$on('outFn', outFn);
+                bus.$emit('fn', '这里是button');
+            }
+        },
+    };
+    let com = {
+        template: '#com',
+        // props接收属性
+        props: ['status', 'id'],
+        inject: ['num2'],
+        mounted() {
+            console.log('com组件', this);
+            // this.num = 56;
+        },
+        methods: {
+            signin() {
+                // this.$emit
+                // this.status
+                bus.$emit('fn', '这里是com1');
+                bus.$emit('outFn', '这里是com1');
+            }
+        },
+    };
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            num: 0,
+            obj: {
+                name: 'zf'
+            }
+        },
+        provide() {
+            return {
+                num2: this.num,
+                obj: this.obj
+            }
+        },
+        // 注册组件
+        components: {
+            myButton,
+            com
+        },
+        mounted() {
+            console.log('div', this.$refs.vmdiv)
+            console.log('buttonzujian', this.$refs['my-button'])
+            console.log('comzujian', this.$refs.com)
+            console.log('vm根组件', this)
+            bus.$on('fn', this.stopSign)
+        },
+        methods: {
+            stopSign(str) {
+                console.log(this.num2)
+                this.num2 = 77;
+                this.obj.name = '改变了';
+                console.log('vm里的事件', str + 122)
+            }
+
+        },
+    })
+</script>
+
+</html>

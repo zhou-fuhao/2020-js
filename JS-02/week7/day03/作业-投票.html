@@ -23,6 +23,10 @@
             color: orangered;
             font-weight: 600;
         }
+
+        .container h2 span {
+            font-size: 30px;
+        }
     </style>
 </head>
 
@@ -30,7 +34,7 @@
 
     <div id="app">
         <vote title="车轮滚滚1"></vote>
-        <!-- <vote title="车轮滚滚2"></vote> -->
+        <vote title="车轮滚滚2"></vote>
 
     </div>
 
@@ -38,7 +42,7 @@
     <template id="vote">
         <div class="container">
             <h2>{{title}} (<span>{{sum}}</span>)</h2>
-            <vote-content></vote-content>
+            <vote-content @change-sum="sumFn"></vote-content>
             <vote-footer></vote-footer>
         </div>
     </template>
@@ -48,18 +52,20 @@
 
             <p>支持人数：<span>{{supportNum}}</span></p>
             <p>反对人数：<span>{{opposeNum}}</span></p>
-            <p>支持率：<span>{{yes}}%</span></p>
+            <p>支持率：<span>{{yes | toFixed(2)}}%</span></p>
         </div>
     </template>
     <template id="voteFooter">
         <div class="footer">
-            <button type="button" style="margin-right: 30px;">支持</button>
-            <button type="button">反对</button>
+            <button type="button" style="margin-right: 30px;" @click="support()">支持</button>
+            <button type="button" @click="oppose()">反对</button>
         </div>
     </template>
     <script src="./node_modules/vue/dist/vue.js"></script>
     <script>
 
+        // 事件池
+        let eventBus = new Vue();
 
         let voteContent = {
             template: '#voteContent',
@@ -77,8 +83,27 @@
                     else {
                         return this.supportNum / (this.supportNum + this.opposeNum) * 100
                     }
-
                 }
+            },
+            filters: {
+                // 保留两位小数
+                toFixed(value, num) {
+                    return value.toFixed(num);
+                }
+            },
+            methods: {
+                supportFn() {
+                    this.supportNum++;
+                    this.$emit('change-sum', this.supportNum, this.opposeNum);
+                },
+                opposeFn() {
+                    this.opposeNum++;
+                    this.$emit('change-sum', this.supportNum, this.opposeNum);
+                }
+            },
+            created() {
+                eventBus.$on('supportFn', this.supportFn);
+                eventBus.$on('opposeFn', this.opposeFn);
             }
         }
 
@@ -88,7 +113,15 @@
                 return {
 
                 }
-            }
+            },
+            methods: {
+                support() {
+                    eventBus.$emit('supportFn', this.supportFn);
+                },
+                oppose() {
+                    eventBus.$emit('opposeFn', this.opposeFn);
+                }
+            },
         }
         let vote = {
             template: '#vote',
@@ -101,6 +134,12 @@
             components: {
                 voteContent,
                 voteFooter
+            },
+            methods: {
+                sumFn(supNum, oppNum) {
+                    // console.log(supNum, oppNum);
+                    this.sum = supNum + oppNum;
+                }
             }
         };
 
@@ -111,6 +150,9 @@
             },
             components: {
                 vote
+            },
+            methods: {
+
             }
         });
     </script>
