@@ -33,17 +33,15 @@
 <body>
 
     <div id="app">
-        <vote title="车轮滚滚1"></vote>
-        <vote title="车轮滚滚2"></vote>
-
+        <vote v-for="item in voteList" :title="item.title"></vote>
     </div>
 
 
     <template id="vote">
         <div class="container">
             <h2>{{title}} (<span>{{sum}}</span>)</h2>
-            <vote-content @change-sum="sumFn"></vote-content>
-            <vote-footer></vote-footer>
+            <vote-content :eventbus="eventBus" @change-sum="sumFn"></vote-content>
+            <vote-footer :eventbus="eventBus"></vote-footer>
         </div>
     </template>
 
@@ -65,10 +63,11 @@
     <script>
 
         // 事件池
-        let eventBus = new Vue();
+        // let eventBus = new Vue();
 
         let voteContent = {
             template: '#voteContent',
+            props: ['eventbus'],
             data() {
                 return {
                     supportNum: 0,
@@ -102,13 +101,14 @@
                 }
             },
             created() {
-                eventBus.$on('supportFn', this.supportFn);
-                eventBus.$on('opposeFn', this.opposeFn);
+                this.eventbus.$on('supportFn', this.supportFn);
+                this.eventbus.$on('opposeFn', this.opposeFn);
             }
         }
 
         let voteFooter = {
             template: '#voteFooter',
+            props: ['eventbus'],
             data() {
                 return {
 
@@ -116,19 +116,22 @@
             },
             methods: {
                 support() {
-                    eventBus.$emit('supportFn', this.supportFn);
+                    this.eventbus.$emit('supportFn', this.supportFn);
                 },
                 oppose() {
-                    eventBus.$emit('opposeFn', this.opposeFn);
+                    this.eventbus.$emit('opposeFn', this.opposeFn);
                 }
             },
         }
         let vote = {
             template: '#vote',
+            // 父组件传递的属性名是kebab-case格式，子组件在注册的时候按照驼峰命名法来接收和使用，例如：kebabCase/KebabCase
+            // 父组件传递的属性名是大写的ABC，其实也是按照小写的来传递，所以props中注册和使用的时候都按照小写来处理，例如：abc
             props: ['title'],
             data() {
                 return {
-                    sum: 0
+                    sum: 0,
+                    eventBus: new Vue
                 }
             },
             components: {
@@ -146,7 +149,16 @@
         let vm = new Vue({
             el: '#app',
             data: {
-                msg: '车轮滚滚'
+                voteList: [
+                    {
+                        id: 1,
+                        title: '降龙十八掌'
+                    },
+                    {
+                        id: 2,
+                        title: '九阴白骨爪'
+                    }
+                ]
             },
             components: {
                 vote

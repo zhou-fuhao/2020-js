@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .container {
+            box-sizing: border-box;
+            margin: 20px auto;
+            width: 400px;
+            padding: 10px;
+            border: 1px solid red;
+        }
+
+        .container h2 {
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 1px dashed gainsboro;
+            padding-bottom: 10px;
+            color: orangered;
+            font-weight: 600;
+        }
+
+        .container h2 span {
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <!-- <vote title="车轮滚滚1"></vote>
+        <vote title="车轮滚滚2"></vote> -->
+
+        <vote v-for="item in voteList" :title="item.title"></vote>
+    </div>
+
+
+    <template id="vote">
+        <div class="container">
+            <h2>{{title}} (<span>{{sum}}</span>)</h2>
+            <vote-content @change-sum="sumFn"></vote-content>
+            <vote-footer></vote-footer>
+        </div>
+    </template>
+
+    <template id="voteContent">
+        <div class="content">
+
+            <p>支持人数：<span>{{supportNum}}</span></p>
+            <p>反对人数：<span>{{opposeNum}}</span></p>
+            <p>支持率：<span>{{yes | toFixed(2)}}%</span></p>
+        </div>
+    </template>
+    <template id="voteFooter">
+        <div class="footer">
+            <button type="button" style="margin-right: 30px;" @click="support()">支持</button>
+            <button type="button" @click="oppose()">反对</button>
+        </div>
+    </template>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+
+        // 事件池
+        let eventBus = new Vue();
+
+        let voteContent = {
+            template: '#voteContent',
+            data() {
+                return {
+                    supportNum: 0,
+                    opposeNum: 0
+                }
+            },
+            computed: {
+                yes() {
+                    if (this.supportNum == 0) {
+                        return 0
+                    }
+                    else {
+                        return this.supportNum / (this.supportNum + this.opposeNum) * 100
+                    }
+                }
+            },
+            filters: {
+                // 保留两位小数
+                toFixed(value, num) {
+                    return value.toFixed(num);
+                }
+            },
+            methods: {
+                supportFn() {
+                    this.supportNum++;
+                    this.$emit('change-sum', this.supportNum, this.opposeNum);
+                },
+                opposeFn() {
+                    this.opposeNum++;
+                    this.$emit('change-sum', this.supportNum, this.opposeNum);
+                }
+            },
+            created() {
+                eventBus.$on('supportFn', this.supportFn);
+                eventBus.$on('opposeFn', this.opposeFn);
+            }
+        }
+
+        let voteFooter = {
+            template: '#voteFooter',
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+                support() {
+                    eventBus.$emit('supportFn', this.supportFn);
+                },
+                oppose() {
+                    eventBus.$emit('opposeFn', this.opposeFn);
+                }
+            },
+        }
+        let vote = {
+            template: '#vote',
+            // 父组件传递的属性名是kebab-case格式，子组件在注册的时候按照驼峰命名法来接收和使用，例如：kebabCase/KebabCase
+            // 父组件传递的属性名是大写的ABC，其实也是按照小写的来传递，所以props中注册和使用的时候都按照小写来处理，例如：abc
+            props: ['title'],
+            data() {
+                return {
+                    sum: 0
+                }
+            },
+            components: {
+                voteContent,
+                voteFooter
+            },
+            methods: {
+                sumFn(supNum, oppNum) {
+                    // console.log(supNum, oppNum);
+                    this.sum = supNum + oppNum;
+                }
+            }
+        };
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                voteList: [
+                    {
+                        id: 1,
+                        title: '降龙十八掌'
+                    }
+                ]
+            },
+            components: {
+                vote
+            },
+            methods: {
+
+            }
+        });
+    </script>
+</body>
+
+</html>
