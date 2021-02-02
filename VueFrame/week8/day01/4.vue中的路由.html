@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="organizer" tag="button">组织结构</router-link>
+        <router-link to="customer" tag="button">客户管理</router-link>
+        <!-- <a href="#/organizer">组织结构</a>
+    <a href="#/customer">客户管理</a> -->
+
+        <router-view></router-view>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script src="./node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        let organizer = {
+            template: '<div>组织结构页面</div>'
+        };
+        let customer = {
+            template: '<div>客户管理页面</div>'
+        };
+
+        let routers = [ // 配置路由映射表
+            {
+                path: '/organizer',
+                component: organizer
+            },
+            {
+                path: '/customer',
+                component: customer
+            }
+        ];
+        let router = new VueRouter({
+            routes: routers
+        });
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            router
+        });
+    </script>
+</body>
+
+</html>

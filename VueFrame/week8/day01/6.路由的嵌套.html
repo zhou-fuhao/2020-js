@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- <router-link to="/organizer" tag="button">组织结构</router-link>
+    <router-link to="/customer" tag="button">客户管理</router-link> -->
+
+        <router-link :to="{name:'org'}" tag="button">组织结构</router-link>
+        <router-link :to="{name:'cus'}" tag="button">客户管理</router-link>
+
+
+        <router-view></router-view>
+
+
+    </div>
+    <template id="customer">
+        <div>
+            <div>我是客户管理页面</div>
+            <ul>
+                <router-link :to="{name:'my'}" tag="li">我的客户</router-link>
+
+                <router-link :to="{path:'/customer/all'}" tag="li">全部客户</router-link>
+                <!-- <router-link to="/customer/all" tag="li">全部客户</router-link> -->
+                <li>新增客户</li>
+            </ul>
+
+            <!-- 此处的router-view是显示二级路由对应的组件的 -->
+            <router-view></router-view>
+        </div>
+    </template>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script src="./node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+
+
+        let my = {
+            template: '<div>我是我的客户组件</div>'
+        };
+        let all = {
+            template: '<div>我是全部客户组件</div>'
+        };
+        let organizer = {
+            template: '<div>组织结构页面</div>',
+        };
+
+        let customer = {
+            template: '#customer',
+        };
+
+        // my和all组件都是customer大组件里的子组件
+
+        // my和all都是customer子路由
+        // 在配置路由映射表的时候，在对象里写一个children属性，期属性值是一个数组，数组里边去配置每一个子路由
+        let routes = [
+            {
+                path: '/organizer',
+                // component就是当前hahs对应上path的值后，显示的组件
+                component: organizer,
+                name: 'org'
+            },
+            {
+                path: '/customer',
+                component: customer,
+                name: 'cus',
+                children: [
+                    {
+                        path: '/customer/my',
+                        component: my,
+                        name: 'my'
+                    },
+                    {
+                        path: 'all', // 如果当前只有最有一个path的话，当匹配的时候他会自动把父级的path加上  //   '/customer/all' 官方建议使用这种方式
+                        component: all
+                    }
+                ]
+            }
+        ];
+        let router = new VueRouter({
+            routes
+        });
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            router
+        });
+    </script>
+</body>
+
+</html>

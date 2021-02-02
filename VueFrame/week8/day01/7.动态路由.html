@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/detail/1">第一本</router-link>
+        <router-link to="/detail/2">第二本</router-link>
+        <router-link to="/detail/3">第三本</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script src="./node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        // 动态留有的好处就是减少了组件的加载和销毁,节省性能，但是当切换路由的时候，组件没有对应的回调函数去执行了
+        let first = {
+            template: '<div>我是第{{$route.params.id}}本书</div>',
+            created() {
+                console.log('created');
+            },
+            watch: {
+                // 只要路由切换，当前的$route就会被监听到，然后执行监听函数
+                $route(to, from) {
+                    console.log(to); // to是到哪去 去之后的路由的信息
+                    console.log(from); // from从哪里来 来之前的路由的信息
+                    // 对路由变化作出响应...
+                }
+            }
+        };
+        // let second = {
+        //   template:'<div>我是第2本书</div>'
+        // };
+        // let third = {
+        //   template:'<div>我是第3本书</div>'
+        // };
+
+        // http://127.0.0.1:5500/index.html#/detail/3
+        // 动态路由：他可以实现传递参数 当配置路由映射表的时候，在写path的时候可以写一个动态的参数 比如 '/detail/:ss' ,此时的ss就是动态参数，这时候页面的hash值只要前边对应上/detail/就可以，后边写啥都行
+
+        // 路由跳转之后在组件身上的$route中的params对象中可以获取到动态的参数值
+        let routes = [
+            {
+                path: '/detail/:id', // 动态路由  '/detail/1' '/detail/2'  /detail/3
+                component: first
+            },
+            // {
+            //   path:'/second',
+            //   component:second
+            // },
+            // {
+            //   path:'/third',
+            //   component:third
+            // }
+        ]
+        let router = new VueRouter({
+            routes
+        })
+        let vm = new Vue({
+            el: '#app',
+            router
+        })
+    </script>
+</body>
+
+</html>

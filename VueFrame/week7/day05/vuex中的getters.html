@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{$store.state.count}}
+        <com1></com1>
+        <com2></com2>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script src="./node_modules/vuex/dist/vuex.js"></script>
+    <script>
+        // 现在要有一个公共的状态，这个状态要依赖count的值的变化而变化
+        // 如果count是偶数，那sex的值就是男孩，如果是奇数，那sex的值就是女孩
+        let store = new Vuex.Store({
+            state: {
+                count: 0
+            },
+            getters: {
+                // 这里存储的是store仓库中的计算状态，也有缓存跟组件里的一样
+
+                // 计算属性的第一个形参的值是store中的state
+                sex(state) {
+                    return state.count % 2 == 0 ? '男' : '女'
+                }
+            },
+            mutations: {
+                add(state, num) {
+                    state.count += num
+                },
+                // add:function(){}
+                min(state) {
+                    state.count--
+                }
+            }
+        });
+
+        let com1 = {
+            template: `<div>我是<button @click="change">修改count</button>组件com1{{count}}{{sex}}</div>`,
+            data() {
+                return {
+                    // count:0
+                }
+            },
+            computed: {
+                count() {
+                    return this.$store.state.count;
+                },
+                sex() {
+                    return this.$store.getters.sex;
+                }
+            },
+            methods: {
+                change() {
+                    this.$store.commit('add', 1);
+                    // commit就是触发mutations中的方法的
+                }
+            }
+        };
+
+        let com2 = {
+            template: `<div>我是组件com2{{$store.state.count}}</div>`,
+            created() {
+                console.log(this);
+            },
+        };
+
+
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '100'
+            },
+            components: {
+                com1,
+                com2
+            },
+            store: store
+        });
+    </script>
+</body>
+
+</html>

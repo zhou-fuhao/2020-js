@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{$store.state.count}}
+        <com1></com1>
+        <com2></com2>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script src="./node_modules/vuex/dist/vuex.js"></script>
+    <script>
+        // let store = {
+        //   count:0
+        // }
+        // 当前的count状态主要多个组件都使用，那说明count就是一个公共的状态，主要把它抽离处理单独进行管理
+        let store = new Vuex.Store({
+            state: {
+                // 当前的state对象就是存放公共状态的地方
+                count: 0
+            },
+            mutations: {
+                // mutaions中的方法就是用来更改store中的state的
+                // mutations对象里的方法的第一个形参对应的值就是store中的state
+                //  mutations对象里的方法的第二个形参对应的值就是用户执行commit的时候传递的参数
+                add(state, num) {
+                    state.count += num
+                },
+                // add:function(){}
+                min(state) {
+                    state.count--
+                }
+
+            }
+        });
+
+        let com1 = {
+            template: `<div>我是<button @click="change">修改count</button>组件com1{{count}}</div>`,
+            data() {
+                return {
+                    // count:0
+                }
+            },
+            computed: {
+                count() {
+                    return this.$store.state.count;
+                }
+            },
+            methods: {
+                change() {
+                    // this.$store.state.count = 300;
+                    // store中的状态不要直接修改，这样不方便以后观察，也不方便我们记录修改的过程
+                    this.$store.commit('add', 2);
+                    // commit就是触发mutations中的方法的
+                }
+            }
+        };
+
+        let com2 = {
+            template: `<div>我是组件com2{{$store.state.count}}</div>`,
+            created() {
+                console.log(this);
+            },
+        };
+
+
+
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            components: {
+                com1,
+                com2
+            },
+            // 把当前的sotre对象传进当前的vue根实例中，这样在vue里的每一个组件都会增加一个$store的属性，这个属性的属性值就是当前store的仓库
+            // 只要你这么一写，所有的组件都拥有了$store属性
+            store: store
+        });
+    </script>
+</body>
+
+</html>
