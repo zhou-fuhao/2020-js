@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Store from "./store/index";
+import store from "./store/index";
 // 全部导入
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -25,6 +25,6 @@ Vue.use(ElementUI);
 // Vue.use(Tag);
 
 new Vue({ // 创建vue根实例
-    Store,
+    store,
     render: h => h(App)
 }).$mount('#app');

@@ -20,5 +20,6 @@ export default new Vuex.Store({
     },
     modules: {
         todo
-    }
+    },
+    // plugins: [logger()]
 });
