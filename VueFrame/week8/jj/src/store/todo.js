@@ -20,7 +20,6 @@ export default {
         updateTodoListAction({
             commit
         }, params = {}) {
-            console.log(params);
             queryTodoList(params).then((res) => {
                 // 把请求成功的数据存储到state中
                 let {

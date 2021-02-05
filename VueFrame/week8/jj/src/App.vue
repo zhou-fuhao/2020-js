@@ -1,14 +1,17 @@
 <template>
   <div id="container">
-      <todo></todo>
+    <!-- <todo></todo> -->
+    <index></index>
   </div>
 </template>
 
 <script>
+import Index from "./pages/Index";
 import Todo from "./pages/Todo";
 export default {
   components: {
     Todo,
+    Index,
   },
 };
 </script>
