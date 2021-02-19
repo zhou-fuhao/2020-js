@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.组件和Props</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="./node_modules/react/umd/react.development.js"></script>
+    <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./node_modules/babel-standalone/babel.js"></script>
+    <script type="text/babel">
+
+        // 第一种方式，函数组件
+        function Hello(props) {
+            return <div>
+                <h1>Hello,{props.name}</h1>
+                <p>年龄：{props.age}</p>
+                <p>擅长：{props.job}</p>
+            </div>;
+        }
+        
+        // 第二种方式
+        class HelloJim extends React.Component {
+            render() {
+                // this 指向React.Component 实例
+                return <div>
+                    <h1>Hello,{this.props.name}</h1>
+                    <p>年龄：{this.props.age}</p>
+                    <p>擅长：{this.props.job}</p>
+                </div>;
+            }
+        }
+
+        ReactDOM.render(
+            // 第一种方式
+            // <Hello name="Jim" age="20" job="JavaScript" />,
+            // 第二种方式
+            <HelloJim name="Jim" age="20" job="JavaScript" />,
+            document.getElementById('app')
+        );
+    </script>
+</body>
+
+</html>

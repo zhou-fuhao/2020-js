@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.React生命周期</title>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <script src="./node_modules/react/umd/react.development.js"></script>
+    <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./node_modules/babel-standalone/babel.js"></script>
+    <script type="text/babel">
+
+        // React生命周期
+        // constructor--> componentWillMount--> render--> componentDidMount--> 
+        // 当数据更新时
+        // shouldComponentUpdate--> componentWillUpdate--> render--> componentDidUpdate
+
+        // 第二种方式
+        class HelloJim extends React.Component {
+            constructor(props) {
+                console.log('组件初始化');
+                // 初始化props
+                super(props);
+                // 初始化状态
+                this.state = {
+                    name: "Jim",
+                    age: 20,
+                    job: "React"
+                }
+            }
+            // 可以在这里进行一些Ajax异步请求
+            componentWillMount() {
+                console.log('组件加载前');
+            }
+            componentDidMount() {
+                console.log('组件加载后');
+            }
+            updateUser = () => {
+                this.setState({
+                    name: "Jim22",
+                    age: 22,
+                    job: "React22"
+                });
+            }
+            shouldComponentUpdate() {
+                console.log('数据是否需要更新');
+                return true;
+            }
+            componentWillUpdate() {
+                console.log('数据将要更新');
+            }
+            componentDidUpdate() {
+                console.log('数据已经更新');
+            }
+            render() {
+                console.log('数据渲染');
+                // this 指向React.Component 实例
+                return <div>
+                    <h1>Hello,{this.state.name}</h1>
+                    <p>年龄：{this.state.age}</p>
+                    <p>擅长：{this.state.job}</p>
+                    <button onClick={this.updateUser}>更新数据</button>
+                </div>;
+            }
+        }
+
+        ReactDOM.render(
+            <HelloJim />,
+            document.getElementById('app')
+        );
+    </script>
+</body>
+
+</html>

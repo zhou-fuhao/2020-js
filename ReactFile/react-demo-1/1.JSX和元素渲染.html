@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.JSX和元素渲染</title>
+    <style>
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="./node_modules/react/umd/react.development.js"></script>
+    <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./node_modules/babel-standalone/babel.js"></script>
+    <script type="text/babel">
+
+        function tick() {
+            let time = new Date().toLocaleTimeString();
+            // 当有多个标签时，需要用一个父标签包起来
+            let ele = <div>
+                <h1 className="red" name="jim">Hello,Jim</h1>
+                <h2>现在时间是：{time}</h2>
+            </div>;
+            ReactDOM.render(
+                ele,
+                document.getElementById('app')
+            );
+        }
+        setInterval(tick, 1000);
+    </script>
+</body>
+
+</html>

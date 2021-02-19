@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5.条件处理</title>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <script src="./node_modules/react/umd/react.development.js"></script>
+    <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./node_modules/babel-standalone/babel.js"></script>
+    <script type="text/babel">
+
+        function Login(props) {
+            return <button onClick={props.updateUser}>Login</button>
+        }
+        function Logout(props) {
+            return <button onClick={props.updateUser}>Logout</button>
+        }
+
+        class App extends React.Component {
+            state = {
+                isLogin: false
+            }
+
+            updateUser = () => {
+                this.setState({
+                    isLogin: true
+                });
+            }
+
+            render() {
+                // 1.第一种if判断方法
+                const { isLogin } = this.state;
+
+                // 2.第二种if判断方法
+                // {isLogin?<Login /> : <Logout />} 改为 {button}
+                // let button;
+                // if (isLogin) {
+                //     button = <Login />;
+                // } else {
+                //     button = <Logout />;
+                // }
+
+                // this 指向React.Component 实例
+                return <div>
+                    <h1>Hello,{this.state.name}</h1>
+                    {isLogin ? <Login updateUser={this.updateUser} /> : <Logout updateUser={this.updateUser} />}<br /><br />
+                    <button onClick={this.updateUser}>{isLogin ? '退出登录' : '登录'}</button>
+                </div>;
+            }
+        }
+
+        ReactDOM.render(
+            <App />,
+            document.getElementById('app')
+        );
+    </script>
+</body>
+
+</html>

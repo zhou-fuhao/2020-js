@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.事件处理</title>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <script src="./node_modules/react/umd/react.development.js"></script>
+    <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./node_modules/babel-standalone/babel.js"></script>
+    <script type="text/babel">
+
+        class HelloJim extends React.Component {
+            constructor(props) {
+                console.log('组件初始化');
+                // 初始化props
+                super(props);
+                // 初始化状态
+                this.state = {
+                    name: "Jim",
+                    age: 20,
+                    job: "React"
+                }
+
+                // 2.第二种点击方法
+                // this.updateUser = this.updateUser.bind(this);
+            }
+            // 1.第一种点击方法
+            updateUser = () => {
+                this.setState({
+                    name: "Jim22",
+                    age: 22,
+                    job: "React22"
+                });
+            }
+
+            // 2.第二种点击方法
+            // 更新按钮 必须是箭头函数，否则找不到this
+            // 如果是普通函数，this则是undefined，如果想用this，则需要在constructor中改变this指向
+            // updateUser() {
+            //     this.setState({
+            //         name: "Jim22",
+            //         age: 22,
+            //         job: "React22"
+            //     });
+            // }
+
+            // 3.第三种点击方法
+            // <button onClick={() => this.updateUser()}>更新数据</button>
+            render() {
+                console.log('数据渲染');
+                // this 指向React.Component 实例
+                return <div>
+                    <h1>Hello,{this.state.name}</h1>
+                    <p>年龄：{this.state.age}</p>
+                    <p>擅长：{this.state.job}</p>
+                    <button onClick={this.updateUser}>更新数据</button>
+                </div>;
+            }
+        }
+
+        ReactDOM.render(
+            <HelloJim />,
+            document.getElementById('app')
+        );
+    </script>
+</body>
+
+</html>

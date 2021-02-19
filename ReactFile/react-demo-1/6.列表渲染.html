@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6.列表渲染</title>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <script src="./node_modules/react/umd/react.development.js"></script>
+    <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./node_modules/babel-standalone/babel.js"></script>
+    <script type="text/babel">
+
+        class ListEle extends React.Component {
+            state = {
+                // list: [1, 2, 3, 4, 5]
+                list: [
+                    { id: '1', job: 'JavaScript' },
+                    { id: '2', job: 'jQuery' },
+                    { id: '3', job: 'Vue' },
+                    { id: '4', job: 'React' }
+                ]
+            }
+
+            render() {
+                const arr = this.state.list;
+                const listItem = [];
+
+                arr.forEach((item) => {
+                    listItem.push(<li key={item.id}>{item.job}</li>);
+                })
+
+                return <div>
+                    <ul>
+                        {listItem}
+                    </ul>
+                </div>;
+            }
+        }
+
+        ReactDOM.render(
+            <ListEle />,
+            document.getElementById('app')
+        );
+    </script>
+</body>
+
+</html>
