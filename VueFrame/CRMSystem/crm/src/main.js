@@ -32,34 +32,34 @@ Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
 
-// // 检测是否正常登录
-// ApiCheckLogin().then(result => {
+// 检测是否正常登录
+ApiCheckLogin().then(result => {
 
-//   store.commit(types.CHECK_IS_LOGIN, true);
-//   store.dispatch(types.QUERY_POWER);
+  store.commit(types.CHECK_IS_LOGIN, true);
+  // store.dispatch(types.QUERY_POWER);
 
-//   new Vue({
-//     router,
-//     store,
-//     render: h => h(App)
-//   }).$mount('#app');
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount('#app');
 
-// }).catch(reason => {
+}).catch(reason => {
 
-//   Vue.prototype.$alert('您当前是非法进入，请登录！', {
-//     callback: action => {
-//       location.href = location.origin + '/login.html';
-//     }
-//   });
+  Vue.prototype.$alert('您当前是非法进入，请登录！', {
+    callback: action => {
+      location.href = location.origin + '/login.html';
+    }
+  });
 
-// });
+});
 
 // console.log("MAIN");
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app');
+// new Vue({
+//   router,
+//   store,
+//   render: h => h(App)
+// }).$mount('#app');
 
 // console.log('main.js')
