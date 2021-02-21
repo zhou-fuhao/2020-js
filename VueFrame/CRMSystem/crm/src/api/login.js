@@ -25,6 +25,7 @@ export function ApiCheckLogin() {
 
 // 获取用户权限
 export function ApiQueryPower() {
+    console.log('api接口');
     return axios.get('/user/power').then(result => {
         if (result.code == 0) {
             return result.power;

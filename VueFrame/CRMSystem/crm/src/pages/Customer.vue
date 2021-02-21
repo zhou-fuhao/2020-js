@@ -6,8 +6,7 @@
         <el-menu-item index="1">
           <span>我的客户</span>
         </el-menu-item>
-        <!-- <el-menu-item index="2" v-power="departcustomer|allcustomer"> -->
-        <el-menu-item index="2">
+        <el-menu-item index="2" v-power="customerAll">
           <span>全部客户</span>
         </el-menu-item>
         <el-menu-item index="3">
@@ -23,6 +22,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      customerAll: "departcustomer|allcustomer",
+    };
+  },
   methods: {
     // 当页面刷新时，根据hash值显示
     activeIndex() {

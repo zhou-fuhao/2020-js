@@ -41,9 +41,3 @@ checkLogin().then(result => {
   });
 });
 
-
-
-
-
-
-// console.log('main.js')

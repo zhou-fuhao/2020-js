@@ -61,7 +61,6 @@ export default {
       // 调用api登录接口
       ApiOnLogin(this.account, password)
         .then((power) => {
-          console.log(power);
           this.$alert("恭喜您，登录成功！", {
             callback: (action) => {
               this.$message({

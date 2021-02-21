@@ -42,7 +42,7 @@ export default {
       headerBox = this.$refs.headerBox,
       mainBox = this.$refs.mainBox;
 
-    mainBox.style.height = winH - headerBox.style.offsetHeight + "px";
+    mainBox.style.height = winH - headerBox.offsetHeight + "px";
     this.$forceUpdate();
   },
 };

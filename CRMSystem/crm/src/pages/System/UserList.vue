@@ -88,7 +88,7 @@ export default {
       }
     },
     deleteAll() {
-      alert(22);
+      alert("批量删除");
     },
     toggleSelection(rows) {
       if (rows) {

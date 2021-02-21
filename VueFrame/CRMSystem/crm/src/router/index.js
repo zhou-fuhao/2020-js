@@ -15,7 +15,7 @@ const router = new VueRouter({
         {
             // 访问地址如果是127.0.0.1:8080  则默认进入客户组织管理页面
             path: '/',
-            redirect: '/organize'
+            redirect: '/customer'
         },
         {
             path: '/organize',
@@ -25,7 +25,6 @@ const router = new VueRouter({
             // 组织结构的权限校验
             beforeEnter(to, from, next) {
                 let power = store.state.power;
-                console.log(power);
                 if (/(userhandle|departhandle|jobhandle)/.test(power)) {
                     next();
                     return;

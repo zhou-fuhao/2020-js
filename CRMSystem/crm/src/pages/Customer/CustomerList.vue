@@ -5,7 +5,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  created(){
+    console.log(location.href);
+  }
+};
 </script>
 
 

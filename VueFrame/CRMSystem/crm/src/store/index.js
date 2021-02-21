@@ -24,7 +24,7 @@ export default new Vuex.Store({
     },
     actions: {
         [types.QUERY_POWER](context) {
-            ApiQueryPower.then(power => {
+            ApiQueryPower().then(power => {
                 context.commit(types.QUERY_POWER, power);
             });
         }
