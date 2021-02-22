@@ -27,19 +27,19 @@
     <!-- 修改密码 -->
     <el-dialog title="修改密码" :visible.sync="dialogFormVisible" width="500px">
       <el-form :model="resetUserPass" ref="resetUserPass">
-        <el-form-item label="请输入新密码" :label-width="labelWidth">
+        <el-form-item label="请输入新密码" prop="password" :label-width="labelWidth">
           <el-col :span="18">
             <el-input type="password" v-model="resetUserPass.password" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="请再次输入密码" :label-width="labelWidth">
+        <el-form-item label="请再次输入密码" prop="againPassword" :label-width="labelWidth">
           <el-col :span="18">
             <el-input type="password" v-model="resetUserPass.againPassword" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="handleClose">取 消</el-button>
         <el-button type="primary" @click="updPassword">确 定</el-button>
       </div>
     </el-dialog>
@@ -92,8 +92,9 @@ export default {
     // 修改密码
     updPassword() {
       let { password, againPassword } = this.resetUserPass;
-      if (password.length < 1 || againPassword.length < 1) {
-        this.$alert("密码不能为空！");
+      let pwdReg = /^\w{6,16}$/;
+      if (!pwdReg.test(password)) {
+        this.$alert("密码不符合规则！");
         return;
       }
       if (password !== againPassword) {
@@ -113,6 +114,21 @@ export default {
         .finally(() => {
           this.$refs.resetUserPass.resetFields();
           this.dialogFormVisible = false;
+        });
+    },
+    handleClose() {
+      this.$confirm("确定关闭此窗口吗, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.$refs.resetUserPass.resetFields();
+          this.dialogFormVisible = false;
+        })
+        .catch(() => {
+          // 关闭弹出框
+          // this.dialogFormVisible = false;
         });
     },
   },
@@ -161,8 +177,8 @@ body,
     line-height: @H;
     text-align: right;
     font-size: 16px;
-    
-    .username{
+
+    .username {
       color: orange;
     }
 

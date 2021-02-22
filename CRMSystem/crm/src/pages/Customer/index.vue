@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="leftBox">
-      <el-menu class="el-menu-vertical-demo" background-color="#3a3d42" text-color="#fff" active-text-color="#ffd04b"
+      <el-menu class="el-menu-vertical-demo" style="border-right: solid 1px #3a3d42;" background-color="#3a3d42" text-color="#fff" active-text-color="#ffd04b"
         @select="changeRouter" :default-active="activeIndex()">
         <el-menu-item index="1">
           <i class="el-icon-setting"></i>

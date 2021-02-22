@@ -51,40 +51,30 @@ export default {
     queryDepartmentList().then((depRes) => {
       this.departmentList = depRes;
     });
-    // 获取用户列表信息
-    queryUserList({ departmentId: this.departmentId, search: this.search })
-      .then((userRes) => {
-        this.userList = userRes;
-      })
-      .catch(() => {
-        this.$alert("当数据为空时，会提示：：获取用户信息失败，请重试！");
-      });
+
+    this.queryData();
   },
   methods: {
-    handleSex(row) {
-      return row.sex == 0 ? "男" : "女";
-    },
-    searchSelect() {
+    // 获取用户列表信息
+    queryData() {
       queryUserList({ departmentId: this.departmentId, search: this.search })
         .then((userRes) => {
           this.userList = userRes;
         })
         .catch(() => {
           this.userList = [];
-          // this.$alert("当数据为空时，会提示：：获取用户信息失败，请重试！");
         });
+    },
+    handleSex(row) {
+      return row.sex == 0 ? "男" : "女";
+    },
+    searchSelect() {
+      this.queryData();
     },
     searchInp(e) {
       let code = e.keyCode;
       if (code == 13) {
-        queryUserList({ departmentId: this.departmentId, search: this.search })
-          .then((userRes) => {
-            this.userList = userRes;
-          })
-          .catch(() => {
-            this.userList = [];
-            // this.$alert("当数据为空时，会提示：：获取用户信息失败，请重试！");
-          });
+        this.queryData();
       }
     },
     deleteAll() {
