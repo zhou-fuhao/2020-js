@@ -13,7 +13,7 @@
               <router-link to="/system/user/list" tag="li">员工列表</router-link>
             </el-menu-item>
             <el-menu-item index="1-2">
-              <router-link to="/system/user/handle" tag="li">新增员工</router-link>
+              <router-link to="/system/user/handle?type=add" tag="li">新增员工</router-link>
             </el-menu-item>
             <el-menu-item index="1-3">
               <router-link to="/system/user/canvas" tag="li">员工报表</router-link>
@@ -30,7 +30,7 @@
               <router-link to="/system/department/list" tag="li">部门列表</router-link>
             </el-menu-item>
             <el-menu-item index="2-2">
-              <router-link to="/system/department/handle" tag="li">新增部门</router-link>
+              <router-link to="/system/department/handle?type=add" tag="li">新增部门</router-link>
             </el-menu-item>
           </el-menu-item-group>
         </el-submenu>

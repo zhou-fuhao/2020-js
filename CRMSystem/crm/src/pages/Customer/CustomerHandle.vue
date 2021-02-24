@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import customerReg from "../../css/customerReg";
+import customerReg from "../../js/reg/customerReg";
 // @符 代表从src路径下
 // import { queryCustomer, addCustomer, updateCustomer } from "@/api/customer";
 import { queryCustomer, addCustomer, updateCustomer } from "../../api/customer";
@@ -148,77 +148,5 @@ export default {
   padding: 30px;
   font-size: 14px;
   overflow-y: auto;
-}
-
-.formBox .form {
-  /* margin-bottom: 15px; */
-}
-
-.formBox .form > .inpBox {
-  display: flex;
-}
-
-.formBox .form > .inpBox > span {
-  margin-right: 15px;
-  width: 100px;
-  line-height: 30px;
-  text-align: right;
-}
-
-.formBox .form > .inpBox > input[type="text"] {
-  box-sizing: border-box;
-  width: 300px;
-  padding: 0 10px;
-  height: 30px;
-  line-height: 30px;
-}
-
-.formBox .form > .inpBox > input[type="radio"],
-.formBox .form > .inpBox > input[type="checkbox"],
-.formBox .form > .inpBox > label {
-  box-sizing: border-box;
-  height: 30px;
-  line-height: 30px;
-  vertical-align: middle;
-}
-
-.formBox .form > .inpBox > label {
-  margin-right: 20px;
-}
-
-.formBox .form > .inpBox > select {
-  box-sizing: border-box;
-  width: 150px;
-  padding: 0 10px;
-  height: 30px;
-  line-height: 30px;
-}
-
-.formBox .form > .inpBox > textarea {
-  box-sizing: border-box;
-  width: 300px;
-  padding: 0 10px;
-  height: 90px;
-  line-height: 30px;
-}
-
-.formBox .form > span {
-  display: block;
-  padding-left: 115px;
-  height: 25px;
-  line-height: 25px;
-  font-size: 12px;
-  color: lightcoral;
-}
-
-.formBox .submit {
-  margin-left: 110px;
-  border: none;
-  background: #29e;
-  color: #fff;
-  width: 150px;
-  height: 40px;
-  line-height: 40px;
-  cursor: pointer;
 }
 </style>

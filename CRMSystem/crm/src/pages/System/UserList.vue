@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <div class="headerSearch">
+  <div class="box">
+    <div class="filterBox">
       <el-button type="info" size="small" @click="deleteAll()">批量删除</el-button>
       <el-select v-model="departmentId" placeholder="全部" size="small" @change="searchSelect">
         <el-option label="全部" value="0"></el-option>
         <el-option v-for="(item,index) in departmentList" :key="index" :label="item.name" :value="item.id">
         </el-option>
       </el-select>
-      <el-input v-model="search" placeholder="按姓名/邮箱/手机号模糊查询" size="small" @keyup.enter.native="searchInp"></el-input>
+      <el-input v-model="search" placeholder="按姓名/邮箱/手机号模糊查询" size="small" @keyup.enter.native="searchInp" class="inp">
+      </el-input>
     </div>
 
     <el-table ref="userList" :data="userList" style="width: 100%" border stripe :header-cell-style="tableHeaderStyle"
@@ -23,7 +24,7 @@
       <el-table-column align="center" prop="desc" label="描述" show-overflow-tooltip></el-table-column>
       <el-table-column align="center" prop="" label="操作" width="200">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="medium">编辑</el-button>
+          <el-button @click="handleEdit(scope.row)" type="text" size="medium">编辑</el-button>
           <el-button type="text" size="medium">删除</el-button>
           <el-button type="text" size="medium">重置密码</el-button>
         </template>
@@ -99,19 +100,32 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
+    // 编辑
+    handleEdit(row) {
+      let userId = row.id;
+      this.$router.push({
+        path: "/system/user/handle",
+        query: { userId },
+      });
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.headerSearch {
-  width: 600px;
-  display: flex;
-  margin: 10px;
-  float: right;
-  div,
-  button {
-    margin-right: 20px;
-  }
+.inp {
+  width: 300px;
+  margin-left: 20px;
+}
+.box {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ==filterBox== */
+.filterBox {
+  padding: 10px;
+  text-align: right;
 }
 </style>
