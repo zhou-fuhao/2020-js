@@ -15,6 +15,9 @@
             <el-menu-item index="1-2">
               <router-link to="/system/user/handle" tag="li">新增员工</router-link>
             </el-menu-item>
+            <el-menu-item index="1-3">
+              <router-link to="/system/user/canvas" tag="li">员工报表</router-link>
+            </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="2">
@@ -62,6 +65,7 @@ export default {
       let nowURL = location.href;
       if (nowURL.includes("/system/user/list")) return "1-1";
       if (nowURL.includes("/system/user/handle")) return "1-2";
+      if (nowURL.includes("/system/user/canvas")) return "1-3";
       if (nowURL.includes("/system/department/list")) return "2-1";
       if (nowURL.includes("/system/department/handle")) return "2-2";
       if (nowURL.includes("/system/job/list")) return "3-1";

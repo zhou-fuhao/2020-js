@@ -10,7 +10,8 @@
       <el-input v-model="search" placeholder="按关键字模糊查询" class="inp" @change="change"></el-input>
     </div>
     <div class="table">
-      <el-table v-loading="loading" ref="customerList" border stripe :data="customerList" style="width: 100%">
+      <el-table v-loading="loading" ref="customerList" border stripe :data="customerList" style="width: 100%"
+        :header-cell-style="tableHeaderStyle">
         <el-table-column align="center" prop="name" label="姓名" min-width="8%"></el-table-column>
         <el-table-column align="center" prop="sex" label="性别" min-width="5%" :formatter="handleSex"></el-table-column>
         <el-table-column align="center" prop="email" label="邮箱" min-width="10%" show-overflow-tooltip></el-table-column>
@@ -52,6 +53,7 @@ export default {
       // 当前页
       page: 1,
       customerList: [],
+      tableHeaderStyle: { background: "#a9a9a9", color: "black" },
     };
   },
   created() {
@@ -117,24 +119,41 @@ export default {
     // 删除数据
     handleDelete(row) {
       let customerId = row.id;
-      deleteCustomer({ customerId })
-        .then((result) => {
-          if (result.code == 0) {
-            this.$alert("数据删除成功，即将跳转到列表~", {
-              callback: () => {
-                // this.$router.push({
-                //   path: "/customer/list",
-                //   query: {
-                //     type: "my",
-                //   },
-                // });
-              },
-            });
-          }
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.$message({
+            type: "success",
+            message: "删除成功!",
+          });
         })
         .catch(() => {
-          this.$alert("数据删除失败，请重试！");
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
         });
+      // deleteCustomer({ customerId })
+      //   .then((result) => {
+      //     if (result.code == 0) {
+      //       this.$alert("数据删除成功，即将跳转到列表~", {
+      //         callback: () => {
+      //           // this.$router.push({
+      //           //   path: "/customer/list",
+      //           //   query: {
+      //           //     type: "my",
+      //           //   },
+      //           // });
+      //         },
+      //       });
+      //     }
+      //   })
+      //   .catch(() => {
+      //     this.$alert("数据删除失败，请重试！");
+      //   });
     },
     handleVisit(row) {
       console.log(row.id);

@@ -1,5 +1,6 @@
 import CustomerList from "../pages/Customer/CustomerList.vue";
 import CustomerHandle from "../pages/Customer/CustomerHandle.vue";
+import CustomerCanvas from "../pages/Customer/CustomerCanvas.vue";
 
 
 const customerArr = [{
@@ -27,6 +28,12 @@ const customerArr = [{
     path: 'handle/:customerId',
     name: 'customerUpdate',
     component: CustomerHandle
+},
+{
+    // 修改页面
+    path: 'canvas',
+    name: 'customerCanvas',
+    component: CustomerCanvas
 }
 ];
 

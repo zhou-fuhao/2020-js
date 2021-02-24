@@ -10,17 +10,18 @@
       <el-input v-model="search" placeholder="按姓名/邮箱/手机号模糊查询" size="small" @keyup.enter.native="searchInp"></el-input>
     </div>
 
-    <el-table ref="userList" :data="userList" style="width: 100%" @selection-change="handleSelectionChange">
+    <el-table ref="userList" :data="userList" style="width: 100%" border stripe :header-cell-style="tableHeaderStyle"
+      @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55">
       </el-table-column>
-      <el-table-column prop="name" label="姓名" width="100"></el-table-column>
-      <el-table-column prop="sex" label="性别" width="60" :formatter="handleSex"></el-table-column>
-      <el-table-column prop="department" label="部门" width="80"></el-table-column>
-      <el-table-column prop="job" label="职务" width="100"></el-table-column>
-      <el-table-column prop="email" label="邮箱" width="220"></el-table-column>
-      <el-table-column prop="phone" label="电话" width="120"></el-table-column>
-      <el-table-column prop="desc" label="描述" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="" label="操作" width="200">
+      <el-table-column align="center" prop="name" label="姓名" width="100"></el-table-column>
+      <el-table-column align="center" prop="sex" label="性别" width="60" :formatter="handleSex"></el-table-column>
+      <el-table-column align="center" prop="department" label="部门" width="80"></el-table-column>
+      <el-table-column align="center" prop="job" label="职务" width="100"></el-table-column>
+      <el-table-column align="center" prop="email" label="邮箱" width="220"></el-table-column>
+      <el-table-column align="center" prop="phone" label="电话" width="120"></el-table-column>
+      <el-table-column align="center" prop="desc" label="描述" show-overflow-tooltip></el-table-column>
+      <el-table-column align="center" prop="" label="操作" width="200">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="medium">编辑</el-button>
           <el-button type="text" size="medium">删除</el-button>
@@ -44,15 +45,17 @@ export default {
       departmentList: [],
       userList: [],
       multipleSelection: [],
+      tableHeaderStyle: { background: "#a9a9a9", color: "black" },
     };
   },
   created() {
     // 获取部门信息
     queryDepartmentList().then((depRes) => {
       this.departmentList = depRes;
-    });
 
-    this.queryData();
+      // 获取部门成功后，则调用用户列表接口
+      this.queryData();
+    });
   },
   methods: {
     // 获取用户列表信息
@@ -65,18 +68,22 @@ export default {
           this.userList = [];
         });
     },
+    // 判断男女
     handleSex(row) {
       return row.sex == 0 ? "男" : "女";
     },
+    // 下拉选择查询
     searchSelect() {
       this.queryData();
     },
+    // 输入框查询
     searchInp(e) {
       let code = e.keyCode;
       if (code == 13) {
         this.queryData();
       }
     },
+    // 批量删除
     deleteAll() {
       alert("批量删除");
     },

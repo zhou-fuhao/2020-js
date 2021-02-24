@@ -27,7 +27,6 @@ Vue.directive("power", {
     flag = arrVal.some(item => {
       return power.includes(item);
     });
-    console.log(power, arrVal);
     !flag ? el.parentNode.removeChild(el) : null;
   }
 });

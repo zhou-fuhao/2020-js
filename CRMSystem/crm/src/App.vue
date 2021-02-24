@@ -131,14 +131,21 @@ export default {
           // this.dialogFormVisible = false;
         });
     },
+    onResize() {
+      let winH = document.documentElement.clientHeight,
+        headerBox = this.$refs.headerBox,
+        mainBox = this.$refs.mainBox;
+
+      mainBox.style.height = winH - headerBox.offsetHeight + "px";
+      this.$forceUpdate();
+    },
   },
   mounted() {
-    let winH = document.documentElement.clientHeight,
-      headerBox = this.$refs.headerBox,
-      mainBox = this.$refs.mainBox;
+    this.onResize();
 
-    mainBox.style.height = winH - headerBox.offsetHeight + "px";
-    this.$forceUpdate();
+    window.onresize = () => {
+      this.onResize();
+    };
   },
 };
 </script>

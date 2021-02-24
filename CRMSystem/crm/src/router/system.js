@@ -1,5 +1,6 @@
 import UserList from "../pages/System/UserList.vue";
 import UserHandle from "../pages/System/UserHandle.vue";
+import UserCanvas from "../pages/System/UserCanvas.vue";
 import DepartmentList from "../pages/System/DepartmentList.vue";
 import DepartmentHandle from "../pages/System/DepartmentHandle.vue";
 import JobList from "../pages/System/JobList.vue";
@@ -25,6 +26,11 @@ const systemArr = [
         path: 'user/handle/:userId',
         name: 'userUpdate',
         component: UserHandle
+    },
+    {
+        path: 'user/canvas',
+        name: 'userCanvas',
+        component: UserCanvas
     },
     {
         path: 'department/list',

@@ -2,6 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import logger from "vuex/dist/logger";
 
+import * as types from "./store-types";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -12,12 +14,12 @@ export default new Vuex.Store({
         power: ''
     },
     mutations: {
-        change_power(state, payload = '') {
+        [types.CHANGE_POWER](state, payload = '') {
             state.power = payload;
         }
     },
     actions: {
-        
+
     },
     plugins: [logger()]
 });
