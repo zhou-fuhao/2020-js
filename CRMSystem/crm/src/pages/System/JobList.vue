@@ -32,6 +32,11 @@ export default {
       tableHeaderStyle: { background: "#a9a9a9", color: "black" },
     };
   },
+  watch: {
+    $route(to, from) {
+      this.queryData();
+    },
+  },
   created() {
     this.queryData();
   },
@@ -70,10 +75,12 @@ export default {
           if (result.code == 0) {
             this.$alert("数据删除成功，即将跳转到列表~", {
               callback: () => {
-                this.$alert("执行回调函数，返回职务列表");
-                // this.$router.push({
-                //   path: "/system/department/list",
-                // });
+                this.$router.push({
+                  path: "/system/department/list",
+                  query: {
+                    type: "delete",
+                  },
+                });
               },
             });
           }

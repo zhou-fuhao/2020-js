@@ -1,5 +1,5 @@
 const departmentReg = {
-    jobName: [{
+    departmentName: [{
             required: true,
             message: "请输入部门名称",
             trigger: "blur"
@@ -11,7 +11,7 @@ const departmentReg = {
             trigger: "blur",
         },
     ],
-    jobDesc: [{
+    departmentDesc: [{
         required: true,
         message: "请填写部门描述",
         trigger: "blur"

@@ -67,6 +67,16 @@ export function updateUser(params = {}) {
     });
 }
 
+// 重置密码
+export function resetUserPassword(params = {}) {
+    return axios.post('/user/resetpassword', params).then(result => {
+        if (result.code == 0) {
+            return result;
+        }
+        return Promise.reject(result.codeText);
+    });
+}
+
 // 获取部门下拉列表和 职务下拉列表
 export function querySelect() {
     let depList = axios.get('/department/list'),

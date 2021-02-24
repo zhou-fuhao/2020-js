@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <div class="filterBox">
-      <el-button type="info" size="small" @click="deleteAll()">批量删除</el-button>
+      <el-button type="info" size="small" @click="deleteAll()" class="btn">批量删除</el-button>
       <el-select v-model="departmentId" placeholder="全部" size="small" @change="searchSelect">
         <el-option label="全部" value="0"></el-option>
         <el-option v-for="(item,index) in departmentList" :key="index" :label="item.name" :value="item.id">
@@ -25,19 +25,21 @@
       <el-table-column align="center" prop="" label="操作" width="200">
         <template slot-scope="scope">
           <el-button @click="handleEdit(scope.row)" type="text" size="medium">编辑</el-button>
-          <el-button type="text" size="medium">删除</el-button>
-          <el-button type="text" size="medium">重置密码</el-button>
+          <el-button @click="handleDelete(scope.row)" type="text" size="medium">删除</el-button>
+          <el-button @click="handleReset(scope.row)" type="text" size="medium">重置密码</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <div style="margin-top: 20px">
-      <el-button @click="toggleSelection()">取消选择</el-button>
-    </div>
   </div>
 </template>
 
 <script>
-import { queryUserList, queryDepartmentList } from "../../api/user";
+import {
+  queryUserList,
+  queryDepartmentList,
+  deleteUser,
+  resetUserPassword,
+} from "../../api/user";
 export default {
   data() {
     return {
@@ -48,6 +50,11 @@ export default {
       multipleSelection: [],
       tableHeaderStyle: { background: "#a9a9a9", color: "black" },
     };
+  },
+  watch: {
+    $route(to, from) {
+      this.queryData();
+    },
   },
   created() {
     // 获取部门信息
@@ -86,15 +93,42 @@ export default {
     },
     // 批量删除
     deleteAll() {
-      alert("批量删除");
-    },
-    toggleSelection(rows) {
-      if (rows) {
-        rows.forEach((row) => {
-          this.$refs.userList.toggleRowSelection(row);
-        });
+      if (this.multipleSelection.length < 1) {
+        this.$alert("请至少选择一条数据删除！");
       } else {
-        this.$refs.userList.clearSelection();
+        let userArr = this.multipleSelection;
+        this.$alert("批量删除有问题！");
+        return;
+
+        this.$confirm(`此操作不可逆，您确定要删除吗?`, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        })
+          .then(() => {
+            userArr.forEach((item) => {
+              deleteUser({ userId: item.id }).then((result) => {
+                let { code } = result;
+                if (code == 0) {
+                  this.$message({
+                    message: "删除成功~",
+                    type: "success",
+                  });
+                } else {
+                  this.$message({
+                    message: "删除失败~",
+                    type: "error",
+                  });
+                }
+                // 重新请求数据
+                this.$alert("执行回调函数，返回用户列表");
+                // this.$router.push({
+                //   path: "/system/user/list",
+                // });
+              });
+            });
+          })
+          .catch(() => {});
       }
     },
     handleSelectionChange(val) {
@@ -107,6 +141,70 @@ export default {
         path: "/system/user/handle",
         query: { userId },
       });
+    },
+    // 删除
+    handleDelete(row) {
+      this.$confirm(`您确定要删除姓名为：${row.name}  的数据嘛?`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          deleteUser({ userId: row.id }).then((result) => {
+            let { code } = result;
+            if (code == 0) {
+              this.$message({
+                message: "删除成功~",
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: "删除失败~",
+                type: "error",
+              });
+            }
+            // 重新请求数据
+            this.$router.push({
+              path: "/system/user/list",
+              query: {
+                type: "delete",
+              },
+            });
+          });
+        })
+        .catch(() => {});
+    },
+    // 重置密码
+    handleReset(row) {
+      this.$confirm(`您确定要重置姓名为：${row.name}  的密码嘛?`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          resetUserPassword({ userId: row.id }).then((result) => {
+            let { code } = result;
+            if (code == 0) {
+              this.$message({
+                message: "重置成功~",
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: "重置失败~",
+                type: "error",
+              });
+            }
+            // 重新请求数据
+            this.$router.push({
+              path: "/system/user/list",
+              query: {
+                type: "reset",
+              },
+            });
+          });
+        })
+        .catch(() => {});
     },
   },
 };
@@ -127,5 +225,9 @@ export default {
 .filterBox {
   padding: 10px;
   text-align: right;
+
+  .btn {
+    margin-right: 20px;
+  }
 }
 </style>
