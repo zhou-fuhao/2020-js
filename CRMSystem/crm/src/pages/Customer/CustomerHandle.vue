@@ -66,8 +66,9 @@ export default {
   },
   created() {
     // 获取路由信息
-    let customerId = this.$route.query.customerId;
-    // 若有值，则是修改
+    let { customerId, type } = this.$route.query;
+
+    // customerId 是修改
     if (customerId) {
       this.msgSubmit = "修改";
       queryCustomer({ customerId })
@@ -78,6 +79,10 @@ export default {
         .catch(() => {
           this.$alert("获取客户信息失败，请重试！");
         });
+    }
+    // type 是新增
+    if (type) {
+      this.ruleForm = {};
     }
   },
   methods: {

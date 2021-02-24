@@ -48,7 +48,7 @@ export default {
       let myChart = this.$echarts.init(document.getElementById("myChart"));
       // 绘制图表
       myChart.setOption({
-        title: { text: "客户数量画布" },
+        title: { text: "客户报表" },
         tooltip: {},
         xAxis: {
           data: ["重点客户", "一般客户", "放弃客户"],

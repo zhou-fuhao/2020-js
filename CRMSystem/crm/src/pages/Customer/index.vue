@@ -17,7 +17,7 @@
         </el-menu-item>
         <el-menu-item index="4">
           <i class="el-icon-help"></i>
-          <span>客户画布</span>
+          <span>客户报表</span>
         </el-menu-item>
       </el-menu>
     </div>
@@ -34,6 +34,11 @@ export default {
       customerAll: "departcustomer|allcustomer",
     };
   },
+  watch: {
+    $route(to, from) {
+      console.log("监听客户管理路由地址！");
+    },
+  },
   methods: {
     activeIndex() {
       let nowURL = location.href;
@@ -49,7 +54,7 @@ export default {
       let customerArr = [
         "/customer/list?type=my",
         "/customer/list?type=all",
-        "/customer/handle",
+        "/customer/handle?type=add",
         "/customer/canvas",
       ];
       index = parseInt(index);
