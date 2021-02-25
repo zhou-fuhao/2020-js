@@ -44,7 +44,7 @@
               <router-link to="/system/job/list" tag="li">职务列表</router-link>
             </el-menu-item>
             <el-menu-item index="3-2">
-              <router-link to="/system/job/handle" tag="li">新增职务</router-link>
+              <router-link to="/system/job/handle?type=add" tag="li">新增职务</router-link>
             </el-menu-item>
           </el-menu-item-group>
         </el-submenu>

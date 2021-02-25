@@ -76,7 +76,7 @@ export default {
             this.$alert("数据删除成功，即将跳转到列表~", {
               callback: () => {
                 this.$router.push({
-                  path: "/system/department/list",
+                  path: "/system/job/list",
                   query: {
                     type: "delete",
                   },

@@ -81,12 +81,29 @@ export function resetUserPassword(params = {}) {
 export function querySelect() {
     let depList = axios.get('/department/list'),
         jobList = axios.get('/job/list');
+    let depSelect = [],
+        jobSelect = [];
 
     return axios.all([depList, jobList]).then(result => {
         let [depListRes, jobListRes] = result;
         if (depListRes.code == 0 && jobListRes.code == 0) {
-            return [depListRes.data, jobListRes.data];
+
+            depListRes.data.forEach(item => {
+                depSelect.push({
+                    departmentId: item.id,
+                    departmentName: item.name
+                });
+            });
+
+            jobListRes.data.forEach(item => {
+                jobSelect.push({
+                    jobId: item.id,
+                    jobName: item.name
+                });
+            });
+
+            return [depSelect, jobSelect];
         }
-        return Promise.reject(result);
+        return Promise.reject([depSelect, jobSelect]);
     });
 }

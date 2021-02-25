@@ -35,25 +35,13 @@ export default {
       rules: departmentReg,
     };
   },
+  watch: {
+    $route(to, from) {
+      this.queryData();
+    },
+  },
   created() {
-    // 获取路由信息
-    let { departmentId, type } = this.$route.query;
-    // departmentId 是修改
-    if (departmentId) {
-      this.msgSubmit = "修改";
-      queryDepartmentInfo({ departmentId })
-        .then((departmentRes) => {
-          let { name, desc } = departmentRes;
-          this.departmentForm.departmentName = name;
-          this.departmentForm.departmentDesc = desc;
-        })
-        .catch(() => {
-          this.$alert("获取部门信息失败，请重试！");
-        });
-    }
-    if (type) {
-      this.departmentForm = {};
-    }
+    this.queryData();
   },
   methods: {
     submitForm(formName) {
@@ -104,6 +92,28 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    queryData() {
+      // 获取路由信息
+      let { departmentId, type } = this.$route.query;
+
+      // departmentId 是修改
+      if (departmentId) {
+        this.msgSubmit = "修改";
+        queryDepartmentInfo({ departmentId })
+          .then((departmentRes) => {
+            let { name, desc } = departmentRes;
+            this.departmentForm.departmentName = name;
+            this.departmentForm.departmentDesc = desc;
+          })
+          .catch(() => {
+            this.$alert("获取部门信息失败，请重试！");
+          });
+      }
+      if (type) {
+        this.msgSubmit = "新增";
+        this.departmentForm = {};
+      }
     },
   },
 };

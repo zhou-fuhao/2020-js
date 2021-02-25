@@ -42,28 +42,40 @@ export default {
       rules: jobReg,
     };
   },
+  watch: {
+    $route(to, from) {
+      this.queryData();
+    },
+  },
   created() {
-    // 获取路由信息
-    let { jobId, type } = this.$route.query;
-    // jobId 是修改
-    if (jobId) {
-      this.msgSubmit = "修改";
-      queryJobInfo({ jobId })
-        .then((jobRes) => {
-          let { name, desc, power } = jobRes;
-          this.jobForm.jobName = name;
-          this.jobForm.jobDesc = desc;
-          this.jobForm.jobPower = power.split("|");
-        })
-        .catch(() => {
-          this.$alert("获取职务信息失败，请重试！");
-        });
-    }
-    if (type) {
-      this.jobForm = {};
-    }
+    this.queryData();
   },
   methods: {
+    queryData() {
+      // 获取路由信息
+      let { jobId, type } = this.$route.query;
+
+      // jobId 是修改
+      if (jobId) {
+        this.msgSubmit = "修改";
+        queryJobInfo({ jobId })
+          .then((jobRes) => {
+            let { name, desc, power } = jobRes;
+            this.jobForm.jobName = name;
+            this.jobForm.jobDesc = desc;
+            this.jobForm.jobPower = power.split("|");
+          })
+          .catch(() => {
+            this.$alert("获取职务信息失败，请重试！");
+          });
+      }
+      if (type) {
+        this.msgSubmit = "新增";
+        this.jobForm.jobName = "";
+        this.jobForm.jobDesc = "";
+        this.jobForm.jobPower = [];
+      }
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {

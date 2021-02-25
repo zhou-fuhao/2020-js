@@ -58,39 +58,90 @@ export default {
         weixin: "",
         address: "",
         type: "",
-        customerId: "",
       },
       msgSubmit: "新增",
       rules: customerReg,
     };
   },
+  watch: {
+    $route() {
+      this.queryData();
+    },
+  },
   created() {
-    // 获取路由信息
-    let { customerId, type } = this.$route.query;
-
-    // customerId 是修改
-    if (customerId) {
-      this.msgSubmit = "修改";
-      queryCustomer({ customerId })
-        .then((customerReg) => {
-          this.ruleForm = customerReg;
-          this.ruleForm.customerId = customerReg.id;
-        })
-        .catch(() => {
-          this.$alert("获取客户信息失败，请重试！");
-        });
-    }
-    // type 是新增
-    if (type) {
-      this.ruleForm = {};
-    }
+    this.queryData();
   },
   methods: {
+    queryData() {
+      // 获取路由信息
+      let { customerId, type } = this.$route.query;
+
+      // customerId 是修改
+      if (customerId) {
+        this.msgSubmit = "修改";
+        queryCustomer({ customerId })
+          .then((customerRes) => {
+            let {
+              name,
+              sex,
+              email,
+              phone,
+              QQ,
+              weixin,
+              address,
+              type,
+            } = customerRes;
+
+            this.ruleForm = {
+              name,
+              sex: Number(sex),
+              email,
+              phone,
+              QQ,
+              weixin,
+              address,
+              type,
+            };
+          })
+          .catch(() => {
+            this.$alert("获取客户信息失败，请重试！");
+          });
+      }
+      // type 是新增
+      if (type) {
+        this.msgSubmit = "新增";
+        this.ruleForm = {};
+      }
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          if (this.ruleForm.id) {
-            updateCustomer(this.ruleForm)
+          let {
+            name,
+            sex,
+            email,
+            phone,
+            QQ,
+            weixin,
+            address,
+            type,
+          } = this.ruleForm;
+          let params = {
+            name,
+            sex,
+            email,
+            phone,
+            QQ,
+            weixin,
+            address,
+            type,
+          };
+
+          let { customerId } = this.$route.query;
+
+          if (customerId) {
+            params.customerId = customerId;
+            updateCustomer(params)
               .then((result) => {
                 if (result.code == 0) {
                   this.$alert("数据更新成功，即将跳转到列表~", {
@@ -109,7 +160,7 @@ export default {
                 this.$alert("数据更新失败，请重试！");
               });
           } else {
-            addCustomer(this.ruleForm)
+            addCustomer(params)
               .then((result) => {
                 if (result.code == 0) {
                   this.$alert("数据新增成功，即将跳转到列表~", {

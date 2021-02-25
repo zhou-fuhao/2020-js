@@ -27,7 +27,7 @@
           <template slot-scope="scope">
             <el-button @click="handleEdit(scope.row)" type="text" size="medium">编辑</el-button>
             <el-button @click="handleDelete(scope.row)" type="text" size="medium">删除</el-button>
-            <el-button @click="handleVisit(scope.row)" type="text" size="medium">回访</el-button>
+            <el-button @click="handleVisit(scope.row)" type="text" size="medium">回访记录</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -111,7 +111,6 @@ export default {
     handleEdit(row) {
       let customerId = row.id;
       this.$router.push({
-        // path: "/customer/handle/:customerId",
         path: "/customer/handle",
         query: { customerId },
       });
@@ -125,38 +124,36 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!",
-          });
+          deleteCustomer({ customerId })
+            .then((result) => {
+              if (result.code == 0) {
+                this.$alert("数据删除成功，即将跳转到列表~", {
+                  callback: () => {
+                    this.$router.push({
+                      path: "/customer/list",
+                      query: {
+                        type: "my",
+                        btn: "delete",
+                      },
+                    });
+                  },
+                });
+              }
+            })
+            .catch(() => {
+              this.$alert("数据删除失败，请重试！");
+            });
         })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
-      // deleteCustomer({ customerId })
-      //   .then((result) => {
-      //     if (result.code == 0) {
-      //       this.$alert("数据删除成功，即将跳转到列表~", {
-      //         callback: () => {
-      //           // this.$router.push({
-      //           //   path: "/customer/list",
-      //           //   query: {
-      //           //     type: "my",
-      //           //   },
-      //           // });
-      //         },
-      //       });
-      //     }
-      //   })
-      //   .catch(() => {
-      //     this.$alert("数据删除失败，请重试！");
-      //   });
+        .catch(() => {});
     },
+    // 回访
     handleVisit(row) {
-      console.log(row.id);
+      let customerId = row.id;
+
+      this.$router.push({
+        path: "/customer/visitList",
+        query: { customerId },
+      });
     },
   },
 };
