@@ -21,42 +21,29 @@
 </template>
 
 <script>
-import { queryDepartmentList, deleteDepartment } from "../../api/department";
+import * as types from "../../store/store-types";
+import { deleteDepartment } from "../../api/department";
 export default {
   data() {
     return {
       loading: true,
       search: "",
-      departmentList: [],
       tableHeaderStyle: { background: "#a9a9a9", color: "black" },
     };
   },
-  watch: {
-    $route(to, from) {
-      this.queryData();
-    },
-  },
   created() {
-    this.queryData();
+    this.$store.dispatch(types.DEPARTMENT_LIST);
+    this.loading = false;
+  },
+  computed: {
+    departmentList() {
+      return this.$store.state.departmentList;
+    },
   },
   methods: {
     // 按部门名称模糊查询
     change() {
-      this.queryData();
-    },
-    // 请求列表数据
-    queryData() {
-      this.loading = true;
-      queryDepartmentList()
-        .then((departmentRes) => {
-          this.departmentList = departmentRes;
-        })
-        .catch(() => {
-          this.departmentList = [];
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+      this.$store.dispatch(types.DEPARTMENT_LIST);
     },
     // 编辑数据
     handleEdit(row) {
@@ -74,12 +61,7 @@ export default {
           if (result.code == 0) {
             this.$alert("数据删除成功，即将跳转到列表~", {
               callback: () => {
-                this.$router.push({
-                  path: "/system/department/list",
-                  query: {
-                    type: "delete",
-                  },
-                });
+                this.$store.dispatch(types.DEPARTMENT_LIST);
               },
             });
           }

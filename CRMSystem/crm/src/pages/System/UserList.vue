@@ -2,19 +2,18 @@
   <div class="box">
     <div class="filterBox">
       <el-button type="info" size="small" @click="deleteAll()" class="btn">批量删除</el-button>
-      <el-select v-model="departmentId" placeholder="全部" size="small" @change="searchSelect">
+      <el-select v-model="departmentId" placeholder="全部" size="small" @change="changeSelect">
         <el-option label="全部" value="0"></el-option>
         <el-option v-for="(item,index) in departmentList" :key="index" :label="item.name" :value="item.id">
         </el-option>
       </el-select>
-      <el-input v-model="search" placeholder="按姓名/邮箱/手机号模糊查询" size="small" @keyup.enter.native="searchInp" class="inp">
+      <el-input v-model="search" placeholder="按姓名/邮箱/手机号模糊查询" size="small" @change="changeSelect" class="inp">
       </el-input>
     </div>
 
     <el-table ref="userList" :data="userList" style="width: 100%" border stripe :header-cell-style="tableHeaderStyle"
       @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55">
-      </el-table-column>
+      <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column align="center" prop="name" label="姓名" width="100"></el-table-column>
       <el-table-column align="center" prop="sex" label="性别" width="60" :formatter="handleSex"></el-table-column>
       <el-table-column align="center" prop="department" label="部门" width="80"></el-table-column>
@@ -40,21 +39,17 @@ import {
   deleteUser,
   resetUserPassword,
 } from "../../api/user";
+
+import * as types from "../../store/store-types";
 export default {
   data() {
     return {
       departmentId: "0",
       search: "",
       departmentList: [],
-      userList: [],
       multipleSelection: [],
       tableHeaderStyle: { background: "#a9a9a9", color: "black" },
     };
-  },
-  watch: {
-    $route(to, from) {
-      this.queryData();
-    },
   },
   created() {
     // 获取部门信息
@@ -62,34 +57,25 @@ export default {
       this.departmentList = depRes;
 
       // 获取部门成功后，则调用用户列表接口
-      this.queryData();
+      this.$store.dispatch(types.USER_LIST);
     });
   },
-  methods: {
-    // 获取用户列表信息
-    queryData() {
-      queryUserList({ departmentId: this.departmentId, search: this.search })
-        .then((userRes) => {
-          this.userList = userRes;
-        })
-        .catch(() => {
-          this.userList = [];
-        });
+  computed: {
+    userList() {
+      return this.$store.state.userList;
     },
+  },
+  methods: {
     // 判断男女
     handleSex(row) {
       return row.sex == 0 ? "男" : "女";
     },
     // 下拉选择查询
-    searchSelect() {
-      this.queryData();
-    },
-    // 输入框查询
-    searchInp(e) {
-      let code = e.keyCode;
-      if (code == 13) {
-        this.queryData();
-      }
+    changeSelect() {
+      this.$store.dispatch(types.USER_LIST, {
+        departmentId: this.departmentId,
+        search: this.search,
+      });
     },
     // 批量删除
     deleteAll() {
@@ -164,12 +150,7 @@ export default {
               });
             }
             // 重新请求数据
-            this.$router.push({
-              path: "/system/user/list",
-              query: {
-                type: "delete",
-              },
-            });
+            this.$store.dispatch(types.USER_LIST);
           });
         })
         .catch(() => {});
@@ -196,12 +177,7 @@ export default {
               });
             }
             // 重新请求数据
-            this.$router.push({
-              path: "/system/user/list",
-              query: {
-                type: "reset",
-              },
-            });
+            this.$store.dispatch(types.USER_LIST);
           });
         })
         .catch(() => {});

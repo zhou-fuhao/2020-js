@@ -22,42 +22,29 @@
 </template>
 
 <script>
-import { queryJobList, deleteJob } from "../../api/job";
+import * as types from "../../store/store-types";
+import { deleteJob } from "../../api/job";
 export default {
   data() {
     return {
       loading: true,
       search: "",
-      jobList: [],
       tableHeaderStyle: { background: "#a9a9a9", color: "black" },
     };
   },
-  watch: {
-    $route(to, from) {
-      this.queryData();
-    },
-  },
   created() {
-    this.queryData();
+    this.$store.dispatch(types.JOB_LIST);
+    this.loading = false;
+  },
+  computed: {
+    jobList() {
+      return this.$store.state.jobList;
+    },
   },
   methods: {
     // 按职务名称模糊查询
     change() {
-      this.queryData();
-    },
-    // 请求列表数据
-    queryData() {
-      this.loading = true;
-      queryJobList()
-        .then((jobRes) => {
-          this.jobList = jobRes;
-        })
-        .catch(() => {
-          this.jobList = [];
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+      this.$store.dispatch(types.JOB_LIST);
     },
     // 编辑数据
     handleEdit(row) {
@@ -75,12 +62,7 @@ export default {
           if (result.code == 0) {
             this.$alert("数据删除成功，即将跳转到列表~", {
               callback: () => {
-                this.$router.push({
-                  path: "/system/job/list",
-                  query: {
-                    type: "delete",
-                  },
-                });
+                this.$store.dispatch(types.JOB_LIST);
               },
             });
           }

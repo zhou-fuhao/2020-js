@@ -1,0 +1,37 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/notice/notice",
+    "pages/user/user"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#ffffff",
+    "navigationBarBackgroundColor": "#84d8e6",
+    "navigationBarTitleText": "小周官网",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#333",
+    "selectedColor": "#5998ec",
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "首页",
+      "iconPath": "images/shouye1.png",
+      "selectedIconPath": "images/shouye2.png"
+    }, {
+      "pagePath": "pages/notice/notice",
+      "text": "消息中心",
+      "iconPath": "images/rizhi1.png",
+      "selectedIconPath": "images/rizhi2.png"
+    }, {
+      "pagePath": "pages/user/user",
+      "text": "我的",
+      "iconPath": "images/my1.png",
+      "selectedIconPath": "images/my2.png"
+    }]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

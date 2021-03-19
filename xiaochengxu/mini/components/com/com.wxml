@@ -1,0 +1,9 @@
+<!--components/com/com.wxml-->
+<text>com组件页面</text>
+
+<text>-----------------</text>
+
+{{data}}
+{{age}}
+
+<button bindtap="onTap">子按钮</button>

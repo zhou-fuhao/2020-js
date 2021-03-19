@@ -10,7 +10,7 @@
     </div>
     <div class="depNum">
       <div class="dep">
-        <div>总裁办{{depZcbNum}}</div>
+        <div>总裁办：{{depZcbNum}}</div>
         <div>销售部：{{depXsbNum}}</div>
         <div>后勤部：{{depHqbNum}}</div>
         <div>产品研发部：{{depCpyfbNum}}</div>
@@ -37,7 +37,6 @@ export default {
     queryUserList()
       .then((userRes) => {
         userRes.forEach((item, index) => {
-          console.log(item.job, item);
           if (item.job == "管理员") {
             this.jobAdminNum++;
           }

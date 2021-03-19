@@ -1,0 +1,24 @@
+<!--pages/demo1/demo1.wxml-->
+<text>pages/demo1/demo1.wxml</text>
+
+<!-- <navigator url="/pages/home/home" open-type="switchTab">跳转到home</navigator> -->
+<navigator url="/pages/demo2/demo2?id=123" open-type="navigate">跳转到demo2</navigator>
+
+<text>---------------------------------------------------</text>
+
+<!-- wx:for循环 可以循环数组/字符串/数字；变量要用双括号括起来 -->
+<view wx:for="{{list}}" wx:key="i" wx:for-item="key" wx:for-index="i">{{key}}---{{i}}</view>
+
+<text>---------------------------------------------------</text>
+
+<!-- wx:if  wx:elif  wx:else      类似vue得v-if-->
+<view wx:if="{{dataNum == 1}}">1</view>
+<view wx:elif="{{dataNum == 2}}">2</view>
+<view wx:else>3</view>
+
+<text>---------------------------------------------------</text>
+
+<!-- block      类似vue中的template -->
+<block></block>
+
+

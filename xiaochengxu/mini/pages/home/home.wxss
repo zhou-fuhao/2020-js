@@ -1,0 +1,12 @@
+/* pages/home/home.wxss */
+.outer {
+    color: #ccc;
+}
+.hover_outer {
+    color: blue;
+}
+image {
+    width: 300px;
+    height: 100px;
+    border: 1px solid red;
+}

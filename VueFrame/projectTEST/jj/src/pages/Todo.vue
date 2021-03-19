@@ -81,12 +81,10 @@ export default {
   methods: {
     // 下拉选择显示多少条
     handleSizeChange(val) {
-      console.log(val, this.currentPage);
       this.$store.dispatch("todo/updateTodoListAction", { limit: val, page: this.currentPage, });
     },
     //
     handleCurrentChange(val) {
-      console.log(val, this.pageSize);
       this.$store.dispatch("todo/updateTodoListAction", { limit: this.pageSize, page: val, });
     },
     // 点击提交按钮进行表单校验

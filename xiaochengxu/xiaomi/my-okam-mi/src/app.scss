@@ -1,0 +1,23 @@
+/**
+ * @file The app entry style
+ * @author jim<zhoufuhao_java@163.com>
+ */
+
+@import './common/css/common';
+
+.page-img {
+    margin: 0 auto;
+    -quick-margin: 0 44%;
+    display: block;
+    width: 150px;
+    height: 150px;
+}
+
+.page-footer {
+    position: absolute;
+    bottom: 80px;
+    width: 100%;
+    text-align: center;
+    -quick-justify-content: center;
+    -quick-align-items: center;
+}

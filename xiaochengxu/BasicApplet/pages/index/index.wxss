@@ -1,0 +1,5 @@
+/**index.wxss**/
+/* 不支持嵌套css样式 */
+.box{
+  color: yellowgreen;
+}

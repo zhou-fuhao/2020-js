@@ -1,0 +1,30 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 轮播图部分 -->
+  <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="{{2000}}" duration="{{200}}" circular="{{true}}" style="height:200px;">
+    <block wx:for="{{bannerList}}" wx:key="*this">
+      <swiper-item>
+        <view class="swiper-item {{item}}">
+          <image class="img" mode="scaleToFill" src="{{item.path}}"></image>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="erBox">
+    <view class="title">认识小周同学</view>
+    <image class="video_box" src="http://www.zhufengpeixun.cn/skin/20142/img/zfBg2.jpg" alt="">
+      <view class="play_icon">
+        <image src="http://www.zhufengpeixun.cn/skin/20142/img/video.png"></image>
+      </view>
+    </image>
+  </view>
+
+  <view class="sanBox">
+    <view class="title">小周的故事会</view>
+    <image class="video_box" src="http://www.zhufengpeixun.cn/skin/20142/img/zfBg.jpg" alt="">
+      <view class="play_icon">
+        <image src="http://www.zhufengpeixun.cn/skin/20142/img/video2.png"></image>
+      </view>
+    </image>
+  </view>
+</view>

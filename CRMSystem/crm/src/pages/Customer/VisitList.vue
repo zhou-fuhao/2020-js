@@ -1,15 +1,15 @@
 <template>
-  <div class="box">
+  <div class="box" id="box">
     <div class="filterBox">
-      <el-button type="primary" @click="dialogFormVisible = true">新增回访记录</el-button>
+      <el-button type="primary" disabled @click="dialogFormVisible = true">新增回访记录</el-button>
     </div>
 
     <el-dialog title="新增回访记录" :visible.sync="dialogFormVisible">
-      <el-form :model="visitForm">
-        <el-form-item label="回访日期" :label-width="formLabelWidth">
+      <el-form :model="visitForm" ref="visitForm">
+        <el-form-item label="回访日期" prop="visitTime" :label-width="formLabelWidth">
           <el-date-picker v-model="visitForm.visitTime" type="date" placeholder="选择日期"></el-date-picker>
         </el-form-item>
-        <el-form-item label="回访纪要" :label-width="formLabelWidth">
+        <el-form-item label="回访纪要" prop="visitText" :label-width="formLabelWidth">
           <el-input type="textarea" v-model="visitForm.visitText" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -36,13 +36,14 @@
 </template>
 
 <script>
-import { queryVisitList, deleteVisit, addVisit } from "../../api/visit";
+import * as types from "../../store/store-types";
+import { deleteVisit, addVisit } from "../../api/visit";
+import customerReg from "../../js/reg/customerReg";
 export default {
   data() {
     return {
       loading: true,
       search: "",
-      visitList: [],
       tableHeaderStyle: { background: "#a9a9a9", color: "black" },
       dialogFormVisible: false,
       visitForm: {
@@ -52,31 +53,27 @@ export default {
       formLabelWidth: "120px",
     };
   },
-  watch: {
-    $route(to, from) {
-      this.queryData();
-    },
-  },
   created() {
-    this.queryData();
+    let { customerId } = this.$route.query;
+    let aa = document.getElementById("box");
+
+    if (!customerId) {
+      console.log("想把客户回访页面屏蔽！");
+      // document.querySelector(".filterBox").style.display = "none";
+      console.log(document.querySelector(".filterBox"));
+
+      this.loading = false;
+    } else {
+      this.$store.dispatch(types.VISIT_LIST, { customerId });
+      this.loading = false;
+    }
+  },
+  computed: {
+    visitList() {
+      return this.$store.state.visitList;
+    },
   },
   methods: {
-    // 请求列表数据
-    queryData() {
-      this.loading = true;
-      let { customerId } = this.$route.query;
-
-      queryVisitList({ customerId })
-        .then((visitRes) => {
-          this.visitList = visitRes;
-        })
-        .catch(() => {
-          this.visitList = [];
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
     // 删除数据
     handleDelete(row) {
       let visitId = row.id,
@@ -86,13 +83,7 @@ export default {
           if (result.code == 0) {
             this.$alert("数据删除成功，即将跳转到列表~", {
               callback: () => {
-                this.$router.push({
-                  path: "/customer/visitList",
-                  query: {
-                    customerId,
-                    type: "delete",
-                  },
-                });
+                this.$store.dispatch(types.VISIT_LIST, { customerId });
               },
             });
           }
@@ -114,14 +105,9 @@ export default {
         .then(() => {
           this.$alert("数据新增成功，即将跳转到列表~", {
             callback: () => {
-              this.$router.push({
-                path: "/customer/visitList",
-                query: {
-                  customerId,
-                  type: "list",
-                },
-              });
+              this.$store.dispatch(types.VISIT_LIST, { customerId });
               this.dialogFormVisible = false;
+              this.$refs.visitForm.resetFields();
             },
           });
         })

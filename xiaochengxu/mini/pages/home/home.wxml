@@ -1,0 +1,86 @@
+<!--pages/home/home.wxml-->
+
+<!-- text类似原生的span  
+        1.decode 解码
+        2.text 组件内只支持 text 嵌套
+        3.user-select除了文本节点以外的其他节点都无法长按选中
+-->
+<text decode user-select>pages/home/home.wxml &nbsp; &lt; &gt; &amp; &apos; &ensp; &emsp;</text>
+
+<!-- view就类似原生的div  只是在div的基础上多做了一些功能 -->
+<!-- 事件：
+        语法：bind+（:可加可不加）+'事件类型'="函数名"
+        在js文件中添加相应函数，即可触发
+    传参：在行内属性增加 data-"变量名" = "参数"
+    接收：函数接收事件对象e;  e.target.dataset里面的数据就是我们传的参数，可以多个 
+-->
+<view>{{name}}</view>
+<view class="outer" hover-class="hover_outer" data-name2="{{name}}" data-age="{{12}}" bindtap="onTap"
+    bindlongpress="onLongPress">大家吃元宵了吗</view>
+
+<!-- 图片image 类似 原生img
+    默认宽高：width: 320px;height: 240px;
+    mode模式：scaleToFill 默认 不保持纵横比，直接拉伸
+        aspectFit 保持纵横比 显示长边 默认在框框的中间
+        aspectFill 保持纵横比 显示短边 默认在框框的中间
+        widthFix 保持纵横比 宽度自定义  高度自适应
+        heightFix 保持纵横比 高度自定义  宽度自适应
+-->
+<image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=32800711,1855326536&fm=26&gp=0.jpg"
+    mode="heightFix" />
+
+<!-- swiper
+    indicator-dots 底部指示点
+    autoplay 自动播放
+    circular 衔接滑动
+    interval 滑动时间间隔 默认5000ms
+    indicator-color 指示点颜色
+    indicator-active-color 选中状态的指示点颜色
+-->
+<swiper autoplay indicator-dots circular interval="2000">
+    <swiper-item>
+        <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=32800711,1855326536&fm=26&gp=0.jpg"
+            mode="heightFix" />
+    </swiper-item>
+    <swiper-item>
+        <image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1806223899,2148352782&fm=26&gp=0.jpg"
+            mode="heightFix" />
+    </swiper-item>
+    <swiper-item>
+        <image src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2768713353,4240076627&fm=26&gp=0.jpg"
+            mode="heightFix"></image>
+    </swiper-item>
+</swiper>
+
+<scroll-view></scroll-view>
+
+
+
+<!-- navigator
+        url跳转地址 以/pages开头
+        open-type跳转方式
+            navigate 直接跳转页面，但不能跳转tabBar页面。最多嵌套10层页面栈
+            navigateBack delta表示回退层数；   getCurrentPages()可查看当前页面栈
+            redirect 关闭当前，再跳转。 不能跳转tabBar页面
+            switchTab 关闭所有页面，跳转tabBar页面
+            reLaunch 关闭所有页面，并跳转
+    注：tabBar页面就是app.json里tabBar.list里的页面
+-->
+
+
+<navigator url="/pages/demo1/demo1" open-type="navigate">跳转到demo1</navigator>
+
+<button bindtap="queryInfo">获取系统信息</button>
+<view>{{querySystemInfo.model}}</view>
+
+<button bindtap="querDialog">获取模态框</button>
+
+<view>
+    <button bindtap="queryImage">获取图片</button>
+</view>
+<button bindtap="queryVideo">获取视频</button>
+
+<view>
+    <button bindtap="onShezhi">点我设置</button>
+</view>
+<button bindtap="onQuery">点我获取</button>

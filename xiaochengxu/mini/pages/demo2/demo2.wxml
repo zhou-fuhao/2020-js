@@ -1,0 +1,8 @@
+<!--pages/demo2/demo2.wxml-->
+<text>demo2的页面</text>
+
+<!-- <navigator url="/pages/demo2/demo2" open-type="navigateBack" delta="2">返回第2层页面栈</navigator> -->
+
+<button bindtap="onFuTap">父按钮</button>
+
+<myCom data="{{name}}" age="{{100}}" bind:childTap="onFuTap"></myCom>

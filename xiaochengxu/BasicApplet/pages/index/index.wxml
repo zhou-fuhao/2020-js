@@ -1,0 +1,44 @@
+<view>
+  你好，{{name}}
+  <view></view>
+  <text>这是text文本标签</text>
+  <view>view会另起一行</view>
+  <view hover-class="box">hover-class按下改变颜色</view>
+  <icon type="success" size="30rpx" />
+  <view class="query {{className}}">class动态获取</view>
+  <view>---------------------------------------------------------</view>
+  <view>
+    wx:for循环<view></view>
+    1.<view></view>
+    在组件上使用 wx:for 控制属性绑定一个数组，即可使用数组中各项的数据重复渲染该组件。
+    <view></view>
+    默认数组的当前项的下标变量名默认为 index，数组当前项的变量名默认为 item
+    <view wx:for="{{personList}}" wx:key="index">
+      编号：{{item.id}}，
+      名字：{{item.name}}，
+      年龄：{{item.age}}
+    </view>
+
+    2.<view></view>
+    使用 wx:for-item 可以指定数组当前元素的变量名，
+    <view></view>
+    使用 wx:for-index 可以指定数组当前下标的变量名：
+    <view wx:for="{{personList}}" wx:key="num" wx:for-index="num" wx:for-item="val">
+      编号：{{val.id}}，
+      名字：{{val.name}}，
+      年龄：{{val.age}}
+    </view>
+  </view>
+  <view>---------------------------------------------------------</view>
+  wx:if wx:elif wx:else<view></view>
+  <view wx:if="{{language == 'chinese'}}">语言：中文</view>
+  <view wx:elif="{{language == 'english'}}">语言：English</view>
+  <view wx:else>语言：Japanese</view>
+  <view>---------------------------------------------------------</view>
+  事件传参，通过data-参数名="参数"，不区分大小写  或者  mark:参数名="参数"，区分大小写<view>
+  data- 和 mark的区别：</view>
+  mark包含从触发事件的节点到根节点上所有的mark:属性值<view>data-只包含一个节点的data-属性值</view>
+  1.bindtap：事件冒泡<view>2.catchtap：无事件冒泡</view>
+  <button type="default" bindtap="fn" data-myData="[1,2,3]" mark:myData="999">点我改变小周同学</button>
+  <button type="default" catchtap="fn1" data-myData="english">点我改变语言</button>
+</view>
